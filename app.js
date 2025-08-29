@@ -1,1279 +1,1114 @@
-// Application data with improved structure
-const appData = {
-    "monthly_tasks": {
-        "1": {
-            "month_name": "1월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_1_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_1_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_1_3", "editable": true}
-            ],
-            "preparation_tasks": [
-                {"name": "신입생 오리엔테이션 준비", "type": "준비업무", "description": "2월 신입생 오리엔테이션 사전 준비", "id": "task_1_prep_1", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "2": {
-            "month_name": "2월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_2_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_2_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_2_3", "editable": true}
-            ],
-            "special_tasks": [
-                {"name": "신입생 오리엔테이션", "type": "특별업무", "description": "2월 신입생 오리엔테이션 진행", "id": "task_2_special_1", "editable": true}
-            ],
-            "preparation_tasks": [
-                {"name": "현황판 교체 준비", "type": "준비업무", "description": "3월 현황판 교체 사전 준비", "id": "task_2_prep_1", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "3": {
-            "month_name": "3월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_3_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_3_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_3_3", "editable": true}
-            ],
-            "special_tasks": [
-                {"name": "현황판 교체", "type": "특별업무", "description": "3월 현황판 교체 작업", "id": "task_3_special_1", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "4": {
-            "month_name": "4월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_4_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_4_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_4_3", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "5": {
-            "month_name": "5월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 5, "id": "task_5_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_5_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_5_3", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "6": {
-            "month_name": "6월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_6_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_6_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_6_3", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "7": {
-            "month_name": "7월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_7_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_7_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_7_3", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "8": {
-            "month_name": "8월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_8_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_8_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_8_3", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "9": {
-            "month_name": "9월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_9_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_9_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_9_3", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "10": {
-            "month_name": "10월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_10_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_10_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_10_3", "editable": true}
-            ],
-            "preparation_tasks": [
-                {"name": "수능 업무 준비", "type": "준비업무", "description": "11월 수능 관련 업무 사전 준비", "id": "task_10_prep_1", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "11": {
-            "month_name": "11월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_11_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_11_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_11_3", "editable": true}
-            ],
-            "special_tasks": [
-                {"name": "수능 업무", "type": "특별업무", "description": "11월 수능 관련 업무 (시험장 운영 등)", "id": "task_11_special_1", "editable": true}
-            ],
-            "preparation_tasks": [
-                {"name": "학교평가 준비", "type": "준비업무", "description": "12월 학교평가 사전 준비", "id": "task_11_prep_1", "editable": true}
-            ],
-            "custom_tasks": []
-        },
-        "12": {
-            "month_name": "12월",
-            "regular_tasks": [
-                {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_12_1", "editable": true},
-                {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_12_2", "editable": true},
-                {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_12_3", "editable": true}
-            ],
-            "special_tasks": [
-                {"name": "학교평가", "type": "특별업무", "description": "12월 학교평가 준비 및 실시", "id": "task_12_special_1", "editable": true}
-            ],
-            "custom_tasks": []
-        }
-    },
-    "teachers": [
-        {"id": "T001", "name": "김영희", "subject": "국어", "grade": "1학년", "status": "정상근무"},
-        {"id": "T002", "name": "박민수", "subject": "수학", "grade": "2학년", "status": "정상근무"},
-        {"id": "T003", "name": "이정은", "subject": "영어", "grade": "3학년", "status": "정상근무"},
-        {"id": "T004", "name": "최수진", "subject": "과학", "grade": "1학년", "status": "정상근무"},
-        {"id": "T005", "name": "장기용", "subject": "사회", "grade": "2학년", "status": "정상근무"},
-        {"id": "T006", "name": "윤서연", "subject": "미술", "grade": "전학년", "status": "휴직중"},
-        {"id": "T007", "name": "한동민", "subject": "체육", "grade": "전학년", "status": "정상근무"},
-        {"id": "T008", "name": "정혜림", "subject": "음악", "grade": "전학년", "status": "정상근무"}
+// 데이터 초기화
+let currentMonth = 1; // 1월로 시작 (기간제교원 계약 업무 확인용)
+let currentView = 'list';
+let editingTask = null;
+let editingLeave = null;
+let taskSteps = []; // 임시 단계 저장용
+
+// 초기 데이터 - application_data_json 기반으로 완전 복원
+const monthlyTasks = {
+  "1": {
+    "month_name": "1월",
+    "regular_tasks": [
+      {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_1_1", "editable": true, "completed_weeks": 0},
+      {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_1_2", "editable": true, "completed_steps": []},
+      {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_1_3", "editable": true, "weeks": 1, "completed_weeks": 0}
     ],
-    "substitute_teachers": [
-        {"id": "S001", "name": "강나연", "subjects": ["국어", "사회"], "available": true, "current_assignment": null},
-        {"id": "S002", "name": "임철호", "subjects": ["수학", "과학"], "available": true, "current_assignment": null},
-        {"id": "S003", "name": "송미경", "subjects": ["영어"], "available": true, "current_assignment": null},
-        {"id": "S004", "name": "오진석", "subjects": ["체육", "미술"], "available": false, "current_assignment": "T006"},
-        {"id": "S005", "name": "안소희", "subjects": ["음악", "미술"], "available": true, "current_assignment": null}
+    "preparation_tasks": [
+      {"name": "신입생 오리엔테이션 준비", "type": "준비업무", "description": "2월 신입생 오리엔테이션 사전 준비", "id": "task_1_prep_1", "editable": true, "weeks": 2, "completed_weeks": 0}
     ],
-    "absences": [
-        {
-            "id": "A001",
-            "teacher_id": "T006",
-            "teacher_name": "윤서연",
-            "absence_type": "육아휴직",
-            "start_date": "2025-11-01",
-            "end_date": "2026-01-31",
-            "substitute_teacher_id": "S004",
-            "substitute_teacher_name": "오진석",
-            "status": "승인",
-            "reason": "만 8세 이하 자녀 양육을 위한 육아휴직 (교육공무원법 제44조 청원휴직)",
-            "approval_date": "2025-10-15"
-        }
+    "special_tasks": [],
+    "custom_tasks": []
+  },
+  "2": {
+    "month_name": "2월",
+    "regular_tasks": [
+      {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_2_1", "editable": true, "completed_weeks": 0},
+      {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_2_2", "editable": true, "weeks": 1, "completed_weeks": 0}
     ],
-    "absence_types": {
-        "직권휴직": [
-            "질병휴직", "병역휴직", "생사불명휴직", "법정의무수행휴직", "노조전임자휴직"
-        ],
-        "청원휴직": [
-            "유학휴직", "고용휴직", "육아휴직", "입양휴직", "불임·난임휴직", 
-            "연수휴직", "가족돌봄휴직", "동반휴직", "자율연수휴직"
-        ]
-    },
-    "task_types": ["정기업무", "특별업무", "준비업무", "프로젝트업무"]
+    "special_tasks": [
+      {"name": "신입생 오리엔테이션", "type": "특별업무", "description": "2월 신입생 오리엔테이션 진행", "id": "task_2_special_1", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "preparation_tasks": [
+      {"name": "현황판 교체 준비", "type": "준비업무", "description": "3월 현황판 교체 사전 준비", "id": "task_2_prep_1", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "custom_tasks": []
+  },
+  "3": {
+    "month_name": "3월", 
+    "regular_tasks": [
+      {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_3_1", "editable": true, "completed_weeks": 0},
+      {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_3_2", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "special_tasks": [
+      {"name": "현황판 교체", "type": "특별업무", "description": "3월 현황판 교체 작업", "id": "task_3_special_1", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "preparation_tasks": [],
+    "custom_tasks": []
+  },
+  "10": {
+    "month_name": "10월",
+    "regular_tasks": [
+      {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_10_1", "editable": true, "completed_weeks": 0},
+      {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_10_2", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "preparation_tasks": [
+      {"name": "수능 업무 준비", "type": "준비업무", "description": "11월 수능 관련 업무 사전 준비", "id": "task_10_prep_1", "editable": true, "weeks": 2, "completed_weeks": 0}
+    ],
+    "special_tasks": [],
+    "custom_tasks": []
+  },
+  "11": {
+    "month_name": "11월",
+    "regular_tasks": [
+      {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_11_1", "editable": true, "completed_weeks": 0},
+      {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_11_2", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "special_tasks": [
+      {"name": "수능 업무", "type": "특별업무", "description": "11월 수능 관련 업무 (시험장 운영 등)", "id": "task_11_special_1", "editable": true, "weeks": 2, "completed_weeks": 0}
+    ],
+    "preparation_tasks": [
+      {"name": "학교평가 준비", "type": "준비업무", "description": "12월 학교평가 사전 준비", "id": "task_11_prep_1", "editable": true, "weeks": 2, "completed_weeks": 0}
+    ],
+    "custom_tasks": []
+  },
+  "12": {
+    "month_name": "12월",
+    "regular_tasks": [
+      {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_12_1", "editable": true, "completed_weeks": 0},
+      {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_12_2", "editable": true, "weeks": 1, "completed_weeks": 0}
+    ],
+    "special_tasks": [
+      {"name": "학교평가", "type": "특별업무", "description": "12월 학교평가 준비 및 실시", "id": "task_12_special_1", "editable": true, "weeks": 3, "completed_weeks": 0}
+    ],
+    "preparation_tasks": [],
+    "custom_tasks": []
+  }
 };
 
-// Global state
-let currentMonth = 1;
-let currentActiveTab = 'task-management';
-let currentAbsenceView = 'list';
-let taskStates = {};
-let editingTaskData = null;
-let editingAbsenceId = null;
-let taskIdCounter = 1000;
-let absenceIdCounter = 2;
-let undoStack = [];
-
-// Message system
-function showMessage(text, type = 'success') {
-    const container = document.getElementById('message-container');
-    const message = document.getElementById('message');
-    if (container && message) {
-        message.textContent = text;
-        message.className = `message ${type}`;
-        container.classList.remove('hidden');
-        
-        setTimeout(() => {
-            container.classList.add('hidden');
-        }, 3000);
-    }
-}
-
-// Confirmation dialog
-function showConfirmDialog(title, message, onConfirm, onCancel = null) {
-    const dialog = document.getElementById('confirm-dialog');
-    const titleEl = document.getElementById('confirm-title');
-    const messageEl = document.getElementById('confirm-message');
-    const okBtn = document.getElementById('confirm-ok-btn');
-    const cancelBtn = document.getElementById('confirm-cancel-btn');
-    
-    if (dialog && titleEl && messageEl && okBtn && cancelBtn) {
-        titleEl.textContent = title;
-        messageEl.textContent = message;
-        dialog.classList.remove('hidden');
-        
-        const handleOk = () => {
-            dialog.classList.add('hidden');
-            okBtn.removeEventListener('click', handleOk);
-            cancelBtn.removeEventListener('click', handleCancel);
-            if (onConfirm) onConfirm();
-        };
-        
-        const handleCancel = () => {
-            dialog.classList.add('hidden');
-            okBtn.removeEventListener('click', handleOk);
-            cancelBtn.removeEventListener('click', handleCancel);
-            if (onCancel) onCancel();
-        };
-        
-        okBtn.addEventListener('click', handleOk);
-        cancelBtn.addEventListener('click', handleCancel);
-    }
-}
-
-// Generate unique task ID
-function generateTaskId() {
-    return `custom_task_${Date.now()}_${taskIdCounter++}`;
-}
-
-// Initialize custom_tasks array for all months if not exists
-function initializeCustomTasks() {
-    for (let month = 1; month <= 12; month++) {
-        const monthStr = month.toString();
-        if (!appData.monthly_tasks[monthStr].custom_tasks) {
-            appData.monthly_tasks[monthStr].custom_tasks = [];
-        }
-    }
-}
-
-// Initialize task states
-function initializeTaskStates() {
-    for (let month = 1; month <= 12; month++) {
-        taskStates[month] = {};
-        const monthData = appData.monthly_tasks[month.toString()];
-        
-        // Initialize all task categories
-        ['regular_tasks', 'special_tasks', 'preparation_tasks', 'custom_tasks'].forEach(category => {
-            if (monthData[category]) {
-                monthData[category].forEach((task) => {
-                    const taskId = task.id;
-                    taskStates[month][taskId] = {
-                        completed: false,
-                        subtasks: {}
-                    };
-                    
-                    if (task.weeks) {
-                        for (let week = 1; week <= task.weeks; week++) {
-                            taskStates[month][taskId].subtasks[`week_${week}`] = false;
-                        }
-                    }
-                    
-                    if (task.steps) {
-                        task.steps.forEach((step, stepIndex) => {
-                            taskStates[month][taskId].subtasks[`step_${stepIndex}`] = false;
-                        });
-                    }
-                });
-            }
-        });
-    }
-}
-
-// Calculate progress for a specific month
-function calculateMonthProgress(month) {
-    const monthState = taskStates[month];
-    if (!monthState) return 0;
-    
-    let totalItems = 0;
-    let completedItems = 0;
-    
-    Object.keys(monthState).forEach(taskId => {
-        const task = monthState[taskId];
-        if (!task) return;
-        
-        const subtaskKeys = Object.keys(task.subtasks || {});
-        if (subtaskKeys.length > 0) {
-            subtaskKeys.forEach(subtaskKey => {
-                totalItems++;
-                if (task.subtasks[subtaskKey]) {
-                    completedItems++;
-                }
-            });
-        } else {
-            totalItems++;
-            if (task.completed) {
-                completedItems++;
-            }
-        }
-    });
-    
-    return totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
-}
-
-// Calculate overall progress
-function calculateOverallProgress() {
-    let totalProgress = 0;
-    for (let month = 1; month <= 12; month++) {
-        totalProgress += calculateMonthProgress(month);
-    }
-    return Math.round(totalProgress / 12);
-}
-
-// Update progress displays
-function updateProgress() {
-    const monthlyProgress = calculateMonthProgress(currentMonth);
-    const overallProgress = calculateOverallProgress();
-    
-    const monthlyFill = document.getElementById('monthly-progress-fill');
-    const monthlyText = document.getElementById('monthly-progress-text');
-    if (monthlyFill && monthlyText) {
-        monthlyFill.style.width = `${monthlyProgress}%`;
-        monthlyText.textContent = `${monthlyProgress}%`;
-    }
-    
-    const overallFill = document.getElementById('overall-progress-fill');
-    const overallText = document.getElementById('overall-progress-text');
-    if (overallFill && overallText) {
-        overallFill.style.width = `${overallProgress}%`;
-        overallText.textContent = `${overallProgress}%`;
-    }
-}
-
-// Toggle task completion
-function toggleTaskCompletion(month, taskId, subtaskKey = null) {
-    if (!taskStates[month] || !taskStates[month][taskId]) {
-        console.warn(`Task state not found: month ${month}, taskId ${taskId}`);
-        return;
-    }
-    
-    if (subtaskKey) {
-        taskStates[month][taskId].subtasks[subtaskKey] = !taskStates[month][taskId].subtasks[subtaskKey];
-        
-        const subtasks = taskStates[month][taskId].subtasks;
-        const subtaskKeys = Object.keys(subtasks);
-        const allCompleted = subtaskKeys.length > 0 && subtaskKeys.every(key => subtasks[key]);
-        taskStates[month][taskId].completed = allCompleted;
-    } else {
-        taskStates[month][taskId].completed = !taskStates[month][taskId].completed;
-        
-        if (taskStates[month][taskId].completed && Object.keys(taskStates[month][taskId].subtasks).length > 0) {
-            Object.keys(taskStates[month][taskId].subtasks).forEach(key => {
-                taskStates[month][taskId].subtasks[key] = true;
-            });
-        } else if (!taskStates[month][taskId].completed && Object.keys(taskStates[month][taskId].subtasks).length > 0) {
-            Object.keys(taskStates[month][taskId].subtasks).forEach(key => {
-                taskStates[month][taskId].subtasks[key] = false;
-            });
-        }
-    }
-    
-    renderTasks(currentMonth);
-    updateProgress();
-}
-
-// Find task by ID across all categories
-function findTaskById(month, taskId) {
-    const monthData = appData.monthly_tasks[month.toString()];
-    const categories = ['regular_tasks', 'special_tasks', 'preparation_tasks', 'custom_tasks'];
-    
-    for (const category of categories) {
-        if (monthData[category]) {
-            const task = monthData[category].find(t => t.id === taskId);
-            if (task) return { task, category };
-        }
-    }
-    return null;
-}
-
-// Enhanced delete task function with undo functionality
-function deleteTask(month, taskId) {
-    const result = findTaskById(month, taskId);
-    if (!result) {
-        showMessage('업무를 찾을 수 없습니다.', 'error');
-        return;
-    }
-    
-    const { task, category } = result;
-    
-    showConfirmDialog(
-        '업무 삭제',
-        `정말로 '${task.name}' 업무를 삭제하시겠습니까?`,
-        () => {
-            // Store undo information
-            const undoInfo = {
-                action: 'delete',
-                month: month,
-                taskId: taskId,
-                task: { ...task },
-                category: category,
-                taskState: { ...taskStates[month][taskId] },
-                timestamp: Date.now()
-            };
-            
-            // Remove from data
-            const monthData = appData.monthly_tasks[month.toString()];
-            const index = monthData[category].findIndex(t => t.id === taskId);
-            if (index !== -1) {
-                monthData[category].splice(index, 1);
-            }
-            
-            // Remove from task states
-            if (taskStates[month] && taskStates[month][taskId]) {
-                delete taskStates[month][taskId];
-            }
-            
-            // Add to undo stack
-            undoStack.push(undoInfo);
-            if (undoStack.length > 10) { // Keep only last 10 actions
-                undoStack.shift();
-            }
-            
-            renderTasks(currentMonth);
-            updateProgress();
-            showMessage('업무가 삭제되었습니다.', 'success');
-        }
-    );
-}
-
-// Enhanced edit task function
-function editTask(month, taskId) {
-    // Remove editing class from other tasks
-    document.querySelectorAll('.task-card.editing').forEach(card => {
-        card.classList.remove('editing');
-    });
-    
-    const result = findTaskById(month, taskId);
-    if (!result) {
-        showMessage('업무를 찾을 수 없습니다.', 'error');
-        return;
-    }
-    
-    const { task } = result;
-    
-    // Add editing class to current task
-    const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
-    if (taskCard) {
-        taskCard.classList.add('editing');
-    }
-    
-    // Find all months that have this task (by name and type)
-    const taskMonths = [];
-    for (let m = 1; m <= 12; m++) {
-        const monthData = appData.monthly_tasks[m.toString()];
-        ['regular_tasks', 'special_tasks', 'preparation_tasks', 'custom_tasks'].forEach(cat => {
-            if (monthData[cat]) {
-                const foundTask = monthData[cat].find(t => t.name === task.name && t.type === task.type);
-                if (foundTask) {
-                    taskMonths.push(m);
-                }
-            }
-        });
-    }
-    
-    editingTaskData = {
-        ...task,
-        originalId: taskId,
-        months: taskMonths.length > 0 ? taskMonths : [month]
+// 나머지 월들 초기화
+for(let i = 4; i <= 9; i++) {
+  if (!monthlyTasks[i]) {
+    monthlyTasks[i] = {
+      month_name: `${i}월`,
+      regular_tasks: [
+        {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": `task_${i}_1`, "editable": true, "completed_weeks": 0},
+        {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": `task_${i}_2`, "editable": true, "weeks": 1, "completed_weeks": 0}
+      ],
+      special_tasks: [],
+      preparation_tasks: [],
+      custom_tasks: []
     };
-    
-    openTaskModal(editingTaskData);
+  }
 }
 
-// Duplicate task to other months
-function duplicateTask(month, taskId) {
-    const result = findTaskById(month, taskId);
-    if (!result) {
-        showMessage('업무를 찾을 수 없습니다.', 'error');
-        return;
-    }
-    
-    const { task } = result;
-    
-    const duplicateData = {
-        ...task,
-        id: undefined, // Will be generated as new custom task
-        months: [month]
-    };
-    
-    openTaskModal(duplicateData);
-}
+const teachers = [
+  {"id": "T001", "name": "김영희", "subject": "국어", "grade": "1학년", "status": "정상근무"},
+  {"id": "T002", "name": "박민수", "subject": "수학", "grade": "2학년", "status": "정상근무"},
+  {"id": "T003", "name": "이정은", "subject": "영어", "grade": "3학년", "status": "정상근무"},
+  {"id": "T004", "name": "최수진", "subject": "과학", "grade": "1학년", "status": "정상근무"},
+  {"id": "T005", "name": "장기용", "subject": "사회", "grade": "2학년", "status": "정상근무"},
+  {"id": "T006", "name": "윤서연", "subject": "미술", "grade": "전학년", "status": "휴직중"},
+  {"id": "T007", "name": "한동민", "subject": "체육", "grade": "전학년", "status": "정상근무"},
+  {"id": "T008", "name": "정혜림", "subject": "음악", "grade": "전학년", "status": "정상근무"}
+];
 
-// Get task type CSS class
-function getTaskTypeClass(type) {
-    return type || 'default';
-}
+const substituteTeachers = [
+  {"id": "S001", "name": "강나연", "subjects": ["국어", "사회"], "available": true, "current_assignment": null},
+  {"id": "S002", "name": "임철호", "subjects": ["수학", "과학"], "available": true, "current_assignment": null},
+  {"id": "S003", "name": "송미경", "subjects": ["영어"], "available": true, "current_assignment": null},
+  {"id": "S004", "name": "오진석", "subjects": ["체육", "미술"], "available": false, "current_assignment": "T006"},
+  {"id": "S005", "name": "안소희", "subjects": ["음악", "미술"], "available": true, "current_assignment": null}
+];
 
-// Render tasks for a specific month
-function renderTasks(month) {
-    const monthData = appData.monthly_tasks[month.toString()];
-    const taskContent = document.getElementById('task-content');
-    
-    if (!monthData) {
-        taskContent.innerHTML = '<div class="no-data">해당 월의 업무 데이터가 없습니다.</div>';
-        return;
-    }
-    
-    let html = '';
-    
-    // Helper function to render task card
-    function renderTaskCard(task, taskId, sectionType = '') {
-        const taskState = taskStates[month][taskId];
-        if (!taskState) return '';
-        
-        const isCompleted = taskState.completed;
-        const isEditable = task.editable !== false;
-        
-        let cardHtml = `
-            <div class="task-card ${isCompleted ? 'completed' : ''}" data-task-id="${taskId}">
-                <div class="task-header">
-                    <div class="task-checkbox ${isCompleted ? 'checked' : ''}" 
-                         onclick="toggleTaskCompletion(${month}, '${taskId}')">
-                    </div>
-                    <h5 class="task-title">${task.name}</h5>
-                    <span class="task-type-badge task-type-${getTaskTypeClass(task.type)}">${task.type}</span>
-                </div>
-        `;
-        
-        if (task.description) {
-            cardHtml += `<p class="task-description">${task.description}</p>`;
-        }
-        
-        // Task actions for all tasks (not just custom ones)
-        cardHtml += `
-            <div class="task-actions">
-                <button class="btn-task-action btn-task-edit" 
-                        data-month="${month}" data-task="${taskId}" 
-                        onclick="editTask(${month}, '${taskId}')" 
-                        title="편집"></button>
-                <button class="btn-task-action btn-task-delete" 
-                        data-month="${month}" data-task="${taskId}" 
-                        onclick="deleteTask(${month}, '${taskId}')" 
-                        title="삭제"></button>
-                <button class="btn-task-action btn-task-duplicate" 
-                        data-month="${month}" data-task="${taskId}" 
-                        onclick="duplicateTask(${month}, '${taskId}')" 
-                        title="복제"></button>
-            </div>
-        `;
-        
-        // Weekly tasks
-        if (task.weeks) {
-            cardHtml += '<div class="weekly-checklist">';
-            for (let week = 1; week <= task.weeks; week++) {
-                const subtaskKey = `week_${week}`;
-                const isSubtaskCompleted = taskState.subtasks[subtaskKey];
-                cardHtml += `
-                    <div class="week-item">
-                        <div class="week-checkbox ${isSubtaskCompleted ? 'checked' : ''}" 
-                             onclick="toggleTaskCompletion(${month}, '${taskId}', '${subtaskKey}')">
-                        </div>
-                        <span class="week-label">${week}주차</span>
-                    </div>
-                `;
-            }
-            cardHtml += '</div>';
-        }
-        
-        // Contract steps
-        if (task.steps && task.steps.length > 0) {
-            cardHtml += '<div class="contract-steps">';
-            task.steps.forEach((step, stepIndex) => {
-                const subtaskKey = `step_${stepIndex}`;
-                const isSubtaskCompleted = taskState.subtasks[subtaskKey];
-                cardHtml += `
-                    <div class="contract-step ${isSubtaskCompleted ? 'completed' : ''}">
-                        <span class="step-number">${stepIndex + 1}</span>
-                        <div class="step-checkbox ${isSubtaskCompleted ? 'checked' : ''}" 
-                             onclick="toggleTaskCompletion(${month}, '${taskId}', '${subtaskKey}')">
-                        </div>
-                        <span class="step-label">${step}</span>
-                    </div>
-                `;
-            });
-            cardHtml += '</div>';
-        }
-        
-        cardHtml += '</div>';
-        return cardHtml;
-    }
-    
-    // Render different task categories
-    const categories = [
-        { key: 'regular_tasks', title: '정기 업무' },
-        { key: 'special_tasks', title: '특별 업무' },
-        { key: 'preparation_tasks', title: '준비 업무' },
-        { key: 'custom_tasks', title: '추가 업무' }
-    ];
-    
-    categories.forEach(category => {
-        const tasks = monthData[category.key];
-        if (tasks && tasks.length > 0) {
-            html += `
-                <div class="task-section">
-                    <h4>${category.title}</h4>
-                    ${tasks.map(task => renderTaskCard(task, task.id, category.key)).join('')}
-                </div>
-            `;
-        }
-    });
-    
-    if (!html) {
-        html = '<div class="no-data">이번 달에는 등록된 업무가 없습니다.</div>';
-    }
-    
-    taskContent.innerHTML = html;
-    
-    // Re-attach event listeners after rendering
-    setTimeout(() => {
-        addTaskEventListeners();
-    }, 10);
-}
+let absences = [
+  {
+    "id": "A001",
+    "teacher_id": "T006",
+    "teacher_name": "윤서연",
+    "absence_type": "육아휴직",
+    "start_date": "2025-11-01",
+    "end_date": "2026-01-31", 
+    "substitute_teacher_id": "S004",
+    "substitute_teacher_name": "오진석",
+    "status": "승인",
+    "reason": "만 8세 이하 자녀 양육을 위한 육아휴직 (교육공무원법 제44조 청원휴직)"
+  }
+];
 
-// Add event listeners to task elements
-function addTaskEventListeners() {
-    // Event listeners are handled by inline onclick handlers in the HTML
-    // This function is kept for potential future enhancements
-}
-
-// Switch to a different month for tasks
-function switchMonth(month) {
-    currentMonth = month;
-    
-    document.querySelectorAll('.month-tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    const activeTab = document.querySelector(`.month-tab[data-month="${month}"]`);
-    if (activeTab) {
-        activeTab.classList.add('active');
-    }
-    
-    const monthName = appData.monthly_tasks[month.toString()].month_name;
-    const monthlyTitle = document.getElementById('monthly-title');
-    if (monthlyTitle) {
-        monthlyTitle.textContent = `${monthName} 진척률`;
-    }
-    
-    renderTasks(month);
-    updateProgress();
-}
-
-// Switch main tabs
+// 메인 탭 전환 함수
 function switchMainTab(tabName) {
-    currentActiveTab = tabName;
+  console.log('Switching to tab:', tabName);
+  
+  // 모든 탭 버튼에서 active 클래스 제거
+  const tabButtons = document.querySelectorAll('.tab-button');
+  tabButtons.forEach(btn => btn.classList.remove('active'));
+  
+  // 모든 탭 콘텐츠에서 active 클래스 제거
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabContents.forEach(content => content.classList.remove('active'));
+  
+  // 선택된 탭 활성화
+  if (tabName === 'tasks') {
+    const tasksButton = document.querySelector('[onclick*="tasks"]');
+    const tasksSection = document.getElementById('tasks-section');
     
-    // Update tab buttons
-    document.querySelectorAll('.main-nav-tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
+    if (tasksButton) tasksButton.classList.add('active');
+    if (tasksSection) tasksSection.classList.add('active');
     
-    event.target.classList.add('active');
+    updateTasksView();
+  } else if (tabName === 'leave') {
+    const leaveButton = document.querySelector('[onclick*="leave"]');
+    const leaveSection = document.getElementById('leave-section');
     
-    // Show/hide tab content
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
+    if (leaveButton) leaveButton.classList.add('active');
+    if (leaveSection) leaveSection.classList.add('active');
     
-    document.getElementById(tabName).classList.add('active');
-    
-    // Initialize appropriate view
-    if (tabName === 'absence-management') {
-        renderAbsenceStats();
-        renderAbsenceView(currentAbsenceView);
-    }
+    updateLeaveView();
+  }
 }
 
-// Task Modal Functions
-function openTaskModal(editingTask = null) {
-    const modal = document.getElementById('task-modal');
-    if (!modal) return;
-    
-    const form = document.getElementById('task-form');
-    const title = document.getElementById('task-modal-title');
-    
-    if (editingTask) {
-        if (title) title.textContent = editingTask.originalId ? '업무 수정' : '업무 복제';
-        populateTaskForm(editingTask);
-    } else {
-        if (title) title.textContent = '업무 추가';
-        if (form) form.reset();
-        
-        // Set current month as default selected
-        const monthCheckboxes = document.querySelectorAll('.month-checkboxes input[type="checkbox"]');
-        monthCheckboxes.forEach(checkbox => {
-            checkbox.checked = parseInt(checkbox.value) === currentMonth;
-        });
-        
-        // Add default step
-        resetStepsContainer();
-    }
-    
-    updateTaskFormVisibility();
-    modal.classList.remove('hidden');
-    
-    // Focus on the first input
-    setTimeout(() => {
-        const firstInput = modal.querySelector('input, select, textarea');
-        if (firstInput) firstInput.focus();
-    }, 100);
+// 월별 탭 전환
+function switchMonth(month) {
+  console.log('Switching to month:', month);
+  currentMonth = month;
+  
+  // 월별 탭 업데이트
+  document.querySelectorAll('.month-tab').forEach(tab => tab.classList.remove('active'));
+  const monthTab = document.querySelector(`[onclick="switchMonth(${month})"]`);
+  if (monthTab) monthTab.classList.add('active');
+  
+  // 월별 제목 및 콘텐츠 업데이트
+  const monthlyTitle = document.getElementById('monthly-title');
+  if (monthlyTitle) monthlyTitle.textContent = `${month}월 진척률`;
+  
+  updateTasksView();
+  updateMonthlyProgress();
 }
 
-function closeTaskModal() {
-    const modal = document.getElementById('task-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-    
-    // Remove editing classes
-    document.querySelectorAll('.task-card.editing').forEach(card => {
-        card.classList.remove('editing');
-    });
-    
-    editingTaskData = null;
+// 뷰 전환 (목록/테이블/기간제교사)
+function switchView(viewName) {
+  currentView = viewName;
+  
+  // 뷰 탭 업데이트
+  document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
+  const viewTab = document.querySelector(`[onclick="switchView('${viewName}')"]`);
+  if (viewTab) viewTab.classList.add('active');
+  
+  // 뷰 콘텐츠 업데이트
+  document.querySelectorAll('.view-content').forEach(content => content.classList.remove('active'));
+  const viewContent = document.getElementById(`${viewName}-view`);
+  if (viewContent) viewContent.classList.add('active');
+  
+  updateLeaveView();
 }
 
-function populateTaskForm(task) {
-    const taskName = document.getElementById('task-name');
-    const taskType = document.getElementById('task-type');
-    const taskDescription = document.getElementById('task-description');
-    const weeksCount = document.getElementById('weeks-count');
-    
-    if (taskName) taskName.value = task.name || '';
-    if (taskType) taskType.value = task.type || '';
-    if (taskDescription) taskDescription.value = task.description || '';
-    if (weeksCount) weeksCount.value = task.weeks || 4;
-    
-    // Set month checkboxes
-    const monthCheckboxes = document.querySelectorAll('.month-checkboxes input[type="checkbox"]');
-    monthCheckboxes.forEach(checkbox => {
-        checkbox.checked = task.months ? task.months.includes(parseInt(checkbox.value)) : false;
-    });
-    
-    // Populate steps if exists
-    if (task.steps && task.steps.length > 0) {
-        populateStepsContainer(task.steps);
-    } else {
-        resetStepsContainer();
-    }
+// 단계별 완료/미완료 토글 (기간제교원 계약 업무용)
+function toggleStep(taskId, stepIndex) {
+  console.log('Toggling step:', taskId, stepIndex);
+  
+  const task = findTaskById(taskId);
+  if (!task || !task.steps) {
+    console.error('Task not found or has no steps:', taskId);
+    return;
+  }
+  
+  if (!task.completed_steps) {
+    task.completed_steps = [];
+  }
+  
+  const completedIndex = task.completed_steps.indexOf(stepIndex);
+  if (completedIndex > -1) {
+    // 이미 완료된 단계면 제거
+    task.completed_steps.splice(completedIndex, 1);
+  } else {
+    // 완료되지 않은 단계면 추가
+    task.completed_steps.push(stepIndex);
+  }
+  
+  console.log('Updated completed steps:', task.completed_steps);
+  
+  // UI 업데이트
+  updateTasksView();
+  updateMonthlyProgress();
+  updateAnnualProgress();
 }
 
-function resetStepsContainer() {
-    const stepsContainer = document.getElementById('steps-container');
-    if (stepsContainer) {
-        stepsContainer.innerHTML = `
-            <div class="step-input">
-                <input type="text" class="form-control step-text" placeholder="단계 설명을 입력하세요">
-                <button type="button" class="btn-remove-step" onclick="removeStep(this)">×</button>
-            </div>
-        `;
-    }
+// ID로 업무 찾기 - 개선된 버전
+function findTaskById(taskId) {
+  for (let month in monthlyTasks) {
+    const monthData = monthlyTasks[month];
+    const allTasks = [
+      ...(monthData.regular_tasks || []), 
+      ...(monthData.special_tasks || []), 
+      ...(monthData.preparation_tasks || []), 
+      ...(monthData.custom_tasks || [])
+    ];
+    const task = allTasks.find(t => t.id === taskId);
+    if (task) return task;
+  }
+  return null;
 }
 
-function populateStepsContainer(steps) {
-    const stepsContainer = document.getElementById('steps-container');
-    if (stepsContainer && steps) {
-        stepsContainer.innerHTML = steps.map(step => `
-            <div class="step-input">
-                <input type="text" class="form-control step-text" value="${step}" placeholder="단계 설명을 입력하세요">
-                <button type="button" class="btn-remove-step" onclick="removeStep(this)">×</button>
-            </div>
-        `).join('');
-    }
+// 업무 유형에 따른 필드 토글
+function toggleTaskTypeFields() {
+  const taskType = document.getElementById('task-type').value;
+  const weeksGroup = document.getElementById('weeks-group');
+  const stepsGroup = document.getElementById('steps-group');
+  
+  if (taskType === '정기업무' || taskType === '특별업무' || taskType === '준비업무') {
+    if (weeksGroup) weeksGroup.classList.remove('hidden');
+    if (stepsGroup) stepsGroup.classList.add('hidden');
+  } else if (taskType === '프로젝트업무') {
+    if (weeksGroup) weeksGroup.classList.add('hidden');
+    if (stepsGroup) stepsGroup.classList.remove('hidden');
+  } else {
+    if (weeksGroup) weeksGroup.classList.add('hidden');
+    if (stepsGroup) stepsGroup.classList.add('hidden');
+  }
 }
 
+// 단계 추가
 function addStep() {
-    const stepsContainer = document.getElementById('steps-container');
-    if (stepsContainer) {
-        const stepDiv = document.createElement('div');
-        stepDiv.className = 'step-input';
-        stepDiv.innerHTML = `
-            <input type="text" class="form-control step-text" placeholder="단계 설명을 입력하세요">
-            <button type="button" class="btn-remove-step" onclick="removeStep(this)">×</button>
-        `;
-        stepsContainer.appendChild(stepDiv);
+  const stepInput = document.querySelector('.step-input');
+  if (!stepInput) return;
+  
+  const stepText = stepInput.value.trim();
+  
+  if (!stepText) {
+    alert('단계를 입력해주세요.');
+    return;
+  }
+  
+  if (taskSteps.includes(stepText)) {
+    alert('이미 추가된 단계입니다.');
+    return;
+  }
+  
+  taskSteps.push(stepText);
+  stepInput.value = '';
+  updateStepsPreview();
+}
+
+// 단계 미리보기 업데이트
+function updateStepsPreview() {
+  const stepsList = document.getElementById('steps-list');
+  if (!stepsList) return;
+  
+  stepsList.innerHTML = '';
+  
+  taskSteps.forEach((step, index) => {
+    const stepItem = document.createElement('div');
+    stepItem.className = 'step-preview-item';
+    stepItem.innerHTML = `
+      <span class="step-preview-text">${step}</span>
+      <button type="button" class="step-remove-btn" onclick="removeStep(${index})">삭제</button>
+    `;
+    stepsList.appendChild(stepItem);
+  });
+}
+
+// 단계 삭제
+function removeStep(index) {
+  taskSteps.splice(index, 1);
+  updateStepsPreview();
+}
+
+// 업무 추가 모달 열기 - 수정된 버전
+function openTaskModal(taskId = null) {
+  console.log('Opening task modal:', taskId);
+  
+  editingTask = taskId;
+  taskSteps = []; // 단계 초기화
+  
+  const modal = document.getElementById('task-modal');
+  const title = document.getElementById('task-modal-title');
+  
+  if (!modal || !title) {
+    console.error('Modal elements not found');
+    return;
+  }
+  
+  // 모달 표시 - 새로운 방식 사용
+  modal.classList.remove('hidden');
+  modal.classList.add('show');
+  
+  if (taskId) {
+    title.textContent = '업무 편집';
+    // 편집할 업무 데이터 로드
+    const task = findTaskById(taskId);
+    if (task) {
+      const nameInput = document.getElementById('task-name');
+      const typeInput = document.getElementById('task-type');
+      const descriptionInput = document.getElementById('task-description');
+      const weeksInput = document.getElementById('task-weeks');
+      
+      if (nameInput) nameInput.value = task.name;
+      if (typeInput) {
+        typeInput.value = task.type;
+        toggleTaskTypeFields();
+      }
+      if (descriptionInput) descriptionInput.value = task.description || '';
+      if (weeksInput) weeksInput.value = task.weeks || 4;
+      
+      // 단계가 있는 경우 로드
+      if (task.steps) {
+        taskSteps = [...task.steps];
+        updateStepsPreview();
+      }
+      
+      // 월 선택은 편집 시 현재 월만 선택
+      const monthCheckboxes = document.querySelectorAll('input[name="task-months"]');
+      monthCheckboxes.forEach(checkbox => {
+        checkbox.checked = parseInt(checkbox.value) === currentMonth;
+      });
     }
-}
-
-function removeStep(button) {
-    const stepsContainer = document.getElementById('steps-container');
-    const stepInputs = stepsContainer.querySelectorAll('.step-input');
-    
-    if (stepInputs.length > 1) {
-        button.parentElement.remove();
-    }
-}
-
-function updateTaskFormVisibility() {
-    // This function can be used to show/hide form fields based on selections
-    // Currently not needed but kept for future enhancements
-}
-
-function handleTaskSubmit(event) {
-    event.preventDefault();
-    
-    const taskName = document.getElementById('task-name').value;
-    const taskType = document.getElementById('task-type').value;
-    const taskDescription = document.getElementById('task-description').value;
-    const weeksCount = parseInt(document.getElementById('weeks-count').value);
-    
-    // Get selected months
-    const selectedMonths = [];
-    document.querySelectorAll('.month-checkboxes input[type="checkbox"]:checked').forEach(checkbox => {
-        selectedMonths.push(parseInt(checkbox.value));
-    });
-    
-    // Get steps
-    const steps = [];
-    document.querySelectorAll('.step-text').forEach(input => {
-        if (input.value.trim()) {
-            steps.push(input.value.trim());
-        }
-    });
-    
-    if (!taskName.trim()) {
-        showMessage('업무명을 입력해주세요.', 'error');
-        return;
-    }
-    
-    if (!taskType) {
-        showMessage('업무 유형을 선택해주세요.', 'error');
-        return;
-    }
-    
-    if (selectedMonths.length === 0) {
-        showMessage('최소 한 개의 월을 선택해주세요.', 'error');
-        return;
-    }
-    
-    const taskData = {
-        name: taskName.trim(),
-        type: taskType,
-        description: taskDescription.trim(),
-        weeks: weeksCount,
-        editable: true
-    };
-    
-    if (steps.length > 0) {
-        taskData.steps = steps;
-        delete taskData.weeks; // Use steps instead of weeks
-    }
-    
-    if (editingTaskData && editingTaskData.originalId) {
-        // Update existing task
-        updateExistingTask(editingTaskData.originalId, taskData, selectedMonths);
-        showMessage('업무가 수정되었습니다.', 'success');
-    } else {
-        // Add new task
-        selectedMonths.forEach(month => {
-            const monthStr = month.toString();
-            if (!appData.monthly_tasks[monthStr].custom_tasks) {
-                appData.monthly_tasks[monthStr].custom_tasks = [];
-            }
-            
-            const newTaskData = {
-                ...taskData,
-                id: generateTaskId()
-            };
-            
-            appData.monthly_tasks[monthStr].custom_tasks.push(newTaskData);
-            
-            // Initialize task state
-            if (!taskStates[month]) taskStates[month] = {};
-            taskStates[month][newTaskData.id] = {
-                completed: false,
-                subtasks: {}
-            };
-            
-            if (newTaskData.weeks) {
-                for (let week = 1; week <= newTaskData.weeks; week++) {
-                    taskStates[month][newTaskData.id].subtasks[`week_${week}`] = false;
-                }
-            }
-            
-            if (newTaskData.steps) {
-                newTaskData.steps.forEach((step, stepIndex) => {
-                    taskStates[month][newTaskData.id].subtasks[`step_${stepIndex}`] = false;
-                });
-            }
-        });
-        
-        showMessage('업무가 추가되었습니다.', 'success');
-    }
-    
-    closeTaskModal();
-    renderTasks(currentMonth);
-    updateProgress();
-}
-
-function updateExistingTask(taskId, newTaskData, selectedMonths) {
-    // Remove task from all months first
-    for (let month = 1; month <= 12; month++) {
-        removeTaskFromData(taskId, month);
-    }
-    
-    // Add to selected months
-    selectedMonths.forEach(month => {
-        const monthStr = month.toString();
-        if (!appData.monthly_tasks[monthStr].custom_tasks) {
-            appData.monthly_tasks[monthStr].custom_tasks = [];
-        }
-        
-        const updatedTaskData = {
-            ...newTaskData,
-            id: taskId
-        };
-        
-        appData.monthly_tasks[monthStr].custom_tasks.push(updatedTaskData);
-        
-        // Update task state
-        if (!taskStates[month]) taskStates[month] = {};
-        if (!taskStates[month][taskId]) {
-            taskStates[month][taskId] = {
-                completed: false,
-                subtasks: {}
-            };
-        }
-        
-        // Clear existing subtasks and create new ones
-        taskStates[month][taskId].subtasks = {};
-        
-        if (updatedTaskData.weeks) {
-            for (let week = 1; week <= updatedTaskData.weeks; week++) {
-                taskStates[month][taskId].subtasks[`week_${week}`] = false;
-            }
-        }
-        
-        if (updatedTaskData.steps) {
-            updatedTaskData.steps.forEach((step, stepIndex) => {
-                taskStates[month][taskId].subtasks[`step_${stepIndex}`] = false;
-            });
-        }
-    });
-}
-
-function removeTaskFromData(taskId, month) {
-    const monthData = appData.monthly_tasks[month.toString()];
-    const categories = ['regular_tasks', 'special_tasks', 'preparation_tasks', 'custom_tasks'];
-    
-    categories.forEach(category => {
-        if (monthData[category]) {
-            const index = monthData[category].findIndex(t => t.id === taskId);
-            if (index !== -1) {
-                monthData[category].splice(index, 1);
-            }
-        }
-    });
-    
-    // Also remove from task states
-    if (taskStates[month] && taskStates[month][taskId]) {
-        delete taskStates[month][taskId];
-    }
-}
-
-// Absence Management Functions
-function renderAbsenceStats() {
-    const totalTeachers = appData.teachers.length;
-    const currentAbsence = appData.teachers.filter(t => t.status === '휴직중').length;
-    const pendingAbsence = appData.absences.filter(a => a.status === '대기').length;
-    const availableSubstitutes = appData.substitute_teachers.filter(s => s.available).length;
-    
-    document.getElementById('total-teachers').textContent = totalTeachers;
-    document.getElementById('current-absence').textContent = currentAbsence;
-    document.getElementById('pending-absence').textContent = pendingAbsence;
-    document.getElementById('available-substitutes').textContent = availableSubstitutes;
-}
-
-function switchAbsenceView(viewName) {
-    currentAbsenceView = viewName;
-    
-    // Update view buttons
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    
-    // Show/hide views
-    document.querySelectorAll('.absence-view').forEach(view => {
-        view.classList.remove('active');
-    });
-    document.getElementById(`${viewName}-view`).classList.add('active');
-    
-    renderAbsenceView(viewName);
-}
-
-function renderAbsenceView(viewName) {
-    switch (viewName) {
-        case 'list':
-            renderAbsenceList();
-            break;
-        case 'table':
-            renderAbsenceTable();
-            break;
-        case 'substitutes':
-            renderSubstitutes();
-            break;
-    }
-}
-
-function renderAbsenceList() {
-    const absenceList = document.getElementById('absence-list');
-    
-    if (appData.absences.length === 0) {
-        absenceList.innerHTML = '<div class="no-data">현재 등록된 휴직이 없습니다.</div>';
-        return;
-    }
-    
-    let html = '';
-    appData.absences.forEach(absence => {
-        html += `
-            <div class="absence-item">
-                <div class="absence-header">
-                    <div class="absence-info">
-                        <h4>${absence.teacher_name}</h4>
-                        <span class="absence-type ${absence.absence_type}">${absence.absence_type}</span>
-                    </div>
-                    <div class="absence-actions">
-                        <button class="btn btn--sm btn--secondary" onclick="editAbsence('${absence.id}')">편집</button>
-                        <button class="btn btn--sm btn--outline" onclick="deleteAbsence('${absence.id}')">삭제</button>
-                    </div>
-                </div>
-                <div class="absence-details">
-                    <p><strong>휴직기간:</strong> ${absence.start_date} ~ ${absence.end_date || '미정'}</p>
-                    <p><strong>대체교사:</strong> ${absence.substitute_teacher_name || '미지정'}</p>
-                    <p><strong>승인상태:</strong> <span class="status status--${absence.status === '승인' ? 'success' : absence.status === '대기' ? 'warning' : 'error'}">${absence.status}</span></p>
-                    <p><strong>사유:</strong> ${absence.reason}</p>
-                </div>
-            </div>
-        `;
-    });
-    
-    absenceList.innerHTML = html;
-}
-
-function renderAbsenceTable() {
-    const tableBody = document.getElementById('absence-table-body');
-    
-    let html = '';
-    appData.teachers.forEach(teacher => {
-        const absence = appData.absences.find(a => a.teacher_id === teacher.id);
-        
-        html += `
-            <tr>
-                <td>${teacher.name}</td>
-                <td>${teacher.subject}</td>
-                <td>${teacher.grade}</td>
-                <td>${absence ? absence.absence_type : '-'}</td>
-                <td>${absence ? `${absence.start_date} ~ ${absence.end_date || '미정'}` : '-'}</td>
-                <td>${absence?.substitute_teacher_name || '-'}</td>
-                <td><span class="teacher-status ${teacher.status}">${teacher.status}</span></td>
-                <td>
-                    ${absence ? `
-                        <button class="btn btn--sm btn--secondary" onclick="editAbsence('${absence.id}')">편집</button>
-                        <button class="btn btn--sm btn--outline" onclick="deleteAbsence('${absence.id}')">삭제</button>
-                    ` : `
-                        <button class="btn btn--sm btn--primary" onclick="openAbsenceModal('${teacher.id}')">휴직신청</button>
-                    `}
-                </td>
-            </tr>
-        `;
-    });
-    
-    tableBody.innerHTML = html;
-}
-
-function renderSubstitutes() {
-    const substitutesGrid = document.getElementById('substitutes-grid');
-    
-    let html = '';
-    appData.substitute_teachers.forEach(substitute => {
-        const assignment = substitute.current_assignment ? 
-            appData.teachers.find(t => t.id === substitute.current_assignment) : null;
-        
-        html += `
-            <div class="substitute-card ${substitute.available ? 'available' : 'busy'}">
-                <div class="substitute-header">
-                    <h4 class="substitute-name">${substitute.name}</h4>
-                    <span class="availability-badge ${substitute.available ? 'available' : 'busy'}">
-                        ${substitute.available ? '가용' : '배정중'}
-                    </span>
-                </div>
-                <p class="substitute-subjects"><strong>담당과목:</strong> ${substitute.subjects.join(', ')}</p>
-                ${assignment ? `<p class="current-assignment"><strong>현재배정:</strong> ${assignment.name} 교사 대체</p>` : ''}
-            </div>
-        `;
-    });
-    
-    substitutesGrid.innerHTML = html;
-}
-
-// Absence Modal Functions
-function openAbsenceModal(teacherId = null) {
-    const modal = document.getElementById('absence-modal');
-    if (!modal) return;
-    
-    const form = document.getElementById('absence-form');
-    const title = document.getElementById('absence-modal-title');
-    
+  } else {
+    title.textContent = '업무 추가';
+    const form = document.getElementById('task-form');
     if (form) form.reset();
-    if (title) title.textContent = '휴직 신청';
     
-    if (teacherId) {
-        const teacher = appData.teachers.find(t => t.id === teacherId);
-        if (teacher) {
-            document.getElementById('absence-teacher').value = teacher.name;
-        }
-    }
+    // 현재 월을 기본 선택
+    const monthCheckboxes = document.querySelectorAll('input[name="task-months"]');
+    monthCheckboxes.forEach(checkbox => {
+      checkbox.checked = parseInt(checkbox.value) === currentMonth;
+    });
     
-    modal.classList.remove('hidden');
+    toggleTaskTypeFields();
+    updateStepsPreview();
+  }
+  
+  console.log('Modal should be visible now');
 }
 
-function closeAbsenceModal() {
-    const modal = document.getElementById('absence-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
-    editingAbsenceId = null;
+// 업무 추가 모달 닫기 - 수정된 버전
+function closeTaskModal() {
+  const modal = document.getElementById('task-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('show');
+  }
+  editingTask = null;
+  taskSteps = [];
 }
 
-function handleAbsenceSubmit(event) {
-    event.preventDefault();
-    
-    const teacherName = document.getElementById('absence-teacher').value;
-    const absenceType = document.getElementById('absence-type').value;
-    const startDate = document.getElementById('absence-start').value;
-    const endDate = document.getElementById('absence-end').value;
-    const substituteTeacher = document.getElementById('absence-substitute').value;
-    const reason = document.getElementById('absence-reason').value;
-    const status = document.getElementById('absence-status').value;
-    
-    if (!teacherName || !absenceType || !startDate || !reason) {
-        showMessage('필수 항목을 모두 입력해주세요.', 'error');
-        return;
+// 휴직 신청 모달 열기 - 수정된 버전
+function openLeaveModal(leaveId = null) {
+  console.log('Opening leave modal:', leaveId);
+  
+  editingLeave = leaveId;
+  const modal = document.getElementById('leave-modal');
+  const title = document.getElementById('leave-modal-title');
+  
+  if (!modal || !title) {
+    console.error('Leave modal elements not found');
+    return;
+  }
+  
+  // 모달 표시 - 새로운 방식 사용
+  modal.classList.remove('hidden');
+  modal.classList.add('show');
+  
+  // 교사 목록 업데이트
+  updateTeacherOptions();
+  updateSubstituteOptions();
+  
+  if (leaveId) {
+    title.textContent = '휴직 편집';
+    // 편집할 휴직 데이터 로드
+    const leave = absences.find(a => a.id === leaveId);
+    if (leave) {
+      const teacherSelect = document.getElementById('leave-teacher');
+      const typeSelect = document.getElementById('leave-type');
+      const startInput = document.getElementById('leave-start-date');
+      const endInput = document.getElementById('leave-end-date');
+      const substituteSelect = document.getElementById('leave-substitute');
+      const reasonInput = document.getElementById('leave-reason');
+      
+      if (teacherSelect) teacherSelect.value = leave.teacher_id;
+      if (typeSelect) typeSelect.value = leave.absence_type;
+      if (startInput) startInput.value = leave.start_date;
+      if (endInput) endInput.value = leave.end_date;
+      if (substituteSelect) substituteSelect.value = leave.substitute_teacher_id || '';
+      if (reasonInput) reasonInput.value = leave.reason;
     }
-    
-    const teacher = appData.teachers.find(t => t.name === teacherName);
-    if (!teacher) {
-        showMessage('해당 교사를 찾을 수 없습니다.', 'error');
-        return;
+  } else {
+    title.textContent = '휴직 신청';
+    const form = document.getElementById('leave-form');
+    if (form) form.reset();
+  }
+}
+
+// 휴직 신청 모달 닫기 - 수정된 버전
+function closeLeaveModal() {
+  const modal = document.getElementById('leave-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('show');
+  }
+  editingLeave = null;
+}
+
+// 업무 저장
+function saveTask() {
+  const nameInput = document.getElementById('task-name');
+  const typeInput = document.getElementById('task-type');
+  const descriptionInput = document.getElementById('task-description');
+  const weeksInput = document.getElementById('task-weeks');
+  const monthCheckboxes = document.querySelectorAll('input[name="task-months"]:checked');
+  
+  if (!nameInput || !typeInput) {
+    alert('필수 입력 필드를 찾을 수 없습니다.');
+    return;
+  }
+  
+  const name = nameInput.value.trim();
+  const type = typeInput.value;
+  const description = descriptionInput ? descriptionInput.value.trim() : '';
+  const weeks = weeksInput ? parseInt(weeksInput.value) : 4;
+  
+  if (!name) {
+    alert('업무명을 입력해주세요.');
+    return;
+  }
+  
+  if (monthCheckboxes.length === 0) {
+    alert('최소 1개월은 선택해주세요.');
+    return;
+  }
+  
+  // 프로젝트업무인데 단계가 없는 경우
+  if (type === '프로젝트업무' && taskSteps.length === 0) {
+    alert('프로젝트업무는 최소 1개의 단계가 필요합니다.');
+    return;
+  }
+  
+  const selectedMonths = Array.from(monthCheckboxes).map(cb => parseInt(cb.value));
+  
+  const taskData = {
+    name: name,
+    type: type,
+    description: description,
+    editable: true
+  };
+  
+  // 업무 유형에 따른 추가 데이터 설정
+  if (type === '정기업무' || type === '특별업무' || type === '준비업무') {
+    taskData.weeks = weeks;
+    taskData.completed_weeks = 0;
+  } else if (type === '프로젝트업무') {
+    taskData.steps = [...taskSteps];
+    taskData.completed_steps = [];
+  }
+  
+  if (editingTask) {
+    // 기존 업무 편집 (현재 월에서만)
+    const task = findTaskById(editingTask);
+    if (task) {
+      Object.assign(task, taskData);
+      task.id = editingTask; // ID 유지
     }
-    
-    const absenceData = {
-        id: `A${String(absenceIdCounter++).padStart(3, '0')}`,
-        teacher_id: teacher.id,
-        teacher_name: teacherName,
-        absence_type: absenceType,
-        start_date: startDate,
-        end_date: endDate,
-        substitute_teacher_name: substituteTeacher,
-        status: status,
-        reason: reason,
-        approval_date: status === '승인' ? new Date().toISOString().split('T')[0] : null
-    };
-    
-    if (editingAbsenceId) {
-        // Update existing absence
-        const index = appData.absences.findIndex(a => a.id === editingAbsenceId);
-        if (index !== -1) {
-            appData.absences[index] = { ...appData.absences[index], ...absenceData, id: editingAbsenceId };
+  } else {
+    // 새 업무 추가 (선택된 모든 월에)
+    selectedMonths.forEach(month => {
+      const newTask = {
+        ...taskData,
+        id: `custom_${month}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      };
+      
+      if (!monthlyTasks[month].custom_tasks) {
+        monthlyTasks[month].custom_tasks = [];
+      }
+      monthlyTasks[month].custom_tasks.push(newTask);
+    });
+  }
+  
+  closeTaskModal();
+  updateTasksView();
+  updateMonthlyProgress();
+  updateAnnualProgress();
+}
+
+// 휴직 저장
+function saveLeave() {
+  const teacherSelect = document.getElementById('leave-teacher');
+  const typeSelect = document.getElementById('leave-type');
+  const startInput = document.getElementById('leave-start-date');
+  const endInput = document.getElementById('leave-end-date');
+  const substituteSelect = document.getElementById('leave-substitute');
+  const reasonInput = document.getElementById('leave-reason');
+  
+  if (!teacherSelect || !typeSelect || !startInput || !endInput || !reasonInput) {
+    alert('필수 입력 필드를 찾을 수 없습니다.');
+    return;
+  }
+  
+  const teacherId = teacherSelect.value;
+  const type = typeSelect.value;
+  const startDate = startInput.value;
+  const endDate = endInput.value;
+  const substituteId = substituteSelect ? substituteSelect.value : '';
+  const reason = reasonInput.value.trim();
+  
+  if (!teacherId || !type || !startDate || !endDate || !reason) {
+    alert('모든 필수 항목을 입력해주세요.');
+    return;
+  }
+  
+  const teacher = teachers.find(t => t.id === teacherId);
+  const substitute = substituteTeachers.find(s => s.id === substituteId);
+  
+  const leaveData = {
+    id: editingLeave || `A${Date.now()}`,
+    teacher_id: teacherId,
+    teacher_name: teacher.name,
+    absence_type: type,
+    start_date: startDate,
+    end_date: endDate,
+    substitute_teacher_id: substituteId || null,
+    substitute_teacher_name: substitute ? substitute.name : null,
+    status: '승인',
+    reason: reason
+  };
+  
+  if (editingLeave) {
+    // 기존 휴직 편집
+    const index = absences.findIndex(a => a.id === editingLeave);
+    if (index !== -1) {
+      // 기존 대체교사 상태 복원
+      const oldLeave = absences[index];
+      if (oldLeave.substitute_teacher_id) {
+        const oldSubstitute = substituteTeachers.find(s => s.id === oldLeave.substitute_teacher_id);
+        if (oldSubstitute) {
+          oldSubstitute.available = true;
+          oldSubstitute.current_assignment = null;
         }
-        showMessage('휴직 정보가 수정되었습니다.', 'success');
+      }
+      
+      absences[index] = leaveData;
+    }
+  } else {
+    // 새 휴직 추가
+    absences.push(leaveData);
+  }
+  
+  // 교사 상태 업데이트
+  teacher.status = '휴직중';
+  
+  // 대체교사 상태 업데이트
+  if (substitute) {
+    substitute.available = false;
+    substitute.current_assignment = teacherId;
+  }
+  
+  closeLeaveModal();
+  updateLeaveView();
+  updateLeaveSummary();
+}
+
+// 업무 삭제
+function deleteTask(taskId) {
+  if (!confirm('이 업무를 삭제하시겠습니까?')) return;
+  
+  for (let month in monthlyTasks) {
+    const monthData = monthlyTasks[month];
+    let tasks = monthData.custom_tasks || [];
+    const index = tasks.findIndex(t => t.id === taskId);
+    if (index !== -1) {
+      tasks.splice(index, 1);
+      break;
+    }
+  }
+  
+  updateTasksView();
+  updateMonthlyProgress();
+  updateAnnualProgress();
+}
+
+// 업무 복제
+function duplicateTask(taskId) {
+  const task = findTaskById(taskId);
+  if (!task) return;
+  
+  const newTask = {
+    ...task,
+    id: `custom_${currentMonth}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    name: `${task.name} (복사본)`,
+    completed_weeks: 0,
+    completed_steps: []
+  };
+  
+  if (!monthlyTasks[currentMonth].custom_tasks) {
+    monthlyTasks[currentMonth].custom_tasks = [];
+  }
+  monthlyTasks[currentMonth].custom_tasks.push(newTask);
+  
+  updateTasksView();
+  updateMonthlyProgress();
+  updateAnnualProgress();
+}
+
+// 휴직 삭제
+function deleteLeave(leaveId) {
+  if (!confirm('이 휴직 정보를 삭제하시겠습니까?')) return;
+  
+  const leave = absences.find(a => a.id === leaveId);
+  if (leave) {
+    // 교사 상태 복원
+    const teacher = teachers.find(t => t.id === leave.teacher_id);
+    if (teacher) {
+      teacher.status = '정상근무';
+    }
+    
+    // 대체교사 상태 복원
+    if (leave.substitute_teacher_id) {
+      const substitute = substituteTeachers.find(s => s.id === leave.substitute_teacher_id);
+      if (substitute) {
+        substitute.available = true;
+        substitute.current_assignment = null;
+      }
+    }
+    
+    // 휴직 정보 삭제
+    const index = absences.findIndex(a => a.id === leaveId);
+    absences.splice(index, 1);
+  }
+  
+  updateLeaveView();
+  updateLeaveSummary();
+}
+
+// 업무 완료 상태 변경
+function toggleTaskCompletion(taskId, type, index = null) {
+  const task = findTaskById(taskId);
+  if (!task) return;
+  
+  if (type === 'week') {
+    if (index !== null) {
+      task.completed_weeks = task.completed_weeks || 0;
+      const checkbox = document.querySelector(`input[data-task="${taskId}"][data-week="${index}"]`);
+      if (checkbox && checkbox.checked) {
+        task.completed_weeks++;
+      } else {
+        task.completed_weeks--;
+      }
+      task.completed_weeks = Math.max(0, Math.min(task.weeks, task.completed_weeks));
+    }
+  } else if (type === 'step') {
+    if (!task.completed_steps) task.completed_steps = [];
+    if (index !== null) {
+      const stepIndex = task.completed_steps.indexOf(index);
+      if (stepIndex === -1) {
+        task.completed_steps.push(index);
+      } else {
+        task.completed_steps.splice(stepIndex, 1);
+      }
+    }
+  }
+  
+  updateTasksView();
+  updateMonthlyProgress();
+  updateAnnualProgress();
+}
+
+// 업무 뷰 업데이트
+function updateTasksView() {
+  console.log('Updating tasks view for month:', currentMonth);
+  
+  const container = document.getElementById('tasks-container');
+  if (!container) {
+    console.error('Tasks container not found');
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  const monthData = monthlyTasks[currentMonth];
+  if (!monthData) {
+    console.error('Month data not found for month:', currentMonth);
+    return;
+  }
+  
+  const allTasks = [
+    ...(monthData.regular_tasks || []), 
+    ...(monthData.special_tasks || []), 
+    ...(monthData.preparation_tasks || []), 
+    ...(monthData.custom_tasks || [])
+  ];
+  
+  console.log('All tasks for month', currentMonth, ':', allTasks);
+  
+  if (allTasks.length === 0) {
+    container.innerHTML = '<div class="card"><div class="card__body"><p>이 달에는 등록된 업무가 없습니다.</p></div></div>';
+    return;
+  }
+  
+  allTasks.forEach(task => {
+    const taskCard = createTaskCard(task);
+    container.appendChild(taskCard);
+  });
+  
+  console.log('Tasks view updated successfully');
+}
+
+// 업무 카드 생성 - 기간제교원 계약 단계 완전 지원
+function createTaskCard(task) {
+  console.log('Creating task card for:', task.name, 'Type:', task.type);
+  
+  const card = document.createElement('div');
+  card.className = 'task-card';
+  
+  const isCompleted = isTaskCompleted(task);
+  if (isCompleted) {
+    card.classList.add('completed');
+  }
+  
+  let progressContent = '';
+  
+  if (task.type === '정기업무' || task.type === '특별업무' || task.type === '준비업무') {
+    if (task.weeks) {
+      const completedWeeks = task.completed_weeks || 0;
+      const progressPercent = (completedWeeks / task.weeks) * 100;
+      
+      progressContent = `
+        <div class="task-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${progressPercent}%"></div>
+          </div>
+          <div class="week-checkboxes">
+            ${Array.from({length: task.weeks}, (_, i) => `
+              <label class="week-checkbox">
+                <input type="checkbox" data-task="${task.id}" data-week="${i}" 
+                       ${completedWeeks > i ? 'checked' : ''} 
+                       onchange="toggleTaskCompletion('${task.id}', 'week', ${i})">
+                ${i + 1}주차
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+  } else if (task.type === '프로젝트업무' && task.steps) {
+    console.log('Creating project task card with steps:', task.steps);
+    
+    const completedSteps = task.completed_steps || [];
+    const progressPercent = (completedSteps.length / task.steps.length) * 100;
+    
+    progressContent = `
+      <div class="task-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${progressPercent}%"></div>
+        </div>
+        <div class="contract-steps">
+          <h5>작업 단계 (${completedSteps.length}/${task.steps.length}):</h5>
+          ${task.steps.map((step, index) => `
+            <div class="contract-step ${completedSteps.includes(index) ? 'completed' : ''}">
+              <div class="step-number">${index + 1}</div>
+              <div class="step-checkbox ${completedSteps.includes(index) ? 'checked' : ''}" 
+                   onclick="toggleStep('${task.id}', ${index})"></div>
+              <span class="step-label">${step}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+  
+  card.innerHTML = `
+    <div class="task-header">
+      <input type="checkbox" class="task-checkbox" ${isCompleted ? 'checked' : ''} readonly>
+      <div class="task-info">
+        <h4 class="task-name">${task.name}</h4>
+        <span class="task-type">${task.type}</span>
+        ${task.description ? `<p class="task-description">${task.description}</p>` : ''}
+      </div>
+    </div>
+    ${progressContent}
+    ${task.editable ? `
+      <div class="task-actions">
+        <button class="task-action-btn" onclick="openTaskModal('${task.id}')">편집</button>
+        <button class="task-action-btn" onclick="duplicateTask('${task.id}')">복제</button>
+        ${task.id.includes('custom_') ? `<button class="task-action-btn" onclick="deleteTask('${task.id}')">삭제</button>` : ''}
+      </div>
+    ` : ''}
+  `;
+  
+  return card;
+}
+
+// 업무 완료 여부 확인
+function isTaskCompleted(task) {
+  if ((task.type === '정기업무' || task.type === '특별업무' || task.type === '준비업무') && task.weeks) {
+    return (task.completed_weeks || 0) >= task.weeks;
+  } else if (task.type === '프로젝트업무' && task.steps) {
+    const completedSteps = task.completed_steps || [];
+    return completedSteps.length >= task.steps.length;
+  }
+  return false;
+}
+
+// 월별 진척률 업데이트
+function updateMonthlyProgress() {
+  const monthData = monthlyTasks[currentMonth];
+  if (!monthData) return;
+  
+  const allTasks = [
+    ...(monthData.regular_tasks || []), 
+    ...(monthData.special_tasks || []), 
+    ...(monthData.preparation_tasks || []), 
+    ...(monthData.custom_tasks || [])
+  ];
+  const completedTasks = allTasks.filter(task => isTaskCompleted(task));
+  
+  const progressPercent = allTasks.length > 0 ? (completedTasks.length / allTasks.length) * 100 : 0;
+  
+  const progressBar = document.getElementById('monthly-progress');
+  const progressText = document.getElementById('monthly-progress-text');
+  
+  if (progressBar) progressBar.style.width = `${progressPercent}%`;
+  if (progressText) progressText.textContent = `${Math.round(progressPercent)}%`;
+}
+
+// 연간 진척률 업데이트
+function updateAnnualProgress() {
+  let totalTasks = 0;
+  let completedTasks = 0;
+  
+  for (let month in monthlyTasks) {
+    const monthData = monthlyTasks[month];
+    const allTasks = [
+      ...(monthData.regular_tasks || []), 
+      ...(monthData.special_tasks || []), 
+      ...(monthData.preparation_tasks || []), 
+      ...(monthData.custom_tasks || [])
+    ];
+    totalTasks += allTasks.length;
+    completedTasks += allTasks.filter(task => isTaskCompleted(task)).length;
+  }
+  
+  const progressPercent = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+  
+  const progressBar = document.getElementById('annual-progress');
+  const progressText = document.getElementById('annual-progress-text');
+  
+  if (progressBar) progressBar.style.width = `${progressPercent}%`;
+  if (progressText) progressText.textContent = `${Math.round(progressPercent)}%`;
+}
+
+// 휴직 관리 뷰 업데이트
+function updateLeaveView() {
+  updateLeaveSummary();
+  
+  if (currentView === 'list') {
+    updateTeachersList();
+  } else if (currentView === 'table') {
+    updateTeachersTable();
+  } else if (currentView === 'substitute') {
+    updateSubstituteList();
+  }
+}
+
+// 휴직 현황 요약 업데이트
+function updateLeaveSummary() {
+  const totalTeachers = teachers.length;
+  const onLeave = teachers.filter(t => t.status === '휴직중').length;
+  const pending = 0;
+  const availableSubstitutes = substituteTeachers.filter(s => s.available).length;
+  
+  const totalElement = document.getElementById('total-teachers');
+  const onLeaveElement = document.getElementById('current-on-leave');
+  const pendingElement = document.getElementById('pending-applications');
+  const availableElement = document.getElementById('available-substitutes');
+  
+  if (totalElement) totalElement.textContent = totalTeachers;
+  if (onLeaveElement) onLeaveElement.textContent = onLeave;
+  if (pendingElement) pendingElement.textContent = pending;
+  if (availableElement) availableElement.textContent = availableSubstitutes;
+}
+
+// 교사 목록 업데이트 (목록 뷰)
+function updateTeachersList() {
+  const container = document.getElementById('teachers-list');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  teachers.forEach(teacher => {
+    const card = document.createElement('div');
+    card.className = 'teacher-card';
+    
+    const absence = absences.find(a => a.teacher_id === teacher.id);
+    let statusInfo = '';
+    
+    if (teacher.status === '휴직중' && absence) {
+      statusInfo = `
+        <div class="teacher-status">
+          <span class="status status--warning">${absence.absence_type}</span>
+          <div class="teacher-details">
+            ${absence.start_date} ~ ${absence.end_date}
+            ${absence.substitute_teacher_name ? `<br>대체: ${absence.substitute_teacher_name}` : ''}
+          </div>
+        </div>
+      `;
     } else {
-        // Add new absence
-        appData.absences.push(absenceData);
-        
-        // Update teacher status
-        teacher.status = status === '승인' ? '휴직중' : '정상근무';
-        
-        // Update substitute teacher availability
-        if (substituteTeacher && status === '승인') {
-            const substitute = appData.substitute_teachers.find(s => s.name === substituteTeacher);
-            if (substitute) {
-                substitute.available = false;
-                substitute.current_assignment = teacher.id;
-            }
-        }
-        
-        showMessage('휴직 신청이 추가되었습니다.', 'success');
+      statusInfo = `
+        <div class="teacher-status">
+          <span class="status status--success">${teacher.status}</span>
+        </div>
+      `;
     }
     
-    closeAbsenceModal();
-    renderAbsenceStats();
-    renderAbsenceView(currentAbsenceView);
+    card.innerHTML = `
+      <div class="teacher-info">
+        <h4 class="teacher-name">${teacher.name}</h4>
+        <div class="teacher-details">${teacher.subject} | ${teacher.grade}</div>
+      </div>
+      ${statusInfo}
+      <div class="teacher-actions">
+        ${absence ? `
+          <button class="btn btn--sm btn--secondary" onclick="openLeaveModal('${absence.id}')">편집</button>
+          <button class="btn btn--sm btn--outline" onclick="deleteLeave('${absence.id}')">삭제</button>
+        ` : `
+          <button class="btn btn--sm btn--primary" onclick="openLeaveModal()">휴직신청</button>
+        `}
+      </div>
+    `;
+    
+    container.appendChild(card);
+  });
 }
 
-function editAbsence(absenceId) {
-    const absence = appData.absences.find(a => a.id === absenceId);
-    if (!absence) {
-        showMessage('해당 휴직 정보를 찾을 수 없습니다.', 'error');
-        return;
+// 교사 테이블 업데이트 (테이블 뷰)
+function updateTeachersTable() {
+  const tbody = document.getElementById('teachers-table-body');
+  if (!tbody) return;
+  
+  tbody.innerHTML = '';
+  
+  teachers.forEach(teacher => {
+    const row = document.createElement('tr');
+    const absence = absences.find(a => a.teacher_id === teacher.id);
+    
+    let substituteInfo = '-';
+    if (absence && absence.substitute_teacher_name) {
+      substituteInfo = absence.substitute_teacher_name;
     }
     
-    editingAbsenceId = absenceId;
+    let statusCell = `<span class="status status--success">${teacher.status}</span>`;
+    if (teacher.status === '휴직중' && absence) {
+      statusCell = `<span class="status status--warning">${absence.absence_type}</span>`;
+    }
     
-    document.getElementById('absence-teacher').value = absence.teacher_name;
-    document.getElementById('absence-type').value = absence.absence_type;
-    document.getElementById('absence-start').value = absence.start_date;
-    document.getElementById('absence-end').value = absence.end_date || '';
-    document.getElementById('absence-substitute').value = absence.substitute_teacher_name || '';
-    document.getElementById('absence-reason').value = absence.reason;
-    document.getElementById('absence-status').value = absence.status;
+    row.innerHTML = `
+      <td>${teacher.name}</td>
+      <td>${teacher.subject}</td>
+      <td>${teacher.grade}</td>
+      <td>${statusCell}</td>
+      <td>${substituteInfo}</td>
+      <td>
+        ${absence ? `
+          <button class="btn btn--sm btn--secondary" onclick="openLeaveModal('${absence.id}')">편집</button>
+          <button class="btn btn--sm btn--outline" onclick="deleteLeave('${absence.id}')">삭제</button>
+        ` : `
+          <button class="btn btn--sm btn--primary" onclick="openLeaveModal()">휴직신청</button>
+        `}
+      </td>
+    `;
     
-    document.getElementById('absence-modal-title').textContent = '휴직 정보 수정';
-    document.getElementById('absence-modal').classList.remove('hidden');
+    tbody.appendChild(row);
+  });
 }
 
-function deleteAbsence(absenceId) {
-    showConfirmDialog(
-        '휴직 정보 삭제',
-        '정말로 이 휴직 정보를 삭제하시겠습니까?',
-        () => {
-            const absence = appData.absences.find(a => a.id === absenceId);
-            if (absence) {
-                // Update teacher status
-                const teacher = appData.teachers.find(t => t.id === absence.teacher_id);
-                if (teacher) {
-                    teacher.status = '정상근무';
-                }
-                
-                // Update substitute teacher availability
-                if (absence.substitute_teacher_name) {
-                    const substitute = appData.substitute_teachers.find(s => s.name === absence.substitute_teacher_name);
-                    if (substitute) {
-                        substitute.available = true;
-                        substitute.current_assignment = null;
-                    }
-                }
-                
-                // Remove absence
-                appData.absences = appData.absences.filter(a => a.id !== absenceId);
-                
-                showMessage('휴직 정보가 삭제되었습니다.', 'success');
-                renderAbsenceStats();
-                renderAbsenceView(currentAbsenceView);
-            }
-        }
-    );
+// 기간제교사 목록 업데이트
+function updateSubstituteList() {
+  const container = document.getElementById('substitute-teachers-list');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  substituteTeachers.forEach(substitute => {
+    const card = document.createElement('div');
+    card.className = `substitute-card ${substitute.available ? 'available' : 'assigned'}`;
+    
+    let assignmentInfo = '';
+    if (!substitute.available && substitute.current_assignment) {
+      const teacher = teachers.find(t => t.id === substitute.current_assignment);
+      assignmentInfo = `<div class="substitute-assignment">현재 배정: ${teacher ? teacher.name : '알 수 없음'}</div>`;
+    }
+    
+    card.innerHTML = `
+      <div class="substitute-info">
+        <h4 class="substitute-name">${substitute.name}</h4>
+        <span class="status ${substitute.available ? 'status--success' : 'status--warning'}">
+          ${substitute.available ? '대기중' : '배정됨'}
+        </span>
+      </div>
+      <div class="substitute-subjects">담당 가능 과목: ${substitute.subjects.join(', ')}</div>
+      ${assignmentInfo}
+    `;
+    
+    container.appendChild(card);
+  });
 }
 
-// Initialize application
+// 교사 옵션 업데이트 (휴직 신청 모달용)
+function updateTeacherOptions() {
+  const select = document.getElementById('leave-teacher');
+  if (!select) return;
+  
+  select.innerHTML = '<option value="">교사를 선택해주세요</option>';
+  
+  teachers.forEach(teacher => {
+    if (teacher.status === '정상근무') {
+      const option = document.createElement('option');
+      option.value = teacher.id;
+      option.textContent = `${teacher.name} (${teacher.subject}, ${teacher.grade})`;
+      select.appendChild(option);
+    }
+  });
+}
+
+// 대체교사 옵션 업데이트 (휴직 신청 모달용)
+function updateSubstituteOptions() {
+  const select = document.getElementById('leave-substitute');
+  if (!select) return;
+  
+  select.innerHTML = '<option value="">대체교사를 선택해주세요</option>';
+  
+  substituteTeachers.forEach(substitute => {
+    if (substitute.available) {
+      const option = document.createElement('option');
+      option.value = substitute.id;
+      option.textContent = `${substitute.name} (${substitute.subjects.join(', ')})`;
+      select.appendChild(option);
+    }
+  });
+}
+
+// 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Application initializing...');
-    
-    initializeCustomTasks();
-    initializeTaskStates();
-    renderTasks(currentMonth);
-    updateProgress();
-    
-    // Initialize absence management if needed
-    if (currentActiveTab === 'absence-management') {
-        renderAbsenceStats();
-        renderAbsenceView(currentAbsenceView);
-    }
-    
-    console.log('Application initialized successfully');
+  console.log('DOM loaded, initializing...');
+  
+  // 1월로 초기화 (기간제교원 계약 업무 확인용)
+  switchMonth(1);
+  
+  updateTasksView();
+  updateMonthlyProgress();
+  updateAnnualProgress();
+  updateLeaveView();
+  
+  console.log('Initialization complete');
+});
+
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', function(event) {
+  const taskModal = document.getElementById('task-modal');
+  const leaveModal = document.getElementById('leave-modal');
+  
+  if (event.target === taskModal) {
+    closeTaskModal();
+  }
+  if (event.target === leaveModal) {
+    closeLeaveModal();
+  }
 });
