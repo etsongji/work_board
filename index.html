@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>교무부장 업무 & 휴가 관리 대시보드</title>
+    <title>교무부장 업무 & 휴가/휴직 관리 대시보드</title>
     <style>
         /* Internal CSS for stability */
         * {
@@ -261,7 +261,7 @@
             user-select: none;
         }
         
-        .add-task-btn {
+        .add-task-btn, .add-leave-btn {
             width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -274,7 +274,7 @@
             margin-top: 20px;
         }
         
-        .add-task-btn:hover {
+        .add-task-btn:hover, .add-leave-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
@@ -435,7 +435,199 @@
             background: #f8d7da;
             color: #721c24;
         }
-        
+
+        /* Leave/Absence Management Styles */
+        .leave-nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .leave-nav-tab {
+            padding: 12px 20px;
+            border: 2px solid #e9ecef;
+            background: white;
+            color: #666;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .leave-nav-tab.active {
+            border-color: #28a745;
+            background: #28a745;
+            color: white;
+        }
+
+        .leave-content {
+            display: none;
+        }
+
+        .leave-content.active {
+            display: block;
+        }
+
+        .leave-card, .absence-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .leave-card:hover, .absence-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .leave-header, .absence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .leave-info h5, .absence-info h5 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+        }
+
+        .leave-type-badge, .absence-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .leave-type-badge {
+            background: #e8f5e8;
+            color: #28a745;
+        }
+
+        .absence-type-badge {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .status-approved, .status-진행중 {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending, .status-대기 {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-ongoing, .status-승인 {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .leave-details, .absence-details {
+            margin-top: 10px;
+        }
+
+        .leave-details p, .absence-details p {
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .teacher-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .teacher-table th,
+        .teacher-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .teacher-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .teacher-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .teacher-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-normal {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-vacation {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-absence {
+            background: #fff3cd;
+            color: #856404;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -445,16 +637,16 @@
                 font-size: 1.5em;
             }
             
-            .main-nav-tab {
+            .main-nav-tab, .leave-nav-tab {
                 padding: 12px 20px;
                 font-size: 1em;
             }
             
-            .month-tabs {
+            .month-tabs, .leave-nav-tabs {
                 justify-content: flex-start;
             }
             
-            .task-header {
+            .task-header, .leave-header, .absence-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
@@ -463,6 +655,19 @@
             .task-actions {
                 align-self: flex-end;
             }
+
+            .statistics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .teacher-table {
+                font-size: 14px;
+            }
+
+            .teacher-table th,
+            .teacher-table td {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -470,14 +675,14 @@
     <div class="container">
         <!-- Header -->
         <header class="dashboard-header">
-            <h1>교무부장 업무 & 휴가 관리 대시보드</h1>
+            <h1>교무부장 업무 & 휴가/휴직 관리 대시보드</h1>
             <div class="year-info">2025년</div>
         </header>
 
         <!-- Main Navigation Tabs -->
         <div class="main-nav-tabs">
             <button class="main-nav-tab active" onclick="switchMainTab('task-management')">업무관리</button>
-            <button class="main-nav-tab" onclick="switchMainTab('vacation-management')">휴가관리</button>
+            <button class="main-nav-tab" onclick="switchMainTab('leave-management')">휴가/휴직관리</button>
         </div>
 
         <!-- Task Management Section -->
@@ -527,11 +732,106 @@
             </div>
         </div>
 
-        <!-- Vacation Management Section -->
-        <div id="vacation-management" class="tab-content">
-            <div class="card">
-                <h2>휴가 관리</h2>
-                <p>휴가 관리 기능은 추후 업데이트 예정입니다.</p>
+        <!-- Leave/Absence Management Section -->
+        <div id="leave-management" class="tab-content">
+            <!-- Statistics Overview -->
+            <div class="statistics-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-teachers">8</div>
+                    <div class="stat-label">총 교원 수</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="on-leave">1</div>
+                    <div class="stat-label">휴가 중</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="on-absence">1</div>
+                    <div class="stat-label">휴직 중</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="substitute-teachers">5</div>
+                    <div class="stat-label">대체 교사</div>
+                </div>
+            </div>
+
+            <!-- Leave/Absence Navigation -->
+            <div class="leave-nav-tabs">
+                <button class="leave-nav-tab active" onclick="switchLeaveTab('vacation')">휴가 관리</button>
+                <button class="leave-nav-tab" onclick="switchLeaveTab('absence')">휴직 관리</button>
+                <button class="leave-nav-tab" onclick="switchLeaveTab('teachers')">교원 현황</button>
+            </div>
+
+            <!-- Vacation Management -->
+            <div id="vacation-content" class="leave-content active">
+                <div class="card">
+                    <h3>휴가 관리</h3>
+                    <div id="vacation-list">
+                        <!-- Vacation entries will be rendered here -->
+                    </div>
+                    <button class="add-leave-btn" onclick="showAddVacationModal()">➕ 휴가 신청 추가</button>
+                </div>
+            </div>
+
+            <!-- Absence Management -->
+            <div id="absence-content" class="leave-content">
+                <div class="card">
+                    <h3>휴직 관리 (공무원 휴직규정 준수)</h3>
+                    <div class="card" style="background: #f8f9fa; margin-bottom: 20px;">
+                        <h4>💡 교육공무원 휴직 유형 (교육공무원법 제44조)</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                            <div>
+                                <h5 style="color: #dc3545; margin-bottom: 10px;">🔴 직권휴직 (5종)</h5>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li>• 질병휴직 (신체·정신상 장애)</li>
+                                    <li>• 병역휴직 (병역복무)</li>
+                                    <li>• 생사불명휴직 (천재지변 등)</li>
+                                    <li>• 법정의무수행휴직</li>
+                                    <li>• 노조전임자휴직</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 style="color: #007bff; margin-bottom: 10px;">🔵 청원휴직 (9종)</h5>
+                                <ul style="list-style: none; padding: 0;">
+                                    <li>• 유학휴직 (해외유학·연구)</li>
+                                    <li>• 고용휴직 (국제기구 등)</li>
+                                    <li>• 육아휴직 (만8세이하 자녀)</li>
+                                    <li>• 입양휴직 (만19세미만)</li>
+                                    <li>• 불임·난임휴직</li>
+                                    <li>• 연수휴직 (지정기관 연수)</li>
+                                    <li>• 가족돌봄휴직 (가사휴직)</li>
+                                    <li>• 동반휴직 (배우자 해외근무)</li>
+                                    <li>• 자율연수휴직 (연구년)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="absence-list">
+                        <!-- Absence entries will be rendered here -->
+                    </div>
+                    <button class="add-leave-btn" onclick="showAddAbsenceModal()">➕ 휴직 신청 추가</button>
+                </div>
+            </div>
+
+            <!-- Teachers Status -->
+            <div id="teachers-content" class="leave-content">
+                <div class="card">
+                    <h3>교원 현황</h3>
+                    <table class="teacher-table">
+                        <thead>
+                            <tr>
+                                <th>교사명</th>
+                                <th>과목</th>
+                                <th>학년</th>
+                                <th>연가 잔여</th>
+                                <th>현재 상태</th>
+                                <th>대체 교사</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teachers-table-body">
+                            <!-- Teachers data will be rendered here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -541,7 +841,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="task-modal-title">업무 추가</h3>
-                <button class="close-btn" onclick="closeModal()">×</button>
+                <button class="close-btn" onclick="closeModal('task-modal')">×</button>
             </div>
             <form id="task-form" onsubmit="return handleTaskSubmit(event)">
                 <div class="form-group">
@@ -584,7 +884,148 @@
                 </div>
                 
                 <div class="btn-group">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">취소</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('task-modal')">취소</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vacation Modal -->
+    <div id="vacation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="vacation-modal-title">휴가 신청 추가</h3>
+                <button class="close-btn" onclick="closeModal('vacation-modal')">×</button>
+            </div>
+            <form id="vacation-form" onsubmit="return handleVacationSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">교사명 *</label>
+                    <select id="vacation-teacher" class="form-select" required>
+                        <option value="">선택하세요</option>
+                        <!-- Teachers will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">휴가 유형 *</label>
+                    <select id="vacation-type" class="form-select" required>
+                        <option value="">선택하세요</option>
+                        <option value="연가">연가</option>
+                        <option value="병가">병가</option>
+                        <option value="특별휴가">특별휴가</option>
+                        <option value="경조휴가">경조휴가</option>
+                        <option value="공가">공가</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">시작일 *</label>
+                    <input type="date" id="vacation-start" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">종료일 *</label>
+                    <input type="date" id="vacation-end" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">사유</label>
+                    <textarea id="vacation-reason" class="form-input" rows="3" placeholder="휴가 사유를 입력하세요"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">대체 교사</label>
+                    <select id="vacation-substitute" class="form-select">
+                        <option value="">선택하세요</option>
+                        <!-- Substitute teachers will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('vacation-modal')">취소</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Absence Modal -->
+    <div id="absence-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="absence-modal-title">휴직 신청 추가</h3>
+                <button class="close-btn" onclick="closeModal('absence-modal')">×</button>
+            </div>
+            <form id="absence-form" onsubmit="return handleAbsenceSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">교사명 *</label>
+                    <select id="absence-teacher" class="form-select" required>
+                        <option value="">선택하세요</option>
+                        <!-- Teachers will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">휴직 유형 * (교육공무원법 제44조)</label>
+                    <select id="absence-type" class="form-select" required>
+                        <option value="">선택하세요</option>
+                        <optgroup label="직권휴직">
+                            <option value="질병휴직">질병휴직 (신체·정신상 장애)</option>
+                            <option value="병역휴직">병역휴직 (병역복무)</option>
+                            <option value="생사불명휴직">생사불명휴직 (천재지변 등)</option>
+                            <option value="법정의무수행휴직">법정의무수행휴직</option>
+                            <option value="노조전임자휴직">노조전임자휴직</option>
+                        </optgroup>
+                        <optgroup label="청원휴직">
+                            <option value="유학휴직">유학휴직 (해외유학·연구)</option>
+                            <option value="고용휴직">고용휴직 (국제기구 등)</option>
+                            <option value="육아휴직">육아휴직 (만8세 이하 자녀)</option>
+                            <option value="입양휴직">입양휴직 (만19세 미만)</option>
+                            <option value="불임·난임휴직">불임·난임휴직</option>
+                            <option value="연수휴직">연수휴직 (지정기관 연수)</option>
+                            <option value="가족돌봄휴직">가족돌봄휴직 (가사휴직)</option>
+                            <option value="동반휴직">동반휴직 (배우자 해외근무)</option>
+                            <option value="자율연수휴직">자율연수휴직 (연구년)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">시작일 *</label>
+                    <input type="date" id="absence-start" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">종료일 (예정)</label>
+                    <input type="date" id="absence-end" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">복직 예정일</label>
+                    <input type="date" id="absence-return" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">사유 *</label>
+                    <textarea id="absence-reason" class="form-input" rows="3" placeholder="휴직 사유를 상세히 입력하세요 (법정 요건 포함)" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">대체 교사</label>
+                    <select id="absence-substitute" class="form-select">
+                        <option value="">선택하세요</option>
+                        <!-- Substitute teachers will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">첨부 서류</label>
+                    <textarea id="absence-documents" class="form-input" rows="2" placeholder="예: 의사진단서, 유학허가서, 채용계약서 등"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('absence-modal')">취소</button>
                     <button type="submit" class="btn btn-primary">저장</button>
                 </div>
             </form>
@@ -592,7 +1033,7 @@
     </div>
 
     <script>
-        // Application data
+        // Application data with proper absence types
         const appData = {
             monthly_tasks: {
                 "1": {
@@ -606,12 +1047,59 @@
                         {"name": "신입생 오리엔테이션 준비", "type": "준비업무", "description": "2월 신입생 오리엔테이션 사전 준비", "id": "task_1_prep_1", "editable": true}
                     ],
                     "custom_tasks": []
-                },
-                // ... other months data would be here ...
-            }
+                }
+            },
+            teachers: [
+                {"id": "T001", "name": "김영희", "subject": "국어", "grade": "1학년", "annual_leave": 21, "used_leave": 3, "remaining_leave": 18, "status": "정상근무"},
+                {"id": "T002", "name": "박민수", "subject": "수학", "grade": "2학년", "annual_leave": 21, "used_leave": 5, "remaining_leave": 16, "status": "정상근무"},
+                {"id": "T003", "name": "이정은", "subject": "영어", "grade": "3학년", "annual_leave": 21, "used_leave": 3, "remaining_leave": 18, "status": "휴가중"},
+                {"id": "T004", "name": "최수진", "subject": "과학", "grade": "1학년", "annual_leave": 21, "used_leave": 5, "remaining_leave": 16, "status": "정상근무"},
+                {"id": "T005", "name": "장기용", "subject": "사회", "grade": "2학년", "annual_leave": 21, "used_leave": 0, "remaining_leave": 21, "status": "정상근무"},
+                {"id": "T006", "name": "윤서연", "subject": "미술", "grade": "전학년", "annual_leave": 21, "used_leave": 61, "remaining_leave": 0, "status": "휴직중"},
+                {"id": "T007", "name": "한동민", "subject": "체육", "grade": "전학년", "annual_leave": 21, "used_leave": 0, "remaining_leave": 21, "status": "정상근무"},
+                {"id": "T008", "name": "정혜림", "subject": "음악", "grade": "전학년", "annual_leave": 21, "used_leave": 0, "remaining_leave": 21, "status": "정상근무"}
+            ],
+            substitute_teachers: [
+                {"id": "S001", "name": "강나연", "subjects": ["국어", "사회"], "available": true, "current_assignment": null},
+                {"id": "S002", "name": "임철호", "subjects": ["수학", "과학"], "available": true, "current_assignment": null},
+                {"id": "S003", "name": "송미경", "subjects": ["영어"], "available": false, "current_assignment": "T003"},
+                {"id": "S004", "name": "오진석", "subjects": ["체육", "미술"], "available": true, "current_assignment": null},
+                {"id": "S005", "name": "안소희", "subjects": ["음악", "미술"], "available": false, "current_assignment": "T006"}
+            ],
+            vacations: [
+                {
+                    "id": "V001",
+                    "teacher_id": "T003",
+                    "teacher_name": "이정은",
+                    "vacation_type": "특별휴가",
+                    "start_date": "2025-09-02",
+                    "end_date": "2025-09-06",
+                    "days": 5,
+                    "substitute_teacher_id": "S003",
+                    "substitute_teacher_name": "송미경",
+                    "status": "승인",
+                    "reason": "가족돌봄"
+                }
+            ],
+            absences: [
+                {
+                    "id": "A001",
+                    "teacher_id": "T006",
+                    "teacher_name": "윤서연",
+                    "absence_type": "육아휴직",
+                    "start_date": "2025-11-01",
+                    "end_date": "2026-01-31",
+                    "return_date": "2026-02-01",
+                    "substitute_teacher_id": "S005",
+                    "substitute_teacher_name": "안소희",
+                    "status": "진행중",
+                    "reason": "만 8세 이하 자녀 양육을 위한 육아휴직 (교육공무원법 제44조 제1항 제7호)",
+                    "documents": "육아휴직신청서, 가족관계증명서"
+                }
+            ]
         };
         
-        // Add data for other months
+        // Add data for other months (same as before)
         for(let i = 2; i <= 12; i++) {
             appData.monthly_tasks[i.toString()] = {
                 "month_name": i + "월",
@@ -634,7 +1122,11 @@
         let taskCompletionState = {};
         let currentMonth = '1';
         let currentEditingTask = null;
+        let currentEditingVacation = null;
+        let currentEditingAbsence = null;
         let taskIdCounter = 1000;
+        let vacationIdCounter = 100;
+        let absenceIdCounter = 100;
         
         // Initialize application
         document.addEventListener('DOMContentLoaded', function() {
@@ -646,6 +1138,12 @@
             console.log('Initializing application...');
             renderMonthTasks(currentMonth);
             updateProgress();
+            renderVacations();
+            renderAbsences();
+            renderTeachersTable();
+            updateStatistics();
+            populateTeacherDropdowns();
+            populateSubstituteDropdowns();
         }
         
         function switchMainTab(tabName) {
@@ -659,6 +1157,23 @@
             const sections = document.querySelectorAll('.tab-content');
             sections.forEach(section => section.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
+
+            if (tabName === 'leave-management') {
+                updateStatistics();
+            }
+        }
+
+        function switchLeaveTab(tabName) {
+            console.log('Switching to leave tab:', tabName);
+            // Update tab buttons
+            const tabs = document.querySelectorAll('.leave-nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show/hide sections
+            const sections = document.querySelectorAll('.leave-content');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(tabName + '-content').classList.add('active');
         }
         
         function switchMonth(month) {
@@ -829,7 +1344,170 @@
             
             return checkboxItem;
         }
+
+        // Vacation Management Functions
+        function renderVacations() {
+            const vacationList = document.getElementById('vacation-list');
+            vacationList.innerHTML = '';
+
+            appData.vacations.forEach(vacation => {
+                const vacationCard = createVacationCard(vacation);
+                vacationList.appendChild(vacationCard);
+            });
+        }
+
+        function createVacationCard(vacation) {
+            const card = document.createElement('div');
+            card.className = 'leave-card';
+            
+            card.innerHTML = `
+                <div class="leave-header">
+                    <div class="leave-info">
+                        <h5>${vacation.teacher_name}</h5>
+                        <span class="leave-type-badge">${vacation.vacation_type}</span>
+                        <span class="status-badge status-${vacation.status}">${vacation.status}</span>
+                    </div>
+                    <div class="task-actions">
+                        <button class="task-action-btn edit-btn" onclick="editVacation('${vacation.id}')" title="편집">✏️</button>
+                        <button class="task-action-btn delete-btn" onclick="deleteVacation('${vacation.id}')" title="삭제">🗑️</button>
+                    </div>
+                </div>
+                <div class="leave-details">
+                    <p><strong>기간:</strong> ${vacation.start_date} ~ ${vacation.end_date} (${vacation.days}일)</p>
+                    <p><strong>대체교사:</strong> ${vacation.substitute_teacher_name || '미배정'}</p>
+                    <p><strong>사유:</strong> ${vacation.reason}</p>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Absence Management Functions
+        function renderAbsences() {
+            const absenceList = document.getElementById('absence-list');
+            absenceList.innerHTML = '';
+
+            appData.absences.forEach(absence => {
+                const absenceCard = createAbsenceCard(absence);
+                absenceList.appendChild(absenceCard);
+            });
+        }
+
+        function createAbsenceCard(absence) {
+            const card = document.createElement('div');
+            card.className = 'absence-card';
+            
+            card.innerHTML = `
+                <div class="absence-header">
+                    <div class="absence-info">
+                        <h5>${absence.teacher_name}</h5>
+                        <span class="absence-type-badge">${absence.absence_type}</span>
+                        <span class="status-badge status-${absence.status}">${absence.status}</span>
+                    </div>
+                    <div class="task-actions">
+                        <button class="task-action-btn edit-btn" onclick="editAbsence('${absence.id}')" title="편집">✏️</button>
+                        <button class="task-action-btn delete-btn" onclick="deleteAbsence('${absence.id}')" title="삭제">🗑️</button>
+                    </div>
+                </div>
+                <div class="absence-details">
+                    <p><strong>휴직기간:</strong> ${absence.start_date} ~ ${absence.end_date || '미정'}</p>
+                    <p><strong>복직예정일:</strong> ${absence.return_date || '미정'}</p>
+                    <p><strong>대체교사:</strong> ${absence.substitute_teacher_name || '미배정'}</p>
+                    <p><strong>사유:</strong> ${absence.reason}</p>
+                    ${absence.documents ? `<p><strong>첨부서류:</strong> ${absence.documents}</p>` : ''}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Teachers Table
+        function renderTeachersTable() {
+            const tableBody = document.getElementById('teachers-table-body');
+            tableBody.innerHTML = '';
+
+            appData.teachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                
+                let statusClass = 'status-normal';
+                let substituteTeacher = '';
+                
+                if (teacher.status === '휴가중') {
+                    statusClass = 'status-vacation';
+                    const vacation = appData.vacations.find(v => v.teacher_id === teacher.id);
+                    if (vacation) substituteTeacher = vacation.substitute_teacher_name || '';
+                } else if (teacher.status === '휴직중') {
+                    statusClass = 'status-absence';
+                    const absence = appData.absences.find(a => a.teacher_id === teacher.id);
+                    if (absence) substituteTeacher = absence.substitute_teacher_name || '';
+                }
+                
+                row.innerHTML = `
+                    <td>${teacher.name}</td>
+                    <td>${teacher.subject}</td>
+                    <td>${teacher.grade}</td>
+                    <td>${teacher.remaining_leave}일</td>
+                    <td><span class="teacher-status ${statusClass}">${teacher.status}</span></td>
+                    <td>${substituteTeacher}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateStatistics() {
+            const totalTeachers = appData.teachers.length;
+            const onLeave = appData.teachers.filter(t => t.status === '휴가중').length;
+            const onAbsence = appData.teachers.filter(t => t.status === '휴직중').length;
+            const substituteTeachers = appData.substitute_teachers.length;
+
+            document.getElementById('total-teachers').textContent = totalTeachers;
+            document.getElementById('on-leave').textContent = onLeave;
+            document.getElementById('on-absence').textContent = onAbsence;
+            document.getElementById('substitute-teachers').textContent = substituteTeachers;
+        }
+
+        function populateTeacherDropdowns() {
+            const vacationTeacherSelect = document.getElementById('vacation-teacher');
+            const absenceTeacherSelect = document.getElementById('absence-teacher');
+            
+            vacationTeacherSelect.innerHTML = '<option value="">선택하세요</option>';
+            absenceTeacherSelect.innerHTML = '<option value="">선택하세요</option>';
+
+            appData.teachers.forEach(teacher => {
+                const option1 = document.createElement('option');
+                option1.value = teacher.id;
+                option1.textContent = `${teacher.name} (${teacher.subject})`;
+                vacationTeacherSelect.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = teacher.id;
+                option2.textContent = `${teacher.name} (${teacher.subject})`;
+                absenceTeacherSelect.appendChild(option2);
+            });
+        }
+
+        function populateSubstituteDropdowns() {
+            const vacationSubstituteSelect = document.getElementById('vacation-substitute');
+            const absenceSubstituteSelect = document.getElementById('absence-substitute');
+            
+            vacationSubstituteSelect.innerHTML = '<option value="">선택하세요</option>';
+            absenceSubstituteSelect.innerHTML = '<option value="">선택하세요</option>';
+
+            appData.substitute_teachers.forEach(substitute => {
+                const option1 = document.createElement('option');
+                option1.value = substitute.id;
+                option1.textContent = `${substitute.name} (${substitute.subjects.join(', ')})`;
+                vacationSubstituteSelect.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = substitute.id;
+                option2.textContent = `${substitute.name} (${substitute.subjects.join(', ')})`;
+                absenceSubstituteSelect.appendChild(option2);
+            });
+        }
         
+        // Modal Functions
         function showAddTaskModal() {
             console.log('Opening add task modal...');
             try {
@@ -865,6 +1543,20 @@
                 }
             }
         }
+
+        function showAddVacationModal() {
+            currentEditingVacation = null;
+            document.getElementById('vacation-form').reset();
+            document.getElementById('vacation-modal-title').textContent = '휴가 신청 추가';
+            document.getElementById('vacation-modal').classList.add('active');
+        }
+
+        function showAddAbsenceModal() {
+            currentEditingAbsence = null;
+            document.getElementById('absence-form').reset();
+            document.getElementById('absence-modal-title').textContent = '휴직 신청 추가';
+            document.getElementById('absence-modal').classList.add('active');
+        }
         
         function addTaskWithPrompt(taskName) {
             const newTask = {
@@ -886,10 +1578,12 @@
             showStatusMessage('업무가 추가되었습니다.');
         }
         
-        function closeModal() {
-            console.log('Closing modal...');
-            document.getElementById('task-modal').classList.remove('active');
+        function closeModal(modalId) {
+            console.log('Closing modal:', modalId);
+            document.getElementById(modalId).classList.remove('active');
             currentEditingTask = null;
+            currentEditingVacation = null;
+            currentEditingAbsence = null;
         }
         
         function handleTaskSubmit(event) {
@@ -948,13 +1642,136 @@
                     showStatusMessage('업무가 추가되었습니다.');
                 }
                 
-                closeModal();
+                closeModal('task-modal');
                 renderMonthTasks(currentMonth);
                 updateProgress();
                 
             } catch (error) {
                 console.error('Task submit error:', error);
                 alert('업무 저장 중 오류가 발생했습니다.');
+            }
+            
+            return false;
+        }
+
+        function handleVacationSubmit(event) {
+            event.preventDefault();
+            
+            try {
+                const teacherId = document.getElementById('vacation-teacher').value;
+                const vacationType = document.getElementById('vacation-type').value;
+                const startDate = document.getElementById('vacation-start').value;
+                const endDate = document.getElementById('vacation-end').value;
+                const reason = document.getElementById('vacation-reason').value;
+                const substituteId = document.getElementById('vacation-substitute').value;
+                
+                if (!teacherId || !vacationType || !startDate || !endDate) {
+                    alert('필수 항목을 모두 입력해주세요.');
+                    return false;
+                }
+                
+                const teacher = appData.teachers.find(t => t.id === teacherId);
+                const substitute = appData.substitute_teachers.find(s => s.id === substituteId);
+                
+                const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
+                
+                const newVacation = {
+                    id: currentEditingVacation || ('V' + String(vacationIdCounter++).padStart(3, '0')),
+                    teacher_id: teacherId,
+                    teacher_name: teacher.name,
+                    vacation_type: vacationType,
+                    start_date: startDate,
+                    end_date: endDate,
+                    days: days,
+                    substitute_teacher_id: substituteId,
+                    substitute_teacher_name: substitute ? substitute.name : '',
+                    status: '승인',
+                    reason: reason
+                };
+                
+                if (currentEditingVacation) {
+                    const index = appData.vacations.findIndex(v => v.id === currentEditingVacation);
+                    if (index !== -1) {
+                        appData.vacations[index] = newVacation;
+                    }
+                    showStatusMessage('휴가 정보가 수정되었습니다.');
+                } else {
+                    appData.vacations.push(newVacation);
+                    // Update teacher status
+                    teacher.status = '휴가중';
+                    showStatusMessage('휴가 신청이 추가되었습니다.');
+                }
+                
+                closeModal('vacation-modal');
+                renderVacations();
+                renderTeachersTable();
+                updateStatistics();
+                
+            } catch (error) {
+                console.error('Vacation submit error:', error);
+                alert('휴가 신청 저장 중 오류가 발생했습니다.');
+            }
+            
+            return false;
+        }
+
+        function handleAbsenceSubmit(event) {
+            event.preventDefault();
+            
+            try {
+                const teacherId = document.getElementById('absence-teacher').value;
+                const absenceType = document.getElementById('absence-type').value;
+                const startDate = document.getElementById('absence-start').value;
+                const endDate = document.getElementById('absence-end').value;
+                const returnDate = document.getElementById('absence-return').value;
+                const reason = document.getElementById('absence-reason').value;
+                const substituteId = document.getElementById('absence-substitute').value;
+                const documents = document.getElementById('absence-documents').value;
+                
+                if (!teacherId || !absenceType || !startDate || !reason) {
+                    alert('필수 항목을 모두 입력해주세요.');
+                    return false;
+                }
+                
+                const teacher = appData.teachers.find(t => t.id === teacherId);
+                const substitute = appData.substitute_teachers.find(s => s.id === substituteId);
+                
+                const newAbsence = {
+                    id: currentEditingAbsence || ('A' + String(absenceIdCounter++).padStart(3, '0')),
+                    teacher_id: teacherId,
+                    teacher_name: teacher.name,
+                    absence_type: absenceType,
+                    start_date: startDate,
+                    end_date: endDate,
+                    return_date: returnDate,
+                    substitute_teacher_id: substituteId,
+                    substitute_teacher_name: substitute ? substitute.name : '',
+                    status: '진행중',
+                    reason: reason,
+                    documents: documents
+                };
+                
+                if (currentEditingAbsence) {
+                    const index = appData.absences.findIndex(a => a.id === currentEditingAbsence);
+                    if (index !== -1) {
+                        appData.absences[index] = newAbsence;
+                    }
+                    showStatusMessage('휴직 정보가 수정되었습니다.');
+                } else {
+                    appData.absences.push(newAbsence);
+                    // Update teacher status
+                    teacher.status = '휴직중';
+                    showStatusMessage('휴직 신청이 추가되었습니다.');
+                }
+                
+                closeModal('absence-modal');
+                renderAbsences();
+                renderTeachersTable();
+                updateStatistics();
+                
+            } catch (error) {
+                console.error('Absence submit error:', error);
+                alert('휴직 신청 저장 중 오류가 발생했습니다.');
             }
             
             return false;
@@ -986,6 +1803,42 @@
             // Show modal
             document.getElementById('task-modal').classList.add('active');
         }
+
+        function editVacation(vacationId) {
+            const vacation = appData.vacations.find(v => v.id === vacationId);
+            if (!vacation) return;
+            
+            currentEditingVacation = vacationId;
+            
+            document.getElementById('vacation-teacher').value = vacation.teacher_id;
+            document.getElementById('vacation-type').value = vacation.vacation_type;
+            document.getElementById('vacation-start').value = vacation.start_date;
+            document.getElementById('vacation-end').value = vacation.end_date;
+            document.getElementById('vacation-reason').value = vacation.reason;
+            document.getElementById('vacation-substitute').value = vacation.substitute_teacher_id || '';
+            
+            document.getElementById('vacation-modal-title').textContent = '휴가 정보 수정';
+            document.getElementById('vacation-modal').classList.add('active');
+        }
+
+        function editAbsence(absenceId) {
+            const absence = appData.absences.find(a => a.id === absenceId);
+            if (!absence) return;
+            
+            currentEditingAbsence = absenceId;
+            
+            document.getElementById('absence-teacher').value = absence.teacher_id;
+            document.getElementById('absence-type').value = absence.absence_type;
+            document.getElementById('absence-start').value = absence.start_date;
+            document.getElementById('absence-end').value = absence.end_date || '';
+            document.getElementById('absence-return').value = absence.return_date || '';
+            document.getElementById('absence-reason').value = absence.reason;
+            document.getElementById('absence-substitute').value = absence.substitute_teacher_id || '';
+            document.getElementById('absence-documents').value = absence.documents || '';
+            
+            document.getElementById('absence-modal-title').textContent = '휴직 정보 수정';
+            document.getElementById('absence-modal').classList.add('active');
+        }
         
         function deleteTask(taskId, month) {
             console.log('Deleting task:', taskId);
@@ -995,6 +1848,38 @@
                 renderMonthTasks(month);
                 updateProgress();
                 showStatusMessage('업무가 삭제되었습니다.');
+            }
+        }
+
+        function deleteVacation(vacationId) {
+            if (confirm('정말로 이 휴가 정보를 삭제하시겠습니까?')) {
+                const vacation = appData.vacations.find(v => v.id === vacationId);
+                if (vacation) {
+                    const teacher = appData.teachers.find(t => t.id === vacation.teacher_id);
+                    if (teacher) teacher.status = '정상근무';
+                }
+                
+                appData.vacations = appData.vacations.filter(v => v.id !== vacationId);
+                renderVacations();
+                renderTeachersTable();
+                updateStatistics();
+                showStatusMessage('휴가 정보가 삭제되었습니다.');
+            }
+        }
+
+        function deleteAbsence(absenceId) {
+            if (confirm('정말로 이 휴직 정보를 삭제하시겠습니까?')) {
+                const absence = appData.absences.find(a => a.id === absenceId);
+                if (absence) {
+                    const teacher = appData.teachers.find(t => t.id === absence.teacher_id);
+                    if (teacher) teacher.status = '정상근무';
+                }
+                
+                appData.absences = appData.absences.filter(a => a.id !== absenceId);
+                renderAbsences();
+                renderTeachersTable();
+                updateStatistics();
+                showStatusMessage('휴직 정보가 삭제되었습니다.');
             }
         }
         
@@ -1192,16 +2077,22 @@
         
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
-            const modal = document.getElementById('task-modal');
-            if (event.target === modal) {
-                closeModal();
-            }
+            const modals = ['task-modal', 'vacation-modal', 'absence-modal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    closeModal(modalId);
+                }
+            });
         });
         
         // Keyboard shortcuts
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
-                closeModal();
+                const activeModal = document.querySelector('.modal.active');
+                if (activeModal) {
+                    closeModal(activeModal.id);
+                }
             }
         });
     </script>
