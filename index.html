@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>교무부장 업무 & 휴가/휴직 관리 대시보드</title>
+    <title>교무부장 업무 & 휴가 관리 대시보드</title>
     <style>
         * {
             margin: 0;
@@ -13,9 +13,29 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .header .year {
+            color: #666;
+            font-size: 16px;
         }
         
         .container {
@@ -24,64 +44,59 @@
             padding: 20px;
         }
         
-        .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .dashboard-header h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
-        
-        .year-info {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .main-nav-tabs {
+        .main-nav {
             display: flex;
-            gap: 10px;
+            gap: 0;
             margin-bottom: 30px;
-            justify-content: center;
         }
         
-        .main-nav-tab {
-            padding: 15px 30px;
-            border: none;
-            background: white;
-            color: #666;
-            border-radius: 10px;
-            font-size: 1.1em;
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 16px;
+            color: #666;
+            transition: all 0.2s;
         }
         
-        .main-nav-tab.active {
-            background: #667eea;
+        .nav-tab:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .nav-tab:last-child {
+            border-radius: 0 8px 8px 0;
+            border-left: none;
+        }
+        
+        .nav-tab.active {
+            background: #4a9d9c;
             color: white;
-            transform: translateY(-2px);
+            border-color: #4a9d9c;
         }
         
-        .tab-content {
+        .content {
             display: none;
         }
         
-        .tab-content.active {
+        .content.active {
             display: block;
         }
         
         .card {
             background: white;
-            border-radius: 15px;
+            border-radius: 8px;
             padding: 25px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .progress-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
         }
         
         .progress-container {
@@ -92,111 +107,106 @@
         
         .progress-bar {
             flex: 1;
-            height: 12px;
+            height: 8px;
             background: #e9ecef;
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #56ab2f 0%, #a8e6cf 100%);
-            transition: width 0.5s ease;
+            background: #4a9d9c;
+            transition: width 0.3s ease;
+            border-radius: 4px;
         }
         
         .progress-text {
-            font-weight: bold;
-            color: #667eea;
-            min-width: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            min-width: 50px;
         }
         
-        .month-tabs {
+        .month-nav {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 30px;
             justify-content: center;
         }
         
         .month-tab {
-            padding: 12px 20px;
-            border: 2px solid #e9ecef;
+            padding: 8px 16px;
             background: white;
-            color: #666;
-            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s;
             font-size: 14px;
+            color: #666;
+            transition: all 0.2s;
         }
         
         .month-tab.active {
-            border-color: #667eea;
-            background: #667eea;
+            background: #4a9d9c;
             color: white;
+            border-color: #4a9d9c;
         }
         
-        .task-category {
+        .task-section {
             margin-bottom: 30px;
         }
         
-        .task-category-title {
-            color: #667eea;
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e9ecef;
-            font-size: 1.3em;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        .task-card {
-            background: white;
+        .task-item {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
             border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-        }
-        
-        .task-card:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
         }
         
         .task-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 10px;
         }
         
-        .task-title h5 {
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 1.2em;
-        }
-        
-        .task-type-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+        .task-title {
             font-weight: 500;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .task-badge {
             background: #e3f2fd;
             color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
         }
         
         .task-actions {
             display: flex;
-            gap: 8px;
+            gap: 5px;
         }
         
-        .task-action-btn {
-            width: 35px;
-            height: 35px;
+        .task-btn {
+            width: 28px;
+            height: 28px;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -207,17 +217,9 @@
             color: #856404;
         }
         
-        .edit-btn:hover {
-            background: #ffeaa7;
-        }
-        
         .delete-btn {
             background: #f8d7da;
             color: #721c24;
-        }
-        
-        .delete-btn:hover {
-            background: #f5c6cb;
         }
         
         .copy-btn {
@@ -225,59 +227,189 @@
             color: #0c5460;
         }
         
-        .copy-btn:hover {
-            background: #bee5eb;
+        .task-desc {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-style: italic;
         }
         
-        .task-description {
-            color: #666;
-            margin-bottom: 15px;
-            font-style: italic;
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background 0.3s;
-        }
-        
-        .checkbox-item:hover {
-            background: #f8f9fa;
+            gap: 8px;
+            padding: 5px;
         }
         
         .checkbox-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
+            width: 16px;
+            height: 16px;
         }
         
         .checkbox-item label {
+            font-size: 14px;
+            color: #333;
             cursor: pointer;
-            user-select: none;
         }
         
-        .add-task-btn, .add-leave-btn {
+        .add-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #4a9d9c;
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s;
             margin-top: 20px;
+            transition: background 0.2s;
         }
         
-        .add-task-btn:hover, .add-leave-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        .add-btn:hover {
+            background: #3a8180;
         }
         
+        /* Leave management styles */
+        .leave-nav {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+        }
+        
+        .leave-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .leave-tab:first-child {
+            border-radius: 6px 0 0 6px;
+        }
+        
+        .leave-tab:last-child {
+            border-radius: 0 6px 6px 0;
+            border-left: none;
+        }
+        
+        .leave-tab.active {
+            background: #4a9d9c;
+            color: white;
+            border-color: #4a9d9c;
+        }
+        
+        .leave-content {
+            display: none;
+        }
+        
+        .leave-content.active {
+            display: block;
+        }
+        
+        .leave-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .leave-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .leave-title {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .leave-type {
+            background: #e8f5e8;
+            color: #28a745;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        .absence-type {
+            background: #fff3cd;
+            color: #856404;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        .leave-details {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .leave-details p {
+            margin-bottom: 4px;
+        }
+        
+        .regulation-box {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .regulation-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+        
+        .regulation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .regulation-section h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .regulation-section.official {
+            color: #dc3545;
+        }
+        
+        .regulation-section.petition {
+            color: #007bff;
+        }
+        
+        .regulation-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .regulation-list li {
+            padding: 3px 0;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -285,7 +417,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.5);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -297,9 +429,9 @@
         
         .modal-content {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 600px;
+            border-radius: 8px;
+            padding: 25px;
+            max-width: 500px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -309,22 +441,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #e9ecef;
+            border-bottom: 1px solid #e0e0e0;
         }
         
         .modal-title {
+            font-size: 18px;
+            font-weight: 600;
             color: #333;
-            font-size: 1.5em;
         }
         
         .close-btn {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             color: #666;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .form-group {
@@ -336,34 +475,25 @@
             margin-bottom: 8px;
             font-weight: 500;
             color: #333;
+            font-size: 14px;
         }
         
-        .form-input {
+        .form-input, .form-select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
         }
         
-        .form-input:focus {
+        .form-input:focus, .form-select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #4a9d9c;
         }
         
-        .form-select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 16px;
-            background: white;
-        }
-        
-        .checkbox-group {
+        .checkbox-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-top: 10px;
         }
@@ -378,29 +508,33 @@
             margin: 0;
         }
         
+        .checkbox-option label {
+            font-size: 13px;
+        }
+        
         .btn-group {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             margin-top: 25px;
         }
         
         .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
             flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
         }
         
         .btn-primary {
-            background: #667eea;
+            background: #4a9d9c;
             color: white;
         }
         
         .btn-primary:hover {
-            background: #5a6fd8;
+            background: #3a8180;
         }
         
         .btn-secondary {
@@ -416,13 +550,12 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 15px 20px;
+            padding: 12px 20px;
             background: #d4edda;
             color: #155724;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
             z-index: 1001;
-            transform: translateX(400px);
+            transform: translateX(300px);
             transition: transform 0.3s;
         }
         
@@ -434,248 +567,230 @@
             background: #f8d7da;
             color: #721c24;
         }
-
-        /* Leave/Vacation management styles */
-        .leave-nav-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            justify-content: center;
-        }
-
-        .leave-nav-tab {
-            padding: 12px 20px;
-            border: 2px solid #e9ecef;
-            background: white;
-            color: #666;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .leave-nav-tab.active {
-            border-color: #28a745;
-            background: #28a745;
-            color: white;
-        }
-
-        .leave-content {
-            display: none;
-        }
-
-        .leave-content.active {
-            display: block;
-        }
-
-        .leave-item {
-            background: white;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-        }
-
-        .leave-item:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
-
-        .leave-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .leave-info h4 {
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .leave-type {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            background: #e8f5e8;
-            color: #28a745;
-        }
-
-        .absence-type {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .leave-details {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .leave-details p {
-            margin-bottom: 5px;
-        }
-
-        .regulation-info {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .regulation-info h4 {
-            color: #dc3545;
-            margin-bottom: 15px;
-        }
-
-        .regulation-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .regulation-section h5 {
-            margin-bottom: 10px;
-        }
-
-        .regulation-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .regulation-section li {
-            margin-bottom: 5px;
-            padding-left: 10px;
-        }
-
+        
         @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
-            .dashboard-header h1 {
-                font-size: 1.5em;
-            }
-            
-            .main-nav-tab, .leave-nav-tab {
-                padding: 12px 20px;
-                font-size: 1em;
-            }
-            
-            .month-tabs, .leave-nav-tabs {
+            .month-nav {
                 justify-content: flex-start;
             }
             
-            .task-header, .leave-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .task-actions {
-                align-self: flex-end;
-            }
-
             .regulation-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .checkbox-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>교무부장 업무 & 휴가 관리 대시보드</h1>
+        <div class="year">2025년</div>
+    </div>
+
     <div class="container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <h1>교무부장 업무 & 휴가/휴직 관리 대시보드</h1>
-            <div class="year-info">2025년</div>
-        </header>
-
-        <!-- Main Navigation Tabs -->
-        <div class="main-nav-tabs">
-            <button class="main-nav-tab active" onclick="switchMainTab('task-management')">업무관리</button>
-            <button class="main-nav-tab" onclick="switchMainTab('leave-management')">휴가/휴직관리</button>
+        <div class="main-nav">
+            <div class="nav-tab active" onclick="switchMainTab('tasks')">업무관리</div>
+            <div class="nav-tab" onclick="switchMainTab('leave')">휴가관리</div>
         </div>
 
-        <!-- Task Management Section -->
-        <div id="task-management" class="tab-content active">
-            <!-- Overall Progress -->
-            <div class="overall-progress card">
-                <h2>연간 진척률</h2>
+        <!-- Tasks Content -->
+        <div id="tasks-content" class="content active">
+            <div class="card progress-section">
+                <h3>연간 진척률</h3>
                 <div class="progress-container">
                     <div class="progress-bar">
-                        <div class="progress-fill" id="overall-progress-fill"></div>
+                        <div class="progress-fill" id="annual-progress" style="width: 2%"></div>
                     </div>
-                    <span class="progress-text" id="overall-progress-text">0%</span>
+                    <div class="progress-text" id="annual-percent">2%</div>
                 </div>
             </div>
 
-            <!-- Month Tabs -->
-            <div class="month-tabs">
-                <button class="month-tab active" onclick="switchMonth('1')">1월</button>
-                <button class="month-tab" onclick="switchMonth('2')">2월</button>
-                <button class="month-tab" onclick="switchMonth('3')">3월</button>
-                <button class="month-tab" onclick="switchMonth('4')">4월</button>
-                <button class="month-tab" onclick="switchMonth('5')">5월</button>
-                <button class="month-tab" onclick="switchMonth('6')">6월</button>
-                <button class="month-tab" onclick="switchMonth('7')">7월</button>
-                <button class="month-tab" onclick="switchMonth('8')">8월</button>
-                <button class="month-tab" onclick="switchMonth('9')">9월</button>
-                <button class="month-tab" onclick="switchMonth('10')">10월</button>
-                <button class="month-tab" onclick="switchMonth('11')">11월</button>
-                <button class="month-tab" onclick="switchMonth('12')">12월</button>
+            <div class="month-nav">
+                <div class="month-tab" onclick="switchMonth(1)">1월</div>
+                <div class="month-tab" onclick="switchMonth(2)">2월</div>
+                <div class="month-tab" onclick="switchMonth(3)">3월</div>
+                <div class="month-tab" onclick="switchMonth(4)">4월</div>
+                <div class="month-tab" onclick="switchMonth(5)">5월</div>
+                <div class="month-tab" onclick="switchMonth(6)">6월</div>
+                <div class="month-tab" onclick="switchMonth(7)">7월</div>
+                <div class="month-tab active" onclick="switchMonth(8)">8월</div>
+                <div class="month-tab" onclick="switchMonth(9)">9월</div>
+                <div class="month-tab" onclick="switchMonth(10)">10월</div>
+                <div class="month-tab" onclick="switchMonth(11)">11월</div>
+                <div class="month-tab" onclick="switchMonth(12)">12월</div>
             </div>
 
-            <!-- Monthly Progress -->
-            <div class="monthly-progress card">
-                <h3 id="monthly-title">1월 진척률</h3>
+            <div class="card progress-section">
+                <h3 id="monthly-title">8월 진척률</h3>
                 <div class="progress-container">
                     <div class="progress-bar">
-                        <div class="progress-fill" id="monthly-progress-fill"></div>
+                        <div class="progress-fill" id="monthly-progress" style="width: 25%"></div>
                     </div>
-                    <span class="progress-text" id="monthly-progress-text">0%</span>
+                    <div class="progress-text" id="monthly-percent">25%</div>
                 </div>
             </div>
 
-            <!-- Tasks Container -->
             <div class="card">
-                <div id="monthly-tasks"></div>
-                <button class="add-task-btn" onclick="showAddTaskModal()">➕ 업무 추가</button>
+                <div id="task-list">
+                    <div class="task-section">
+                        <div class="section-title">정기 업무</div>
+                        
+                        <div class="task-item">
+                            <div class="task-header">
+                                <div>
+                                    <span class="task-title">주간업무일지</span>
+                                    <span class="task-badge">정기업무</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button class="task-btn edit-btn" title="편집">✏️</button>
+                                    <button class="task-btn delete-btn" title="삭제">🗑️</button>
+                                    <button class="task-btn copy-btn" title="복사">📋</button>
+                                </div>
+                            </div>
+                            <div class="task-desc">매주 작성하는 업무 보고서</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task1-1" checked>
+                                    <label for="task1-1">1주차</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task1-2" checked>
+                                    <label for="task1-2">2주차</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task1-3" checked>
+                                    <label for="task1-3">3주차</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task1-4">
+                                    <label for="task1-4">4주차</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="task-item">
+                            <div class="task-header">
+                                <div>
+                                    <span class="task-title">기간제교원 계약</span>
+                                    <span class="task-badge">프로젝트업무</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button class="task-btn edit-btn" title="편집">✏️</button>
+                                    <button class="task-btn delete-btn" title="삭제">🗑️</button>
+                                    <button class="task-btn copy-btn" title="복사">📋</button>
+                                </div>
+                            </div>
+                            <div class="task-desc">필요시 진행하는 기간제교원 채용 업무</div>
+                            <div class="checkbox-list">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-1" checked>
+                                    <label for="task2-1">공고번호 채번</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-2" checked>
+                                    <label for="task2-2">공고 내부결재</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-3" checked>
+                                    <label for="task2-3">교육청 게시판 공고</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-4">
+                                    <label for="task2-4">채용 계약 완료</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-5">
+                                    <label for="task2-5">계약 후 문서 수합 및 내부결재</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-6">
+                                    <label for="task2-6">성범죄조회 문서 출력 합본</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="task2-7">
+                                    <label for="task2-7">교감선생님 제출</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-section">
+                        <div class="section-title">시간강사 수당 지급</div>
+                        <div class="task-item">
+                            <div class="task-header">
+                                <div>
+                                    <span class="task-title">매월 말 시간강사 수당 처리</span>
+                                    <span class="task-badge">정기업무</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button class="task-btn edit-btn" title="편집">✏️</button>
+                                    <button class="task-btn delete-btn" title="삭제">🗑️</button>
+                                    <button class="task-btn copy-btn" title="복사">📋</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-btn" onclick="showTaskModal()">+ 업무 추가</button>
             </div>
         </div>
 
-        <!-- Leave/Absence Management Section -->
-        <div id="leave-management" class="tab-content">
-            <!-- Leave Navigation -->
-            <div class="leave-nav-tabs">
-                <button class="leave-nav-tab active" onclick="switchLeaveTab('vacation')">휴가 관리</button>
-                <button class="leave-nav-tab" onclick="switchLeaveTab('absence')">휴직 관리</button>
+        <!-- Leave Content -->
+        <div id="leave-content" class="content">
+            <div class="leave-nav">
+                <div class="leave-tab active" onclick="switchLeaveTab('vacation')">휴가 관리</div>
+                <div class="leave-tab" onclick="switchLeaveTab('absence')">휴직 관리</div>
             </div>
 
-            <!-- Vacation Management -->
+            <!-- Vacation Content -->
             <div id="vacation-content" class="leave-content active">
                 <div class="card">
                     <h3>휴가 관리</h3>
                     <div id="vacation-list">
-                        <!-- Vacation entries will be rendered here -->
+                        <div class="leave-item">
+                            <div class="leave-header">
+                                <div>
+                                    <span class="leave-title">이정은</span>
+                                    <span class="leave-type">특별휴가</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button class="task-btn edit-btn" title="편집">✏️</button>
+                                    <button class="task-btn delete-btn" title="삭제">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="leave-details">
+                                <p><strong>기간:</strong> 2025-09-02 ~ 2025-09-06 (5일)</p>
+                                <p><strong>사유:</strong> 가족돌봄</p>
+                            </div>
+                        </div>
                     </div>
-                    <button class="add-leave-btn" onclick="showAddVacationModal()">➕ 휴가 신청 추가</button>
+                    <button class="add-btn" onclick="showVacationModal()">+ 휴가 신청 추가</button>
                 </div>
             </div>
 
-            <!-- Absence Management -->
+            <!-- Absence Content -->
             <div id="absence-content" class="leave-content">
-                <!-- Regulation Info -->
-                <div class="regulation-info">
-                    <h4>📋 교육공무원 휴직 유형 (교육공무원법 제44조)</h4>
+                <div class="regulation-box">
+                    <div class="regulation-title">📋 교육공무원 휴직 유형 (교육공무원법 제44조)</div>
                     <div class="regulation-grid">
-                        <div class="regulation-section">
-                            <h5 style="color: #dc3545;">🔴 직권휴직 (5종)</h5>
-                            <ul>
+                        <div class="regulation-section official">
+                            <h4>🔴 직권휴직 (5종)</h4>
+                            <ul class="regulation-list">
                                 <li>• 질병휴직 (신체·정신상 장애)</li>
                                 <li>• 병역휴직 (병역복무)</li>
                                 <li>• 생사불명휴직 (천재지변 등)</li>
@@ -683,9 +798,9 @@
                                 <li>• 노조전임자휴직</li>
                             </ul>
                         </div>
-                        <div class="regulation-section">
-                            <h5 style="color: #007bff;">🔵 청원휴직 (9종)</h5>
-                            <ul>
+                        <div class="regulation-section petition">
+                            <h4>🔵 청원휴직 (9종)</h4>
+                            <ul class="regulation-list">
                                 <li>• 유학휴직 (해외유학·연구)</li>
                                 <li>• 고용휴직 (국제기구 등)</li>
                                 <li>• 육아휴직 (만8세이하 자녀)</li>
@@ -699,13 +814,28 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <h3>휴직 관리</h3>
                     <div id="absence-list">
-                        <!-- Absence entries will be rendered here -->
+                        <div class="leave-item">
+                            <div class="leave-header">
+                                <div>
+                                    <span class="leave-title">윤서연</span>
+                                    <span class="absence-type">육아휴직</span>
+                                </div>
+                                <div class="task-actions">
+                                    <button class="task-btn edit-btn" title="편집">✏️</button>
+                                    <button class="task-btn delete-btn" title="삭제">🗑️</button>
+                                </div>
+                            </div>
+                            <div class="leave-details">
+                                <p><strong>휴직기간:</strong> 2025-11-01 ~ 2026-01-31</p>
+                                <p><strong>사유:</strong> 만 8세 이하 자녀 양육을 위한 육아휴직</p>
+                            </div>
+                        </div>
                     </div>
-                    <button class="add-leave-btn" onclick="showAddAbsenceModal()">➕ 휴직 신청 추가</button>
+                    <button class="add-btn" onclick="showAbsenceModal()">+ 휴직 신청 추가</button>
                 </div>
             </div>
         </div>
@@ -715,15 +845,14 @@
     <div id="task-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="task-modal-title">업무 추가</h3>
+                <div class="modal-title">업무 추가</div>
                 <button class="close-btn" onclick="closeModal('task-modal')">×</button>
             </div>
-            <form id="task-form" onsubmit="return handleTaskSubmit(event)">
+            <form onsubmit="return addTask(event)">
                 <div class="form-group">
                     <label class="form-label">업무명 *</label>
-                    <input type="text" id="task-name" class="form-input" required placeholder="업무명을 입력하세요">
+                    <input type="text" id="task-name" class="form-input" required>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">업무 유형 *</label>
                     <select id="task-type" class="form-select" required>
@@ -734,30 +863,27 @@
                         <option value="프로젝트업무">프로젝트업무</option>
                     </select>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">설명</label>
-                    <textarea id="task-description" class="form-input" rows="3" placeholder="업무 설명을 입력하세요"></textarea>
+                    <textarea id="task-desc" class="form-input" rows="3"></textarea>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">적용 월 *</label>
-                    <div class="checkbox-group" id="month-checkboxes">
-                        <div class="checkbox-option"><input type="checkbox" id="month-1" value="1"><label for="month-1">1월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-2" value="2"><label for="month-2">2월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-3" value="3"><label for="month-3">3월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-4" value="4"><label for="month-4">4월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-5" value="5"><label for="month-5">5월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-6" value="6"><label for="month-6">6월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-7" value="7"><label for="month-7">7월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-8" value="8"><label for="month-8">8월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-9" value="9"><label for="month-9">9월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-10" value="10"><label for="month-10">10월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-11" value="11"><label for="month-11">11월</label></div>
-                        <div class="checkbox-option"><input type="checkbox" id="month-12" value="12"><label for="month-12">12월</label></div>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-option"><input type="checkbox" id="m1" value="1"><label for="m1">1월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m2" value="2"><label for="m2">2월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m3" value="3"><label for="m3">3월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m4" value="4"><label for="m4">4월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m5" value="5"><label for="m5">5월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m6" value="6"><label for="m6">6월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m7" value="7"><label for="m7">7월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m8" value="8"><label for="m8">8월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m9" value="9"><label for="m9">9월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m10" value="10"><label for="m10">10월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m11" value="11"><label for="m11">11월</label></div>
+                        <div class="checkbox-option"><input type="checkbox" id="m12" value="12"><label for="m12">12월</label></div>
                     </div>
                 </div>
-                
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('task-modal')">취소</button>
                     <button type="submit" class="btn btn-primary">저장</button>
@@ -770,15 +896,14 @@
     <div id="vacation-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="vacation-modal-title">휴가 신청 추가</h3>
+                <div class="modal-title">휴가 신청 추가</div>
                 <button class="close-btn" onclick="closeModal('vacation-modal')">×</button>
             </div>
-            <form id="vacation-form" onsubmit="return handleVacationSubmit(event)">
+            <form onsubmit="return addVacation(event)">
                 <div class="form-group">
                     <label class="form-label">교사명 *</label>
-                    <input type="text" id="vacation-teacher" class="form-input" required placeholder="교사명을 입력하세요">
+                    <input type="text" id="vacation-teacher" class="form-input" required>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">휴가 유형 *</label>
                     <select id="vacation-type" class="form-select" required>
@@ -790,22 +915,18 @@
                         <option value="공가">공가</option>
                     </select>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">시작일 *</label>
                     <input type="date" id="vacation-start" class="form-input" required>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">종료일 *</label>
                     <input type="date" id="vacation-end" class="form-input" required>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">사유</label>
-                    <textarea id="vacation-reason" class="form-input" rows="3" placeholder="휴가 사유를 입력하세요"></textarea>
+                    <textarea id="vacation-reason" class="form-input" rows="3"></textarea>
                 </div>
-                
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('vacation-modal')">취소</button>
                     <button type="submit" class="btn btn-primary">저장</button>
@@ -818,15 +939,14 @@
     <div id="absence-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="absence-modal-title">휴직 신청 추가</h3>
+                <div class="modal-title">휴직 신청 추가</div>
                 <button class="close-btn" onclick="closeModal('absence-modal')">×</button>
             </div>
-            <form id="absence-form" onsubmit="return handleAbsenceSubmit(event)">
+            <form onsubmit="return addAbsence(event)">
                 <div class="form-group">
                     <label class="form-label">교사명 *</label>
-                    <input type="text" id="absence-teacher" class="form-input" required placeholder="교사명을 입력하세요">
+                    <input type="text" id="absence-teacher" class="form-input" required>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">휴직 유형 * (교육공무원법 제44조)</label>
                     <select id="absence-type" class="form-select" required>
@@ -851,22 +971,18 @@
                         </optgroup>
                     </select>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">시작일 *</label>
                     <input type="date" id="absence-start" class="form-input" required>
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">종료일 (예정)</label>
                     <input type="date" id="absence-end" class="form-input">
                 </div>
-                
                 <div class="form-group">
                     <label class="form-label">사유 *</label>
-                    <textarea id="absence-reason" class="form-input" rows="3" placeholder="휴직 사유를 상세히 입력하세요" required></textarea>
+                    <textarea id="absence-reason" class="form-input" rows="3" required></textarea>
                 </div>
-                
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('absence-modal')">취소</button>
                     <button type="submit" class="btn btn-primary">저장</button>
@@ -878,861 +994,218 @@
     <script>
         // Application data
         const appData = {
-            monthly_tasks: {
-                "1": {
-                    "month_name": "1월",
-                    "regular_tasks": [
-                        {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_1_1", "editable": true},
-                        {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_1_2", "editable": true},
-                        {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_1_3", "editable": true}
-                    ],
-                    "preparation_tasks": [
-                        {"name": "신입생 오리엔테이션 준비", "type": "준비업무", "description": "2월 신입생 오리엔테이션 사전 준비", "id": "task_1_prep_1", "editable": true}
-                    ],
-                    "custom_tasks": []
-                }
-            },
-            vacations: [
-                {
-                    "id": "V001",
-                    "teacher_name": "이정은",
-                    "vacation_type": "특별휴가",
-                    "start_date": "2025-09-02",
-                    "end_date": "2025-09-06",
-                    "days": 5,
-                    "reason": "가족돌봄"
-                }
-            ],
-            absences: [
-                {
-                    "id": "A001",
-                    "teacher_name": "윤서연",
-                    "absence_type": "육아휴직",
-                    "start_date": "2025-11-01",
-                    "end_date": "2026-01-31",
-                    "reason": "만 8세 이하 자녀 양육을 위한 육아휴직 (교육공무원법 제44조 제1항 제7호)"
-                }
-            ]
+            tasks: {},
+            vacations: [],
+            absences: []
         };
         
-        // Add data for other months
-        for(let i = 2; i <= 12; i++) {
-            appData.monthly_tasks[i.toString()] = {
-                "month_name": i + "월",
-                "regular_tasks": [
-                    {"name": "주간업무일지", "type": "정기업무", "description": "매주 작성하는 업무 보고서", "weeks": 4, "id": "task_" + i + "_1", "editable": true},
-                    {"name": "기간제교원 계약", "type": "프로젝트업무", "description": "필요시 진행하는 기간제교원 채용 업무", "steps": ["공고번호 채번", "공고 내부결재", "교육청 게시판 공고", "채용 계약 완료", "계약 후 문서 수합 및 내부결재", "성범죄조회 문서 출력 합본", "교감선생님 제출"], "id": "task_" + i + "_2", "editable": true},
-                    {"name": "시간강사 수당 지급", "type": "정기업무", "description": "매월 말 시간강사 수당 처리", "id": "task_" + i + "_3", "editable": true}
-                ],
-                "custom_tasks": []
-            };
-        }
+        let currentMonth = 8;
         
-        // Add special tasks for specific months
-        appData.monthly_tasks["2"].special_tasks = [{"name": "신입생 오리엔테이션", "type": "특별업무", "description": "2월 신입생 오리엔테이션 진행", "id": "task_2_special_1", "editable": true}];
-        appData.monthly_tasks["3"].special_tasks = [{"name": "현황판 교체", "type": "특별업무", "description": "3월 현황판 교체 작업", "id": "task_3_special_1", "editable": true}];
-        appData.monthly_tasks["11"].special_tasks = [{"name": "수능 업무", "type": "특별업무", "description": "11월 수능 관련 업무 (시험장 운영 등)", "id": "task_11_special_1", "editable": true}];
-        appData.monthly_tasks["12"].special_tasks = [{"name": "학교평가", "type": "특별업무", "description": "12월 학교평가 준비 및 실시", "id": "task_12_special_1", "editable": true}];
-        
-        // Global variables
-        let taskCompletionState = {};
-        let currentMonth = '1';
-        let currentEditingTask = null;
-        let taskIdCounter = 1000;
-        let vacationIdCounter = 100;
-        let absenceIdCounter = 100;
-        
-        // Initialize application
+        // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing app...');
-            initializeApp();
+            updateProgress();
+            setupEventListeners();
         });
         
-        function initializeApp() {
-            console.log('Initializing application...');
-            renderMonthTasks(currentMonth);
-            updateProgress();
-            renderVacations();
-            renderAbsences();
+        function setupEventListeners() {
+            // Add event listeners for checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateProgress();
+                    showMessage('진척률이 업데이트되었습니다.');
+                });
+            });
         }
         
-        function switchMainTab(tabName) {
-            console.log('Switching to tab:', tabName);
+        function switchMainTab(tab) {
             // Update tab buttons
-            const tabs = document.querySelectorAll('.main-nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Show/hide sections
-            const sections = document.querySelectorAll('.tab-content');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
+            // Show/hide content
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
         }
-
-        function switchLeaveTab(tabName) {
-            console.log('Switching to leave tab:', tabName);
+        
+        function switchLeaveTab(tab) {
             // Update tab buttons
-            const tabs = document.querySelectorAll('.leave-nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.leave-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Show/hide sections
-            const sections = document.querySelectorAll('.leave-content');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(tabName + '-content').classList.add('active');
+            // Show/hide content
+            document.querySelectorAll('.leave-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + '-content').classList.add('active');
         }
         
         function switchMonth(month) {
-            console.log('Switching to month:', month);
             currentMonth = month;
             
             // Update month tabs
-            const monthTabs = document.querySelectorAll('.month-tab');
-            monthTabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
             // Update title
-            document.getElementById('monthly-title').textContent = appData.monthly_tasks[month].month_name + ' 진척률';
+            document.getElementById('monthly-title').textContent = month + '월 진척률';
             
-            // Render tasks
-            renderMonthTasks(month);
-            updateMonthlyProgress(month);
-        }
-        
-        function renderMonthTasks(month) {
-            console.log('Rendering tasks for month:', month);
-            const monthData = appData.monthly_tasks[month];
-            if (!monthData) return;
-            
-            const tasksContainer = document.getElementById('monthly-tasks');
-            tasksContainer.innerHTML = '';
-            
-            // Render each task category
-            renderTaskCategory(tasksContainer, '정기 업무', monthData.regular_tasks || [], month);
-            renderTaskCategory(tasksContainer, '특별 업무', monthData.special_tasks || [], month);
-            renderTaskCategory(tasksContainer, '준비 업무', monthData.preparation_tasks || [], month);
-            renderTaskCategory(tasksContainer, '사용자 추가 업무', monthData.custom_tasks || [], month);
-        }
-        
-        function renderTaskCategory(container, categoryTitle, tasks, month) {
-            if (tasks.length === 0) return;
-            
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'task-category';
-            
-            const categoryHeader = document.createElement('h4');
-            categoryHeader.className = 'task-category-title';
-            categoryHeader.textContent = categoryTitle;
-            categoryDiv.appendChild(categoryHeader);
-            
-            tasks.forEach(task => {
-                const taskCard = createTaskCard(task, month);
-                categoryDiv.appendChild(taskCard);
-            });
-            
-            container.appendChild(categoryDiv);
-        }
-        
-        function createTaskCard(task, month) {
-            const taskCard = document.createElement('div');
-            taskCard.className = 'task-card';
-            
-            // Task header
-            const taskHeader = document.createElement('div');
-            taskHeader.className = 'task-header';
-            
-            const taskTitle = document.createElement('div');
-            taskTitle.className = 'task-title';
-            
-            const taskName = document.createElement('h5');
-            taskName.textContent = task.name;
-            taskTitle.appendChild(taskName);
-            
-            const taskType = document.createElement('span');
-            taskType.className = 'task-type-badge';
-            taskType.textContent = task.type;
-            taskTitle.appendChild(taskType);
-            
-            // Task actions
-            const taskActions = document.createElement('div');
-            taskActions.className = 'task-actions';
-            
-            if (task.editable !== false) {
-                const editBtn = document.createElement('button');
-                editBtn.className = 'task-action-btn edit-btn';
-                editBtn.innerHTML = '✏️';
-                editBtn.title = '편집';
-                editBtn.onclick = () => editTask(task.id, month);
-                taskActions.appendChild(editBtn);
-                
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'task-action-btn delete-btn';
-                deleteBtn.innerHTML = '🗑️';
-                deleteBtn.title = '삭제';
-                deleteBtn.onclick = () => deleteTask(task.id, month);
-                taskActions.appendChild(deleteBtn);
-                
-                const copyBtn = document.createElement('button');
-                copyBtn.className = 'task-action-btn copy-btn';
-                copyBtn.innerHTML = '📋';
-                copyBtn.title = '복사';
-                copyBtn.onclick = () => copyTask(task.id, month);
-                taskActions.appendChild(copyBtn);
-            }
-            
-            taskHeader.appendChild(taskTitle);
-            taskHeader.appendChild(taskActions);
-            taskCard.appendChild(taskHeader);
-            
-            // Task description
-            if (task.description) {
-                const taskDesc = document.createElement('p');
-                taskDesc.className = 'task-description';
-                taskDesc.textContent = task.description;
-                taskCard.appendChild(taskDesc);
-            }
-            
-            // Task content (checkboxes)
-            const taskContent = document.createElement('div');
-            taskContent.className = 'task-content';
-            
-            if (task.weeks) {
-                for (let week = 1; week <= task.weeks; week++) {
-                    const checkboxItem = createCheckboxItem(
-                        task.id + '_week_' + week,
-                        week + '주차',
-                        task.id
-                    );
-                    taskContent.appendChild(checkboxItem);
-                }
-            } else if (task.steps && task.steps.length > 0) {
-                task.steps.forEach((step, index) => {
-                    const checkboxItem = createCheckboxItem(
-                        task.id + '_step_' + index,
-                        step,
-                        task.id
-                    );
-                    taskContent.appendChild(checkboxItem);
-                });
-            } else {
-                const checkboxItem = createCheckboxItem(
-                    task.id + '_simple',
-                    '완료',
-                    task.id
-                );
-                taskContent.appendChild(checkboxItem);
-            }
-            
-            taskCard.appendChild(taskContent);
-            return taskCard;
-        }
-        
-        function createCheckboxItem(checkboxId, label, taskId) {
-            const checkboxItem = document.createElement('div');
-            checkboxItem.className = 'checkbox-item';
-            
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = checkboxId;
-            checkbox.checked = taskCompletionState[checkboxId] || false;
-            checkbox.onchange = function() {
-                taskCompletionState[checkboxId] = checkbox.checked;
-                updateProgress();
-                showStatusMessage('진척률이 업데이트되었습니다.');
-            };
-            
-            const checkboxLabel = document.createElement('label');
-            checkboxLabel.setAttribute('for', checkboxId);
-            checkboxLabel.textContent = label;
-            
-            checkboxItem.appendChild(checkbox);
-            checkboxItem.appendChild(checkboxLabel);
-            
-            return checkboxItem;
-        }
-
-        // Vacation Management Functions
-        function renderVacations() {
-            const vacationList = document.getElementById('vacation-list');
-            vacationList.innerHTML = '';
-
-            appData.vacations.forEach(vacation => {
-                const vacationItem = createVacationItem(vacation);
-                vacationList.appendChild(vacationItem);
-            });
-        }
-
-        function createVacationItem(vacation) {
-            const item = document.createElement('div');
-            item.className = 'leave-item';
-            
-            item.innerHTML = `
-                <div class="leave-header">
-                    <div class="leave-info">
-                        <h4>${vacation.teacher_name}</h4>
-                        <span class="leave-type">${vacation.vacation_type}</span>
-                    </div>
-                    <div class="task-actions">
-                        <button class="task-action-btn edit-btn" onclick="editVacation('${vacation.id}')" title="편집">✏️</button>
-                        <button class="task-action-btn delete-btn" onclick="deleteVacation('${vacation.id}')" title="삭제">🗑️</button>
-                    </div>
-                </div>
-                <div class="leave-details">
-                    <p><strong>기간:</strong> ${vacation.start_date} ~ ${vacation.end_date} (${vacation.days}일)</p>
-                    <p><strong>사유:</strong> ${vacation.reason}</p>
-                </div>
-            `;
-            
-            return item;
-        }
-
-        // Absence Management Functions
-        function renderAbsences() {
-            const absenceList = document.getElementById('absence-list');
-            absenceList.innerHTML = '';
-
-            appData.absences.forEach(absence => {
-                const absenceItem = createAbsenceItem(absence);
-                absenceList.appendChild(absenceItem);
-            });
-        }
-
-        function createAbsenceItem(absence) {
-            const item = document.createElement('div');
-            item.className = 'leave-item';
-            
-            item.innerHTML = `
-                <div class="leave-header">
-                    <div class="leave-info">
-                        <h4>${absence.teacher_name}</h4>
-                        <span class="absence-type">${absence.absence_type}</span>
-                    </div>
-                    <div class="task-actions">
-                        <button class="task-action-btn edit-btn" onclick="editAbsence('${absence.id}')" title="편집">✏️</button>
-                        <button class="task-action-btn delete-btn" onclick="deleteAbsence('${absence.id}')" title="삭제">🗑️</button>
-                    </div>
-                </div>
-                <div class="leave-details">
-                    <p><strong>휴직기간:</strong> ${absence.start_date} ~ ${absence.end_date || '미정'}</p>
-                    <p><strong>사유:</strong> ${absence.reason}</p>
-                </div>
-            `;
-            
-            return item;
-        }
-        
-        // Modal Functions
-        function showAddTaskModal() {
-            console.log('Opening add task modal...');
-            try {
-                currentEditingTask = null;
-                
-                // Reset form
-                document.getElementById('task-form').reset();
-                
-                // Set current month as default
-                const monthCheckbox = document.getElementById('month-' + currentMonth);
-                if (monthCheckbox) {
-                    monthCheckbox.checked = true;
-                }
-                
-                // Update modal title
-                document.getElementById('task-modal-title').textContent = '업무 추가';
-                
-                // Show modal
-                document.getElementById('task-modal').classList.add('active');
-                
-                // Focus first input
-                setTimeout(() => {
-                    const nameInput = document.getElementById('task-name');
-                    if (nameInput) nameInput.focus();
-                }, 100);
-                
-            } catch (error) {
-                console.error('Modal error:', error);
-                // Fallback to prompt
-                const taskName = prompt('업무명을 입력하세요:');
-                if (taskName && taskName.trim()) {
-                    addTaskWithPrompt(taskName.trim());
-                }
-            }
-        }
-
-        function showAddVacationModal() {
-            document.getElementById('vacation-form').reset();
-            document.getElementById('vacation-modal-title').textContent = '휴가 신청 추가';
-            document.getElementById('vacation-modal').classList.add('active');
-        }
-
-        function showAddAbsenceModal() {
-            document.getElementById('absence-form').reset();
-            document.getElementById('absence-modal-title').textContent = '휴직 신청 추가';
-            document.getElementById('absence-modal').classList.add('active');
-        }
-        
-        function addTaskWithPrompt(taskName) {
-            const newTask = {
-                id: 'custom_' + (taskIdCounter++),
-                name: taskName,
-                type: '정기업무',
-                description: '',
-                editable: true
-            };
-            
-            // Add to current month
-            if (!appData.monthly_tasks[currentMonth].custom_tasks) {
-                appData.monthly_tasks[currentMonth].custom_tasks = [];
-            }
-            appData.monthly_tasks[currentMonth].custom_tasks.push(newTask);
-            
-            renderMonthTasks(currentMonth);
             updateProgress();
-            showStatusMessage('업무가 추가되었습니다.');
-        }
-        
-        function closeModal(modalId) {
-            console.log('Closing modal:', modalId);
-            document.getElementById(modalId).classList.remove('active');
-            currentEditingTask = null;
-        }
-        
-        function handleTaskSubmit(event) {
-            event.preventDefault();
-            console.log('Submitting task...');
-            
-            try {
-                const taskName = document.getElementById('task-name').value;
-                const taskType = document.getElementById('task-type').value;
-                const taskDescription = document.getElementById('task-description').value;
-                
-                if (!taskName.trim()) {
-                    alert('업무명을 입력해주세요.');
-                    return false;
-                }
-                
-                if (!taskType) {
-                    alert('업무 유형을 선택해주세요.');
-                    return false;
-                }
-                
-                // Get selected months
-                const selectedMonths = [];
-                for (let i = 1; i <= 12; i++) {
-                    const checkbox = document.getElementById('month-' + i);
-                    if (checkbox && checkbox.checked) {
-                        selectedMonths.push(i.toString());
-                    }
-                }
-                
-                if (selectedMonths.length === 0) {
-                    alert('최소 한 개의 월을 선택해주세요.');
-                    return false;
-                }
-                
-                const newTask = {
-                    id: currentEditingTask || ('custom_' + (taskIdCounter++)),
-                    name: taskName.trim(),
-                    type: taskType,
-                    description: taskDescription.trim(),
-                    editable: true
-                };
-                
-                if (currentEditingTask) {
-                    // Update existing task
-                    updateExistingTask(currentEditingTask, newTask, selectedMonths);
-                    showStatusMessage('업무가 수정되었습니다.');
-                } else {
-                    // Add new task
-                    selectedMonths.forEach(month => {
-                        if (!appData.monthly_tasks[month].custom_tasks) {
-                            appData.monthly_tasks[month].custom_tasks = [];
-                        }
-                        appData.monthly_tasks[month].custom_tasks.push({...newTask});
-                    });
-                    showStatusMessage('업무가 추가되었습니다.');
-                }
-                
-                closeModal('task-modal');
-                renderMonthTasks(currentMonth);
-                updateProgress();
-                
-            } catch (error) {
-                console.error('Task submit error:', error);
-                alert('업무 저장 중 오류가 발생했습니다.');
-            }
-            
-            return false;
-        }
-
-        function handleVacationSubmit(event) {
-            event.preventDefault();
-            
-            try {
-                const teacherName = document.getElementById('vacation-teacher').value;
-                const vacationType = document.getElementById('vacation-type').value;
-                const startDate = document.getElementById('vacation-start').value;
-                const endDate = document.getElementById('vacation-end').value;
-                const reason = document.getElementById('vacation-reason').value;
-                
-                if (!teacherName || !vacationType || !startDate || !endDate) {
-                    alert('필수 항목을 모두 입력해주세요.');
-                    return false;
-                }
-                
-                const days = Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
-                
-                const newVacation = {
-                    id: 'V' + String(vacationIdCounter++).padStart(3, '0'),
-                    teacher_name: teacherName,
-                    vacation_type: vacationType,
-                    start_date: startDate,
-                    end_date: endDate,
-                    days: days,
-                    reason: reason
-                };
-                
-                appData.vacations.push(newVacation);
-                renderVacations();
-                closeModal('vacation-modal');
-                showStatusMessage('휴가 신청이 추가되었습니다.');
-                
-            } catch (error) {
-                console.error('Vacation submit error:', error);
-                alert('휴가 신청 저장 중 오류가 발생했습니다.');
-            }
-            
-            return false;
-        }
-
-        function handleAbsenceSubmit(event) {
-            event.preventDefault();
-            
-            try {
-                const teacherName = document.getElementById('absence-teacher').value;
-                const absenceType = document.getElementById('absence-type').value;
-                const startDate = document.getElementById('absence-start').value;
-                const endDate = document.getElementById('absence-end').value;
-                const reason = document.getElementById('absence-reason').value;
-                
-                if (!teacherName || !absenceType || !startDate || !reason) {
-                    alert('필수 항목을 모두 입력해주세요.');
-                    return false;
-                }
-                
-                const newAbsence = {
-                    id: 'A' + String(absenceIdCounter++).padStart(3, '0'),
-                    teacher_name: teacherName,
-                    absence_type: absenceType,
-                    start_date: startDate,
-                    end_date: endDate,
-                    reason: reason
-                };
-                
-                appData.absences.push(newAbsence);
-                renderAbsences();
-                closeModal('absence-modal');
-                showStatusMessage('휴직 신청이 추가되었습니다.');
-                
-            } catch (error) {
-                console.error('Absence submit error:', error);
-                alert('휴직 신청 저장 중 오류가 발생했습니다.');
-            }
-            
-            return false;
-        }
-        
-        function editTask(taskId, month) {
-            console.log('Editing task:', taskId);
-            const task = findTaskById(taskId);
-            if (!task) return;
-            
-            currentEditingTask = taskId;
-            
-            // Fill form
-            document.getElementById('task-name').value = task.name;
-            document.getElementById('task-type').value = task.type;
-            document.getElementById('task-description').value = task.description || '';
-            
-            // Set current month as selected
-            for (let i = 1; i <= 12; i++) {
-                const checkbox = document.getElementById('month-' + i);
-                if (checkbox) {
-                    checkbox.checked = (i.toString() === month);
-                }
-            }
-            
-            // Update modal title
-            document.getElementById('task-modal-title').textContent = '업무 편집';
-            
-            // Show modal
-            document.getElementById('task-modal').classList.add('active');
-        }
-
-        function editVacation(vacationId) {
-            const vacation = appData.vacations.find(v => v.id === vacationId);
-            if (!vacation) return;
-            
-            document.getElementById('vacation-teacher').value = vacation.teacher_name;
-            document.getElementById('vacation-type').value = vacation.vacation_type;
-            document.getElementById('vacation-start').value = vacation.start_date;
-            document.getElementById('vacation-end').value = vacation.end_date;
-            document.getElementById('vacation-reason').value = vacation.reason;
-            
-            document.getElementById('vacation-modal-title').textContent = '휴가 정보 수정';
-            document.getElementById('vacation-modal').classList.add('active');
-        }
-
-        function editAbsence(absenceId) {
-            const absence = appData.absences.find(a => a.id === absenceId);
-            if (!absence) return;
-            
-            document.getElementById('absence-teacher').value = absence.teacher_name;
-            document.getElementById('absence-type').value = absence.absence_type;
-            document.getElementById('absence-start').value = absence.start_date;
-            document.getElementById('absence-end').value = absence.end_date || '';
-            document.getElementById('absence-reason').value = absence.reason;
-            
-            document.getElementById('absence-modal-title').textContent = '휴직 정보 수정';
-            document.getElementById('absence-modal').classList.add('active');
-        }
-        
-        function deleteTask(taskId, month) {
-            console.log('Deleting task:', taskId);
-            if (confirm('정말로 이 업무를 삭제하시겠습니까?')) {
-                removeTaskFromData(taskId, month);
-                removeTaskCompletionState(taskId);
-                renderMonthTasks(month);
-                updateProgress();
-                showStatusMessage('업무가 삭제되었습니다.');
-            }
-        }
-
-        function deleteVacation(vacationId) {
-            if (confirm('정말로 이 휴가 정보를 삭제하시겠습니까?')) {
-                appData.vacations = appData.vacations.filter(v => v.id !== vacationId);
-                renderVacations();
-                showStatusMessage('휴가 정보가 삭제되었습니다.');
-            }
-        }
-
-        function deleteAbsence(absenceId) {
-            if (confirm('정말로 이 휴직 정보를 삭제하시겠습니까?')) {
-                appData.absences = appData.absences.filter(a => a.id !== absenceId);
-                renderAbsences();
-                showStatusMessage('휴직 정보가 삭제되었습니다.');
-            }
-        }
-        
-        function copyTask(taskId, month) {
-            console.log('Copying task:', taskId);
-            const task = findTaskById(taskId);
-            if (!task) return;
-            
-            const newTask = {
-                ...task,
-                id: 'custom_' + (taskIdCounter++),
-                name: task.name + ' (복사본)'
-            };
-            
-            if (!appData.monthly_tasks[month].custom_tasks) {
-                appData.monthly_tasks[month].custom_tasks = [];
-            }
-            appData.monthly_tasks[month].custom_tasks.push(newTask);
-            
-            renderMonthTasks(month);
-            updateProgress();
-            showStatusMessage('업무가 복사되었습니다.');
-        }
-        
-        function findTaskById(taskId) {
-            for (const month in appData.monthly_tasks) {
-                const monthData = appData.monthly_tasks[month];
-                const categories = ['regular_tasks', 'special_tasks', 'preparation_tasks', 'custom_tasks'];
-                
-                for (const category of categories) {
-                    if (monthData[category]) {
-                        const task = monthData[category].find(t => t.id === taskId);
-                        if (task) return task;
-                    }
-                }
-            }
-            return null;
-        }
-        
-        function updateExistingTask(taskId, newTaskData, selectedMonths) {
-            // Remove task from all months first
-            for (const month in appData.monthly_tasks) {
-                removeTaskFromData(taskId, month);
-            }
-            
-            // Add to selected months
-            selectedMonths.forEach(month => {
-                if (!appData.monthly_tasks[month].custom_tasks) {
-                    appData.monthly_tasks[month].custom_tasks = [];
-                }
-                appData.monthly_tasks[month].custom_tasks.push({...newTaskData});
-            });
-        }
-        
-        function removeTaskFromData(taskId, month) {
-            const monthData = appData.monthly_tasks[month];
-            const categories = ['regular_tasks', 'special_tasks', 'preparation_tasks', 'custom_tasks'];
-            
-            categories.forEach(category => {
-                if (monthData[category]) {
-                    const index = monthData[category].findIndex(t => t.id === taskId);
-                    if (index !== -1) {
-                        monthData[category].splice(index, 1);
-                    }
-                }
-            });
-        }
-        
-        function removeTaskCompletionState(taskId) {
-            Object.keys(taskCompletionState).forEach(key => {
-                if (key.startsWith(taskId + '_')) {
-                    delete taskCompletionState[key];
-                }
-            });
         }
         
         function updateProgress() {
-            updateMonthlyProgress(currentMonth);
-            updateOverallProgress();
+            // Count checked checkboxes
+            const allCheckboxes = document.querySelectorAll('#task-list input[type="checkbox"]');
+            const checkedCheckboxes = document.querySelectorAll('#task-list input[type="checkbox"]:checked');
+            
+            const totalTasks = allCheckboxes.length;
+            const completedTasks = checkedCheckboxes.length;
+            
+            // Update monthly progress
+            const monthlyPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            document.getElementById('monthly-progress').style.width = monthlyPercent + '%';
+            document.getElementById('monthly-percent').textContent = monthlyPercent + '%';
+            
+            // Update annual progress (simplified calculation)
+            const annualPercent = Math.floor(monthlyPercent / 12);
+            document.getElementById('annual-progress').style.width = annualPercent + '%';
+            document.getElementById('annual-percent').textContent = annualPercent + '%';
         }
         
-        function updateMonthlyProgress(month) {
-            const monthData = appData.monthly_tasks[month];
-            if (!monthData) return;
+        function showTaskModal() {
+            document.getElementById('task-modal').classList.add('active');
+        }
+        
+        function showVacationModal() {
+            document.getElementById('vacation-modal').classList.add('active');
+        }
+        
+        function showAbsenceModal() {
+            document.getElementById('absence-modal').classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        function addTask(event) {
+            event.preventDefault();
             
-            let totalTasks = 0;
-            let completedTasks = 0;
+            const taskName = document.getElementById('task-name').value;
+            const taskType = document.getElementById('task-type').value;
             
-            const allTasks = [
-                ...(monthData.regular_tasks || []),
-                ...(monthData.special_tasks || []),
-                ...(monthData.preparation_tasks || []),
-                ...(monthData.custom_tasks || [])
-            ];
+            if (!taskName || !taskType) {
+                alert('필수 항목을 입력해주세요.');
+                return false;
+            }
             
-            allTasks.forEach(task => {
-                if (task.weeks) {
-                    totalTasks += task.weeks;
-                    for (let week = 1; week <= task.weeks; week++) {
-                        if (taskCompletionState[task.id + '_week_' + week]) {
-                            completedTasks++;
-                        }
-                    }
-                } else if (task.steps && task.steps.length > 0) {
-                    totalTasks += task.steps.length;
-                    task.steps.forEach((step, index) => {
-                        if (taskCompletionState[task.id + '_step_' + index]) {
-                            completedTasks++;
-                        }
-                    });
-                } else {
-                    totalTasks++;
-                    if (taskCompletionState[task.id + '_simple']) {
-                        completedTasks++;
-                    }
+            // Check if at least one month is selected
+            const selectedMonths = [];
+            for (let i = 1; i <= 12; i++) {
+                if (document.getElementById('m' + i).checked) {
+                    selectedMonths.push(i);
                 }
-            });
-            
-            const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-            
-            const progressFill = document.getElementById('monthly-progress-fill');
-            const progressText = document.getElementById('monthly-progress-text');
-            
-            if (progressFill && progressText) {
-                progressFill.style.width = progressPercentage + '%';
-                progressText.textContent = progressPercentage + '%';
             }
+            
+            if (selectedMonths.length === 0) {
+                alert('최소 하나의 월을 선택해주세요.');
+                return false;
+            }
+            
+            closeModal('task-modal');
+            showMessage('업무가 추가되었습니다.');
+            
+            // Reset form
+            document.getElementById('task-name').value = '';
+            document.getElementById('task-type').value = '';
+            document.getElementById('task-desc').value = '';
+            for (let i = 1; i <= 12; i++) {
+                document.getElementById('m' + i).checked = false;
+            }
+            
+            return false;
         }
         
-        function updateOverallProgress() {
-            let totalTasks = 0;
-            let completedTasks = 0;
+        function addVacation(event) {
+            event.preventDefault();
             
-            Object.keys(appData.monthly_tasks).forEach(month => {
-                const monthData = appData.monthly_tasks[month];
-                const allTasks = [
-                    ...(monthData.regular_tasks || []),
-                    ...(monthData.special_tasks || []),
-                    ...(monthData.preparation_tasks || []),
-                    ...(monthData.custom_tasks || [])
-                ];
-                
-                allTasks.forEach(task => {
-                    if (task.weeks) {
-                        totalTasks += task.weeks;
-                        for (let week = 1; week <= task.weeks; week++) {
-                            if (taskCompletionState[task.id + '_week_' + week]) {
-                                completedTasks++;
-                            }
-                        }
-                    } else if (task.steps && task.steps.length > 0) {
-                        totalTasks += task.steps.length;
-                        task.steps.forEach((step, index) => {
-                            if (taskCompletionState[task.id + '_step_' + index]) {
-                                completedTasks++;
-                            }
-                        });
-                    } else {
-                        totalTasks++;
-                        if (taskCompletionState[task.id + '_simple']) {
-                            completedTasks++;
-                        }
-                    }
-                });
-            });
+            const teacher = document.getElementById('vacation-teacher').value;
+            const type = document.getElementById('vacation-type').value;
+            const start = document.getElementById('vacation-start').value;
+            const end = document.getElementById('vacation-end').value;
             
-            const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-            
-            const progressFill = document.getElementById('overall-progress-fill');
-            const progressText = document.getElementById('overall-progress-text');
-            
-            if (progressFill && progressText) {
-                progressFill.style.width = progressPercentage + '%';
-                progressText.textContent = progressPercentage + '%';
+            if (!teacher || !type || !start || !end) {
+                alert('필수 항목을 입력해주세요.');
+                return false;
             }
+            
+            closeModal('vacation-modal');
+            showMessage('휴가 신청이 추가되었습니다.');
+            
+            // Reset form
+            document.getElementById('vacation-teacher').value = '';
+            document.getElementById('vacation-type').value = '';
+            document.getElementById('vacation-start').value = '';
+            document.getElementById('vacation-end').value = '';
+            document.getElementById('vacation-reason').value = '';
+            
+            return false;
         }
         
-        function showStatusMessage(message, type = 'success') {
-            console.log('Status:', message);
-            let statusEl = document.getElementById('status-message');
-            if (!statusEl) {
-                statusEl = document.createElement('div');
-                statusEl.id = 'status-message';
-                statusEl.className = 'status-message';
-                document.body.appendChild(statusEl);
+        function addAbsence(event) {
+            event.preventDefault();
+            
+            const teacher = document.getElementById('absence-teacher').value;
+            const type = document.getElementById('absence-type').value;
+            const start = document.getElementById('absence-start').value;
+            const reason = document.getElementById('absence-reason').value;
+            
+            if (!teacher || !type || !start || !reason) {
+                alert('필수 항목을 입력해주세요.');
+                return false;
             }
             
-            statusEl.textContent = message;
-            statusEl.className = 'status-message ' + type + ' show';
+            closeModal('absence-modal');
+            showMessage('휴직 신청이 추가되었습니다.');
+            
+            // Reset form
+            document.getElementById('absence-teacher').value = '';
+            document.getElementById('absence-type').value = '';
+            document.getElementById('absence-start').value = '';
+            document.getElementById('absence-end').value = '';
+            document.getElementById('absence-reason').value = '';
+            
+            return false;
+        }
+        
+        function showMessage(message, isError = false) {
+            let msgEl = document.getElementById('status-msg');
+            if (!msgEl) {
+                msgEl = document.createElement('div');
+                msgEl.id = 'status-msg';
+                msgEl.className = 'status-message';
+                document.body.appendChild(msgEl);
+            }
+            
+            msgEl.textContent = message;
+            msgEl.className = 'status-message' + (isError ? ' error' : '');
+            msgEl.classList.add('show');
             
             setTimeout(() => {
-                statusEl.classList.remove('show');
+                msgEl.classList.remove('show');
             }, 3000);
         }
         
-        // Close modal when clicking outside
+        // Close modals when clicking outside
         window.addEventListener('click', function(event) {
-            const modals = ['task-modal', 'vacation-modal', 'absence-modal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (event.target === modal) {
-                    closeModal(modalId);
-                }
-            });
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
         });
         
-        // Keyboard shortcuts
+        // Close modals with ESC key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
-                const activeModal = document.querySelector('.modal.active');
-                if (activeModal) {
-                    closeModal(activeModal.id);
-                }
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
             }
         });
     </script>
