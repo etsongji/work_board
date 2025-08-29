@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교무부장 업무 & 휴가 관리 대시보드</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>교무부장 업무 & 휴가 관리 대시보드</h1>
+            <div class="year-info">2025년</div>
+        </header>
+
+        <!-- Main Navigation Tabs -->
+        <div class="main-nav-tabs">
+            <button class="main-nav-tab active" data-tab="task-management">업무관리</button>
+            <button class="main-nav-tab" data-tab="vacation-management">휴가관리</button>
+        </div>
+
+        <!-- Task Management Section -->
+        <div id="task-management" class="tab-content active">
+            <!-- Overall Progress -->
+            <div class="overall-progress card">
+                <h2>연간 진척률</h2>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overall-progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="overall-progress-text">0%</span>
+                </div>
+            </div>
+
+            <!-- Month Tabs -->
+            <div class="month-tabs">
+                <button class="month-tab" data-month="1">1월</button>
+                <button class="month-tab" data-month="2">2월</button>
+                <button class="month-tab" data-month="3">3월</button>
+                <button class="month-tab" data-month="4">4월</button>
+                <button class="month-tab" data-month="5">5월</button>
+                <button class="month-tab" data-month="6">6월</button>
+                <button class="month-tab" data-month="7">7월</button>
+                <button class="month-tab active" data-month="8">8월</button>
+                <button class="month-tab" data-month="9">9월</button>
+                <button class="month-tab" data-month="10">10월</button>
+                <button class="month-tab" data-month="11">11월</button>
+                <button class="month-tab" data-month="12">12월</button>
+            </div>
+
+            <!-- Monthly Progress -->
+            <div class="monthly-progress card">
+                <h3 id="monthly-title">8월 진척률</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="monthly-progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="monthly-progress-text">0%</span>
+                </div>
+            </div>
+
+            <!-- Task Content -->
+            <div class="task-content" id="task-content">
+                <!-- Tasks will be dynamically loaded here -->
+            </div>
+        </div>
+
+        <!-- Vacation Management Section -->
+        <div id="vacation-management" class="tab-content">
+            <!-- Vacation Stats Overview -->
+            <div class="vacation-stats card">
+                <h2>휴가 현황 요약</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">총 교사수</span>
+                        <span class="stat-value" id="total-teachers">8</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">현재 휴가중</span>
+                        <span class="stat-value" id="current-vacations">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">대기중 신청</span>
+                        <span class="stat-value" id="pending-applications">1</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">가용 기간제교사</span>
+                        <span class="stat-value" id="available-substitutes">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vacation Controls -->
+            <div class="vacation-controls">
+                <button class="btn btn--primary" id="add-vacation-btn">휴가 신청</button>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="calendar">캘린더</button>
+                    <button class="view-btn" data-view="table">테이블</button>
+                    <button class="view-btn" data-view="substitutes">기간제교사</button>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendar-view" class="vacation-view active">
+                <div class="calendar-tabs">
+                    <button class="calendar-tab active" data-month="1">1월</button>
+                    <button class="calendar-tab" data-month="2">2월</button>
+                    <button class="calendar-tab" data-month="3">3월</button>
+                    <button class="calendar-tab" data-month="4">4월</button>
+                    <button class="calendar-tab" data-month="5">5월</button>
+                    <button class="calendar-tab" data-month="6">6월</button>
+                    <button class="calendar-tab" data-month="7">7월</button>
+                    <button class="calendar-tab" data-month="8">8월</button>
+                    <button class="calendar-tab" data-month="9">9월</button>
+                    <button class="calendar-tab" data-month="10">10월</button>
+                    <button class="calendar-tab" data-month="11">11월</button>
+                    <button class="calendar-tab" data-month="12">12월</button>
+                </div>
+                <div class="calendar-content card">
+                    <h3 id="calendar-month-title">1월 휴가 현황</h3>
+                    <div class="vacation-legend">
+                        <div class="legend-item">
+                            <span class="legend-color vacation-type-연가"></span>
+                            <span>연가</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color vacation-type-병가"></span>
+                            <span>병가</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color vacation-type-특별휴가"></span>
+                            <span>특별휴가</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color vacation-type-출산휴가"></span>
+                            <span>출산휴가</span>
+                        </div>
+                    </div>
+                    <div id="calendar-list" class="vacation-list">
+                        <!-- Calendar items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table View -->
+            <div id="table-view" class="vacation-view">
+                <div class="card">
+                    <h3>교사별 휴가 현황</h3>
+                    <div class="table-container">
+                        <table class="vacation-table">
+                            <thead>
+                                <tr>
+                                    <th>교사명</th>
+                                    <th>담당과목</th>
+                                    <th>학년</th>
+                                    <th>총 휴가일수</th>
+                                    <th>사용일수</th>
+                                    <th>잔여일수</th>
+                                    <th>현재 상태</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacher-table-body">
+                                <!-- Teacher data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>휴가 신청 목록</h3>
+                    <div class="table-container">
+                        <table class="vacation-table">
+                            <thead>
+                                <tr>
+                                    <th>교사명</th>
+                                    <th>휴가유형</th>
+                                    <th>기간</th>
+                                    <th>일수</th>
+                                    <th>대체교사</th>
+                                    <th>승인상태</th>
+                                    <th>관리</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vacation-table-body">
+                                <!-- Vacation data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Substitute Teachers View -->
+            <div id="substitutes-view" class="vacation-view">
+                <div class="card">
+                    <h3>기간제교사 현황</h3>
+                    <div class="substitutes-grid">
+                        <!-- Substitute teacher data will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vacation Form Modal -->
+        <div id="vacation-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">휴가 신청</h3>
+                    <button class="modal-close" id="modal-close-btn">&times;</button>
+                </div>
+                <form id="vacation-form" class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="teacher-select">교사명</label>
+                        <select id="teacher-select" class="form-control" required>
+                            <option value="">교사를 선택하세요</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="vacation-type-select">휴가유형</label>
+                        <select id="vacation-type-select" class="form-control" required>
+                            <option value="">휴가 유형을 선택하세요</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="start-date">시작일</label>
+                        <input type="date" id="start-date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="end-date">종료일</label>
+                        <input type="date" id="end-date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="substitute-select">대체교사</label>
+                        <select id="substitute-select" class="form-control" required>
+                            <option value="">대체교사를 선택하세요</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="vacation-reason">휴가 사유</label>
+                        <textarea id="vacation-reason" class="form-control" rows="3" placeholder="휴가 사유를 입력하세요"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="approval-status">승인상태</label>
+                        <select id="approval-status" class="form-control" required>
+                            <option value="대기">대기</option>
+                            <option value="승인">승인</option>
+                            <option value="반려">반려</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--outline" id="cancel-btn">취소</button>
+                    <button type="submit" class="btn btn--primary" id="save-vacation-btn">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
