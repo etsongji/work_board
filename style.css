@@ -761,6 +761,51 @@ select.form-control {
   font-weight: var(--font-weight-medium);
 }
 
+/* Message Container */
+.message-container {
+  position: fixed;
+  top: var(--space-24);
+  right: var(--space-24);
+  z-index: 2000;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.message-container.hidden {
+  display: none !important;
+}
+
+.message {
+  padding: var(--space-12) var(--space-20);
+  border-radius: var(--radius-base);
+  font-weight: var(--font-weight-medium);
+  box-shadow: var(--shadow-lg);
+  min-width: 300px;
+  animation: slideIn var(--duration-normal) var(--ease-standard);
+}
+
+.message.success {
+  background-color: var(--color-bg-3);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.message.error {
+  background-color: var(--color-bg-4);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Main Navigation Tabs */
 .main-nav-tabs {
   display: flex;
@@ -882,15 +927,37 @@ select.form-control {
   font-weight: var(--font-weight-semibold);
 }
 
-/* Monthly Progress */
-.monthly-progress {
+/* Monthly Header and Add Task Button */
+.monthly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-16);
   margin-bottom: var(--space-24);
+}
+
+.monthly-progress {
+  flex: 1;
+  margin-bottom: 0;
 }
 
 .monthly-progress h3 {
   font-size: var(--font-size-xl);
   margin-bottom: var(--space-12);
   color: var(--color-text);
+}
+
+.add-task-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.add-icon {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
 }
 
 /* Task Cards */
@@ -913,16 +980,25 @@ select.form-control {
   padding: var(--space-16);
   margin-bottom: var(--space-16);
   transition: all var(--duration-normal) var(--ease-standard);
+  position: relative;
+  cursor: pointer;
 }
 
 .task-card:hover {
   box-shadow: var(--shadow-md);
   border-color: var(--color-primary);
+  transform: translateY(-1px);
 }
 
 .task-card.completed {
   background-color: var(--color-bg-3);
   border-color: var(--color-success);
+}
+
+.task-card.editing {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 0 2px rgba(var(--color-warning-rgb), 0.2);
+  transform: scale(1.02);
 }
 
 .task-header {
@@ -962,6 +1038,7 @@ select.form-control {
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
   margin: 0;
+  flex: 1;
 }
 
 .task-description {
@@ -979,24 +1056,99 @@ select.form-control {
   margin-left: auto;
 }
 
-.task-type-weekly {
+.task-type-정기업무 {
   background-color: var(--color-bg-1);
   color: var(--color-primary);
 }
 
-.task-type-monthly {
-  background-color: var(--color-bg-2);
-  color: var(--color-orange-500);
-}
-
-.task-type-special {
+.task-type-특별업무 {
   background-color: var(--color-bg-4);
   color: var(--color-red-500);
 }
 
-.task-type-preparation {
+.task-type-준비업무 {
   background-color: var(--color-bg-5);
   color: var(--color-slate-500);
+}
+
+.task-type-프로젝트업무 {
+  background-color: var(--color-bg-6);
+  color: var(--color-orange-500);
+}
+
+/* Enhanced Task Actions */
+.task-actions {
+  position: absolute;
+  top: var(--space-12);
+  right: var(--space-12);
+  display: flex;
+  gap: var(--space-4);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-standard);
+}
+
+.task-card:hover .task-actions {
+  opacity: 1;
+}
+
+.btn-task-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  border: 1px solid;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-task-edit {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-task-edit:hover {
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  transform: scale(1.05);
+}
+
+.btn-task-edit::before {
+  content: '✏️';
+}
+
+.btn-task-delete {
+  color: var(--color-red-500);
+  border-color: var(--color-red-500);
+}
+
+.btn-task-delete:hover {
+  background-color: var(--color-red-500);
+  color: var(--color-white);
+  transform: scale(1.05);
+}
+
+.btn-task-delete::before {
+  content: '🗑️';
+}
+
+.btn-task-duplicate {
+  color: var(--color-slate-500);
+  border-color: var(--color-slate-500);
+}
+
+.btn-task-duplicate:hover {
+  background-color: var(--color-slate-500);
+  color: var(--color-white);
+  transform: scale(1.05);
+}
+
+.btn-task-duplicate::before {
+  content: '📋';
 }
 
 /* Weekly Tasks */
@@ -1106,6 +1258,92 @@ select.form-control {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   margin-right: var(--space-4);
+}
+
+/* Task Form Modal Specific Styles */
+.month-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.checkbox-label:hover {
+  background-color: var(--color-bg-8);
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.steps-container {
+  margin-bottom: var(--space-12);
+}
+
+.step-input {
+  display: flex;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+  align-items: center;
+}
+
+.step-input .step-text {
+  flex: 1;
+}
+
+.btn-remove-step {
+  background-color: var(--color-bg-4);
+  color: var(--color-red-500);
+  border: 1px solid var(--color-red-500);
+  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.btn-remove-step:hover {
+  background-color: var(--color-red-500);
+  color: var(--color-white);
+  transform: scale(1.05);
+}
+
+.btn-add-step {
+  margin-top: var(--space-8);
+}
+
+/* Confirmation Dialog */
+.confirm-dialog {
+  max-width: 400px;
+}
+
+.confirm-dialog .modal-body {
+  text-align: center;
+  padding: var(--space-24) var(--space-20);
+}
+
+.confirm-dialog .modal-body p {
+  color: var(--color-text);
+  margin: 0;
+  font-size: var(--font-size-lg);
 }
 
 /* Vacation Management Styles */
@@ -1499,7 +1737,7 @@ select.form-control {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -1547,44 +1785,6 @@ select.form-control {
   border-top: 1px solid var(--color-border);
 }
 
-/* Action Buttons */
-.action-btns {
-  display: flex;
-  gap: var(--space-6);
-}
-
-.btn-edit {
-  background-color: var(--color-bg-1);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  padding: var(--space-4) var(--space-8);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.btn-edit:hover {
-  background-color: var(--color-primary);
-  color: var(--color-btn-primary-text);
-}
-
-.btn-delete {
-  background-color: var(--color-bg-4);
-  color: var(--color-red-500);
-  border: 1px solid var(--color-red-500);
-  padding: var(--space-4) var(--space-8);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.btn-delete:hover {
-  background-color: var(--color-red-500);
-  color: var(--color-white);
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-header {
@@ -1604,6 +1804,15 @@ select.form-control {
   .month-tabs,
   .calendar-tabs {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .monthly-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-task-btn {
+    align-self: flex-end;
   }
 
   .progress-container {
@@ -1661,4 +1870,51 @@ select.form-control {
     align-items: flex-start;
     gap: var(--space-8);
   }
+
+  .month-checkboxes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .task-actions {
+    position: relative;
+    opacity: 1;
+    top: auto;
+    right: auto;
+    margin-top: var(--space-8);
+    margin-left: 32px;
+  }
+
+  .message-container {
+    top: var(--space-16);
+    right: var(--space-16);
+    left: var(--space-16);
+  }
+
+  .message {
+    min-width: auto;
+  }
+}
+
+/* Touch devices specific styles */
+@media (hover: none) and (pointer: coarse) {
+  .task-actions {
+    opacity: 1;
+  }
+  
+  .btn-task-action {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-md);
+  }
+}
+
+/* Keyboard navigation */
+.task-card:focus-within {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.btn-task-action:focus {
+  outline: var(--focus-outline);
+  outline-offset: 1px;
 }

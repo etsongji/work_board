@@ -14,6 +14,11 @@
             <div class="year-info">2025년</div>
         </header>
 
+        <!-- Success/Error Messages -->
+        <div id="message-container" class="message-container hidden">
+            <div id="message" class="message"></div>
+        </div>
+
         <!-- Main Navigation Tabs -->
         <div class="main-nav-tabs">
             <button class="main-nav-tab active" data-tab="task-management">업무관리</button>
@@ -35,29 +40,34 @@
 
             <!-- Month Tabs -->
             <div class="month-tabs">
-                <button class="month-tab" data-month="1">1월</button>
+                <button class="month-tab active" data-month="1">1월</button>
                 <button class="month-tab" data-month="2">2월</button>
                 <button class="month-tab" data-month="3">3월</button>
                 <button class="month-tab" data-month="4">4월</button>
                 <button class="month-tab" data-month="5">5월</button>
                 <button class="month-tab" data-month="6">6월</button>
                 <button class="month-tab" data-month="7">7월</button>
-                <button class="month-tab active" data-month="8">8월</button>
+                <button class="month-tab" data-month="8">8월</button>
                 <button class="month-tab" data-month="9">9월</button>
                 <button class="month-tab" data-month="10">10월</button>
                 <button class="month-tab" data-month="11">11월</button>
                 <button class="month-tab" data-month="12">12월</button>
             </div>
 
-            <!-- Monthly Progress -->
-            <div class="monthly-progress card">
-                <h3 id="monthly-title">8월 진척률</h3>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="monthly-progress-fill"></div>
+            <!-- Monthly Progress and Add Task Button -->
+            <div class="monthly-header">
+                <div class="monthly-progress card">
+                    <h3 id="monthly-title">1월 진척률</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="monthly-progress-fill"></div>
+                        </div>
+                        <span class="progress-text" id="monthly-progress-text">0%</span>
                     </div>
-                    <span class="progress-text" id="monthly-progress-text">0%</span>
                 </div>
+                <button class="btn btn--primary add-task-btn" id="add-task-btn">
+                    <span class="add-icon">+</span> 업무 추가
+                </button>
             </div>
 
             <!-- Task Content -->
@@ -201,13 +211,104 @@
             </div>
         </div>
 
+        <!-- Task Form Modal -->
+        <div id="task-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="task-modal-title">업무 추가</h3>
+                    <button class="modal-close" id="task-modal-close-btn">&times;</button>
+                </div>
+                <form id="task-form" class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label" for="task-name">업무명 *</label>
+                        <input type="text" id="task-name" class="form-control" required placeholder="업무명을 입력하세요">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="task-type">업무 유형 *</label>
+                        <select id="task-type" class="form-control" required>
+                            <option value="">업무 유형을 선택하세요</option>
+                            <option value="정기업무">정기업무</option>
+                            <option value="특별업무">특별업무</option>
+                            <option value="준비업무">준비업무</option>
+                            <option value="프로젝트업무">프로젝트업무</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="task-description">업무 설명</label>
+                        <textarea id="task-description" class="form-control" rows="3" placeholder="업무 설명을 입력하세요"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">적용 월 선택 *</label>
+                        <div class="month-checkboxes">
+                            <label class="checkbox-label"><input type="checkbox" value="1"> 1월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="2"> 2월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="3"> 3월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="4"> 4월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="5"> 5월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="6"> 6월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="7"> 7월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="8"> 8월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="9"> 9월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="10"> 10월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="11"> 11월</label>
+                            <label class="checkbox-label"><input type="checkbox" value="12"> 12월</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="weekly-config" style="display: none;">
+                        <label class="form-label" for="weeks-count">주 수 설정</label>
+                        <select id="weeks-count" class="form-control">
+                            <option value="4">4주</option>
+                            <option value="5">5주</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="steps-config">
+                        <label class="form-label">세부 단계/체크리스트 (선택사항)</label>
+                        <div id="steps-container">
+                            <div class="step-input">
+                                <input type="text" class="form-control step-text" placeholder="1단계 내용을 입력하세요">
+                                <button type="button" class="btn-remove-step">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn--outline btn-add-step">+ 단계 추가</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--outline" id="task-cancel-btn">취소</button>
+                    <button type="button" class="btn btn--primary" id="save-task-btn">저장</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Dialog -->
+        <div id="confirm-dialog" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content confirm-dialog">
+                <div class="modal-header">
+                    <h3 id="confirm-title">확인</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="confirm-message">정말로 이 작업을 실행하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--outline" id="confirm-cancel-btn">취소</button>
+                    <button type="button" class="btn btn--primary" id="confirm-ok-btn">확인</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Vacation Form Modal -->
         <div id="vacation-modal" class="modal hidden">
             <div class="modal-overlay"></div>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 id="modal-title">휴가 신청</h3>
-                    <button class="modal-close" id="modal-close-btn">&times;</button>
+                    <h3 id="vacation-modal-title">휴가 신청</h3>
+                    <button class="modal-close" id="vacation-modal-close-btn">&times;</button>
                 </div>
                 <form id="vacation-form" class="modal-body">
                     <div class="form-group">
@@ -256,7 +357,7 @@
                     </div>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn--outline" id="cancel-btn">취소</button>
+                    <button type="button" class="btn btn--outline" id="vacation-cancel-btn">취소</button>
                     <button type="submit" class="btn btn--primary" id="save-vacation-btn">저장</button>
                 </div>
             </div>
