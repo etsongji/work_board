@@ -754,8 +754,43 @@ select.form-control {
   font-weight: var(--font-weight-bold);
 }
 
+/* Main Tabs */
+.main-tabs {
+  display: flex;
+  gap: var(--space-8);
+  margin-bottom: var(--space-24);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: var(--space-16);
+}
+
+.tab-button {
+  padding: var(--space-12) var(--space-24);
+  background: var(--color-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.tab-button:hover {
+  background: var(--color-secondary-hover);
+}
+
+.tab-button.active {
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  border-color: var(--color-primary);
+}
+
 /* Tab Content */
 .tab-content {
+  display: none;
+}
+
+.tab-content.active {
   display: block;
 }
 
@@ -826,19 +861,6 @@ select.form-control {
   margin-bottom: var(--space-24);
 }
 
-.task-section {
-  margin-bottom: var(--space-24);
-}
-
-.task-section h4 {
-  color: var(--color-text);
-  margin-bottom: var(--space-16);
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  padding-bottom: var(--space-8);
-  border-bottom: 2px solid var(--color-border);
-}
-
 .task-card {
   background: var(--color-surface);
   border: 1px solid var(--color-card-border);
@@ -846,7 +868,6 @@ select.form-control {
   padding: var(--space-16);
   position: relative;
   transition: box-shadow var(--duration-normal) var(--ease-standard);
-  margin-bottom: var(--space-16);
 }
 
 .task-card:hover {
@@ -925,6 +946,255 @@ select.form-control {
   color: var(--color-text);
 }
 
+/* Leave Management Styles */
+.leave-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-16);
+  margin-bottom: var(--space-24);
+}
+
+.summary-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  text-align: center;
+}
+
+.summary-card h4 {
+  margin: 0 0 var(--space-8) 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.summary-number {
+  display: block;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.info-card {
+  background: var(--color-bg-8);
+  border: 1px solid var(--color-border);
+}
+
+.vacation-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-24);
+}
+
+.vacation-type-section h4 {
+  color: var(--color-text);
+  margin-bottom: var(--space-12);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.vacation-type-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vacation-type-section li {
+  padding: var(--space-6) var(--space-12);
+  margin-bottom: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+/* View Tabs */
+.view-tabs {
+  display: flex;
+  gap: var(--space-8);
+  margin-bottom: var(--space-24);
+  flex-wrap: wrap;
+}
+
+.view-tab {
+  padding: var(--space-8) var(--space-16);
+  background: var(--color-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.view-tab:hover {
+  background: var(--color-secondary-hover);
+}
+
+.view-tab.active {
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  border-color: var(--color-primary);
+}
+
+/* View Content */
+.view-content {
+  display: none;
+}
+
+.view-content.active {
+  display: block;
+}
+
+/* Teachers List */
+.teachers-list {
+  display: grid;
+  gap: var(--space-16);
+}
+
+.teacher-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-16);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teacher-info {
+  flex: 1;
+}
+
+.teacher-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  margin: 0 0 var(--space-4) 0;
+  color: var(--color-text);
+}
+
+.teacher-details {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.teacher-status {
+  margin-left: var(--space-16);
+}
+
+.teacher-actions {
+  display: flex;
+  gap: var(--space-8);
+}
+
+/* Teachers Table */
+.table-container {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.teachers-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+}
+
+.teachers-table th,
+.teachers-table td {
+  padding: var(--space-12) var(--space-16);
+  text-align: left;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.teachers-table th {
+  background: var(--color-bg-1);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.teachers-table td {
+  color: var(--color-text);
+}
+
+.teachers-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Substitute Teachers */
+.substitute-teachers-list {
+  display: grid;
+  gap: var(--space-16);
+}
+
+.substitute-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-16);
+}
+
+.substitute-card.assigned {
+  background: var(--color-bg-4);
+  border-color: var(--color-warning);
+}
+
+.substitute-card.available {
+  background: var(--color-bg-3);
+  border-color: var(--color-success);
+}
+
+.substitute-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+}
+
+.substitute-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  color: var(--color-text);
+}
+
+.substitute-subjects {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.substitute-assignment {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+}
+
+/* Vacation Summary */
+.vacation-summary-container {
+  display: grid;
+  gap: var(--space-24);
+}
+
+.substitute-need-list {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.substitute-need-item {
+  padding: var(--space-12);
+  background: var(--color-bg-4);
+  border: 1px solid var(--color-warning);
+  border-radius: var(--radius-base);
+}
+
+.substitute-need-item.sufficient {
+  background: var(--color-bg-3);
+  border-color: var(--color-success);
+}
+
 /* Modal Styles */
 .modal {
   position: fixed;
@@ -948,7 +1218,7 @@ select.form-control {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
 }
@@ -1001,39 +1271,21 @@ select.form-control {
   margin-bottom: 0;
 }
 
-/* Month Selection Checkboxes */
-.month-checkboxes {
+/* Month Checkboxes */
+.months-checkboxes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: var(--space-8);
   margin-top: var(--space-8);
 }
 
-.month-checkbox {
+.months-checkboxes label {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
-  padding: var(--space-6) var(--space-8);
-  background: var(--color-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  gap: var(--space-4);
   font-size: var(--font-size-sm);
   color: var(--color-text);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-standard);
-}
-
-.month-checkbox:hover {
-  background: var(--color-secondary-hover);
-}
-
-.month-checkbox input[type="checkbox"] {
-  margin: 0;
-  cursor: pointer;
-}
-
-.month-checkbox input[type="checkbox"]:checked {
-  accent-color: var(--color-primary);
 }
 
 /* Week Progress */
@@ -1094,45 +1346,198 @@ select.form-control {
   color: var(--color-success);
 }
 
-.task-steps h5 {
-  margin: 0 0 var(--space-8) 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
+/* 새로운 동적 단계 입력 스타일 */
+#steps-section {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  padding: var(--space-16);
+  background: var(--color-bg-1);
 }
 
-/* Empty State */
-.empty-state {
-  text-align: center;
-  color: var(--color-text-secondary);
-  padding: var(--space-32);
+#steps-container {
+  margin-bottom: var(--space-12);
+}
+
+.step-input-item {
+  margin-bottom: var(--space-8);
+}
+
+.step-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.step-input {
+  flex: 1;
+  padding: var(--space-8) var(--space-12);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.step-input:focus {
+  border-color: var(--color-primary);
+  outline: var(--focus-outline);
+}
+
+.btn-remove-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-error);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-full);
   font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.btn-remove-step:hover {
+  background: var(--color-red-500);
+  transform: scale(1.1);
+}
+
+.btn-remove-step:disabled {
+  background: var(--color-text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.5;
+}
+
+#add-step-btn {
+  width: 100%;
+  border: 2px dashed var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+#add-step-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-bg-1);
+  color: var(--color-primary);
+}
+
+/* Leave Modal Info */
+.teacher-leave-info {
+  margin-top: var(--space-8);
+  padding: var(--space-12);
+  background: var(--color-bg-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-success);
+}
+
+.leave-type-info {
+  margin-top: var(--space-8);
+  padding: var(--space-12);
+  background: var(--color-bg-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.leave-days-info {
+  padding: var(--space-12);
+  background: var(--color-bg-1);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  font-weight: var(--font-weight-medium);
+}
+
+.substitute-suggestion {
+  margin-top: var(--space-8);
+  padding: var(--space-12);
+  background: var(--color-bg-8);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .main-tabs {
+    flex-direction: column;
+  }
+  
   .month-tabs {
     grid-template-columns: repeat(4, 1fr);
   }
   
-  .month-checkboxes {
-    grid-template-columns: repeat(3, 1fr);
+  .leave-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .vacation-types {
+    grid-template-columns: 1fr;
+  }
+  
+  .teacher-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-12);
+  }
+  
+  .teacher-status {
+    margin-left: 0;
+    align-self: stretch;
+  }
+  
+  .teacher-actions {
+    align-self: stretch;
+    justify-content: flex-end;
   }
   
   .modal-content {
     width: 95%;
     margin: var(--space-16);
   }
-
-  .task-actions {
-    position: static;
-    margin-top: var(--space-12);
-    justify-content: flex-end;
+  
+  .table-container {
+    font-size: var(--font-size-sm);
+  }
+  
+  .months-checkboxes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .view-tabs {
+    flex-direction: column;
   }
 
-  .week-checkboxes {
-    flex-direction: column;
-    gap: var(--space-8);
+  .step-input-row {
+    flex-wrap: wrap;
+  }
+
+  .step-number {
+    min-width: 24px;
+    height: 24px;
+    font-size: var(--font-size-xs);
+  }
+
+  .btn-remove-step {
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-md);
   }
 }
 
@@ -1141,11 +1546,21 @@ select.form-control {
     grid-template-columns: repeat(3, 1fr);
   }
   
-  .month-checkboxes {
-    grid-template-columns: repeat(2, 1fr);
+  .leave-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .months-checkboxes {
+    grid-template-columns: 1fr;
   }
 
-  .dashboard-header h1 {
-    font-size: var(--font-size-2xl);
+  .step-input-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .step-number {
+    align-self: flex-start;
   }
 }
