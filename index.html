@@ -3,20 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>교무부장 업무 & 휴가관리 대시보드</title>
+    <title>교무업무 대시보드</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header class="dashboard-header">
-            <h1>교무부장 업무 & 휴가관리 대시보드 2025년</h1>
+            <h1>교무업무 대시보드</h1>
         </header>
-
-        <!-- 메인 탭 -->
-        <div class="main-tabs">
-            <button class="tab-button active" data-tab="tasks">업무관리</button>
-            <button class="tab-button" data-tab="leave">휴가관리</button>
-        </div>
 
         <!-- 업무관리 섹션 -->
         <div id="tasks-section" class="tab-content active">
@@ -33,18 +27,18 @@
 
             <!-- 월별 탭 -->
             <div class="month-tabs">
-                <button class="month-tab active" data-month="1">1월</button>
-                <button class="month-tab" data-month="2">2월</button>
-                <button class="month-tab" data-month="3">3월</button>
-                <button class="month-tab" data-month="4">4월</button>
-                <button class="month-tab" data-month="5">5월</button>
-                <button class="month-tab" data-month="6">6월</button>
-                <button class="month-tab" data-month="7">7월</button>
-                <button class="month-tab" data-month="8">8월</button>
-                <button class="month-tab" data-month="9">9월</button>
-                <button class="month-tab" data-month="10">10월</button>
-                <button class="month-tab" data-month="11">11월</button>
-                <button class="month-tab" data-month="12">12월</button>
+                <button class="month-tab active" onclick="switchMonth(1)">1월</button>
+                <button class="month-tab" onclick="switchMonth(2)">2월</button>
+                <button class="month-tab" onclick="switchMonth(3)">3월</button>
+                <button class="month-tab" onclick="switchMonth(4)">4월</button>
+                <button class="month-tab" onclick="switchMonth(5)">5월</button>
+                <button class="month-tab" onclick="switchMonth(6)">6월</button>
+                <button class="month-tab" onclick="switchMonth(7)">7월</button>
+                <button class="month-tab" onclick="switchMonth(8)">8월</button>
+                <button class="month-tab" onclick="switchMonth(9)">9월</button>
+                <button class="month-tab" onclick="switchMonth(10)">10월</button>
+                <button class="month-tab" onclick="switchMonth(11)">11월</button>
+                <button class="month-tab" onclick="switchMonth(12)">12월</button>
             </div>
 
             <!-- 월별 진척률 -->
@@ -60,133 +54,12 @@
 
             <!-- 업무 추가 버튼 -->
             <div class="action-buttons">
-                <button class="btn btn--primary" id="add-task-btn">업무 추가</button>
+                <button class="btn btn--primary" onclick="openTaskModal()">+ 업무 추가</button>
             </div>
 
-            <!-- 업무 카드들 -->
-            <div id="tasks-container" class="tasks-container">
+            <!-- 업무 콘텐츠 -->
+            <div id="task-content" class="tasks-container">
                 <!-- 업무 카드들이 여기에 동적으로 생성됩니다 -->
-            </div>
-        </div>
-
-        <!-- 휴가관리 섹션 -->
-        <div id="leave-section" class="tab-content">
-            <!-- 휴가 현황 요약 -->
-            <div class="leave-summary">
-                <div class="summary-card">
-                    <h4>총 교사수</h4>
-                    <span class="summary-number" id="total-teachers">8</span>
-                </div>
-                <div class="summary-card">
-                    <h4>현재 휴가/휴직중</h4>
-                    <span class="summary-number" id="current-on-leave">1</span>
-                </div>
-                <div class="summary-card">
-                    <h4>대기중 신청</h4>
-                    <span class="summary-number" id="pending-applications">0</span>
-                </div>
-                <div class="summary-card">
-                    <h4>가용 기간제교사</h4>
-                    <span class="summary-number" id="available-substitutes">4</span>
-                </div>
-            </div>
-
-            <!-- 공무원 휴가규정 안내 -->
-            <div class="card info-card">
-                <div class="card__body">
-                    <h3>공무원 휴가규정 (국가공무원법 제70조)</h3>
-                    <div class="vacation-types">
-                        <div class="vacation-type-section">
-                            <h4>연가 (21일/년)</h4>
-                            <ul>
-                                <li>근속 5년 미만: 21일</li>
-                                <li>근속 5년 이상: 23일</li>
-                                <li>근속 10년 이상: 25일</li>
-                            </ul>
-                        </div>
-                        <div class="vacation-type-section">
-                            <h4>기타 휴가</h4>
-                            <ul>
-                                <li>병가: 60일 이내 (진단서 필요)</li>
-                                <li>공가: 법정의무, 국가시험 등</li>
-                                <li>특별휴가: 경조휴가, 포상휴가</li>
-                                <li>출산휴가: 90일 (산전후)</li>
-                                <li>육아휴직: 만8세 이하 자녀당 최대 3년</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 보기 방식 탭 -->
-            <div class="view-tabs">
-                <button class="view-tab active" data-view="list">목록</button>
-                <button class="view-tab" data-view="table">테이블</button>
-                <button class="view-tab" data-view="substitute">기간제교사</button>
-                <button class="view-tab" data-view="summary">휴가현황</button>
-            </div>
-
-            <!-- 휴가 신청 버튼 -->
-            <div class="action-buttons">
-                <button class="btn btn--primary" id="add-leave-btn">휴가 신청</button>
-            </div>
-
-            <!-- 목록 뷰 -->
-            <div id="list-view" class="view-content active">
-                <div id="teachers-list" class="teachers-list">
-                    <!-- 교사 목록이 여기에 동적으로 생성됩니다 -->
-                </div>
-            </div>
-
-            <!-- 테이블 뷰 -->
-            <div id="table-view" class="view-content">
-                <div class="table-container">
-                    <table class="teachers-table">
-                        <thead>
-                            <tr>
-                                <th>이름</th>
-                                <th>담당과목</th>
-                                <th>학년</th>
-                                <th>연가잔여</th>
-                                <th>현재상태</th>
-                                <th>대체교사</th>
-                                <th>관리</th>
-                            </tr>
-                        </thead>
-                        <tbody id="teachers-table-body">
-                            <!-- 교사 테이블 데이터가 여기에 동적으로 생성됩니다 -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 기간제교사 뷰 -->
-            <div id="substitute-view" class="view-content">
-                <div id="substitute-teachers-list" class="substitute-teachers-list">
-                    <!-- 기간제교사 목록이 여기에 동적으로 생성됩니다 -->
-                </div>
-            </div>
-
-            <!-- 휴가현황 뷰 -->
-            <div id="summary-view" class="view-content">
-                <div class="vacation-summary-container">
-                    <div class="card">
-                        <div class="card__body">
-                            <h3>월별 휴가 현황</h3>
-                            <div id="monthly-vacation-chart" style="position: relative; height: 400px;">
-                                <canvas id="vacationChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card__body">
-                            <h3>기간제교원 소요 예측</h3>
-                            <div id="substitute-need-list" class="substitute-need-list">
-                                <!-- 기간제교원 소요가 여기에 표시됩니다 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -196,7 +69,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="task-modal-title">업무 추가</h3>
-                <button class="modal-close" id="close-task-modal">&times;</button>
+                <button class="modal-close" onclick="closeTaskModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="task-form">
@@ -204,127 +77,98 @@
                         <label class="form-label">업무명</label>
                         <input type="text" id="task-name" class="form-control" required>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">업무 유형</label>
                         <select id="task-type" class="form-control">
                             <option value="정기업무">정기업무</option>
                             <option value="프로젝트업무">프로젝트업무</option>
-                            <option value="단계별업무">단계별업무</option>
-                            <option value="특별업무">특별업무</option>
-                            <option value="준비업무">준비업무</option>
                         </select>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">설명</label>
                         <textarea id="task-description" class="form-control" rows="3"></textarea>
                     </div>
-                    <div class="form-group" id="months-group">
-                        <label class="form-label">추가할 월 선택 (복수 선택 가능)</label>
-                        <div class="months-checkboxes">
-                            <label><input type="checkbox" value="1"> 1월</label>
-                            <label><input type="checkbox" value="2"> 2월</label>
-                            <label><input type="checkbox" value="3"> 3월</label>
-                            <label><input type="checkbox" value="4"> 4월</label>
-                            <label><input type="checkbox" value="5"> 5월</label>
-                            <label><input type="checkbox" value="6"> 6월</label>
-                            <label><input type="checkbox" value="7"> 7월</label>
-                            <label><input type="checkbox" value="8"> 8월</label>
-                            <label><input type="checkbox" value="9"> 9월</label>
-                            <label><input type="checkbox" value="10"> 10월</label>
-                            <label><input type="checkbox" value="11"> 11월</label>
-                            <label><input type="checkbox" value="12"> 12월</label>
-                        </div>
-                    </div>
+                    
+                    <!-- 정기업무용 주간 수 입력 -->
                     <div class="form-group" id="weeks-group">
                         <label class="form-label">주간 수</label>
                         <input type="number" id="task-weeks" class="form-control" min="1" max="4" value="1">
                     </div>
-                    <!-- 새로운 단계 입력 섹션 -->
-                    <div id="steps-section" class="form-group" style="display: none;">
+                    
+                    <!-- 프로젝트업무용 단계 입력 -->
+                    <div class="form-group" id="steps-group" style="display: none;">
                         <label class="form-label">작업 단계</label>
-                        <div id="steps-container">
-                            <!-- 동적으로 단계 입력 필드가 추가됩니다 -->
+                        <div id="steps-container" class="steps-container">
+                            <!-- 단계 입력 필드들이 동적으로 생성됩니다 -->
                         </div>
-                        <button type="button" class="btn btn--secondary btn--sm" id="add-step-btn">+ 단계 추가</button>
+                        <button type="button" class="btn btn--outline btn--sm" onclick="addStep()">+ 단계 추가</button>
+                    </div>
+                    
+                    <!-- 월 선택 체크박스 -->
+                    <div class="form-group" id="month-selection-group">
+                        <label class="form-label">적용할 월 선택</label>
+                        <div class="month-checkboxes">
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="1">
+                                1월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="2">
+                                2월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="3">
+                                3월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="4">
+                                4월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="5">
+                                5월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="6">
+                                6월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="7">
+                                7월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="8">
+                                8월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="9">
+                                9월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="10">
+                                10월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="11">
+                                11월
+                            </label>
+                            <label class="month-checkbox">
+                                <input type="checkbox" name="selected-months" value="12">
+                                12월
+                            </label>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn--secondary" id="cancel-task">취소</button>
-                <button class="btn btn--primary" id="save-task">저장</button>
+                <button class="btn btn--secondary" onclick="closeTaskModal()">취소</button>
+                <button class="btn btn--primary" onclick="saveTask()">저장</button>
             </div>
         </div>
     </div>
 
-    <!-- 휴가 신청/편집 모달 -->
-    <div id="leave-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="leave-modal-title">휴가 신청</h3>
-                <button class="modal-close" id="close-leave-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="leave-form">
-                    <div class="form-group">
-                        <label class="form-label">교사 선택</label>
-                        <select id="leave-teacher" class="form-control" required>
-                            <option value="">교사를 선택해주세요</option>
-                        </select>
-                        <div id="teacher-leave-info" class="teacher-leave-info hidden">
-                            <!-- 교사별 휴가 잔여 정보가 여기에 표시됩니다 -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">휴가 유형</label>
-                        <select id="leave-type" class="form-control" required>
-                            <option value="">휴가 유형을 선택해주세요</option>
-                            <option value="연가">연가</option>
-                            <option value="병가">병가</option>
-                            <option value="공가">공가</option>
-                            <option value="특별휴가">특별휴가</option>
-                            <option value="출산휴가">출산휴가</option>
-                            <option value="육아휴직">육아휴직</option>
-                        </select>
-                        <div id="leave-type-info" class="leave-type-info hidden">
-                            <!-- 휴가 유형별 정보가 여기에 표시됩니다 -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">시작일</label>
-                        <input type="date" id="leave-start-date" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">종료일</label>
-                        <input type="date" id="leave-end-date" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <div id="leave-days-info" class="leave-days-info hidden">
-                            <!-- 휴가 일수가 여기에 표시됩니다 -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">대체교사</label>
-                        <select id="leave-substitute" class="form-control">
-                            <option value="">대체교사를 선택해주세요 (자동 매칭)</option>
-                        </select>
-                        <div id="substitute-suggestion" class="substitute-suggestion hidden">
-                            <!-- 추천 대체교사가 여기에 표시됩니다 -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">사유</label>
-                        <textarea id="leave-reason" class="form-control" rows="3" required></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn--secondary" id="cancel-leave">취소</button>
-                <button class="btn btn--primary" id="save-leave">저장</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
