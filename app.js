@@ -40,7 +40,7 @@ function initializeAllMonths() {
             completed_weeks: 0
         });
         
-        // 기간제교원 계약 업무 추가 (모든 월) - 핵심 요구사항
+        // 기간제교원 계약 업무 추가 (모든 월) - 하위 단계 포함 (수정된 내용)
         monthlyTasks[i].regular_tasks.push({
             name: '기간제교원 계약',
             type: '프로젝트업무',
@@ -50,13 +50,22 @@ function initializeAllMonths() {
                 '공고 내부결재',
                 '교육청 게시판 공고',
                 '채용 계약 완료',
-                '계약 후 문서 수합 및 내부결재',
+                {
+                    name: '계약 후 문서 수합 및 내부결재',
+                    sub_steps: [
+                        '계약서',
+                        '자격증: 초본,교원자격증,경력증명서',
+                        '보안서약서 및 평가동의서',
+                        '결격사유 조회, 마약, 신체검사서'
+                    ]
+                },
                 '성범죄조회 문서 출력 합본',
                 '교감선생님 제출'
             ],
             id: `task_${i}_contract`,
             editable: true,
-            completed_steps: []
+            completed_steps: [],
+            completed_sub_steps: {} // 하위 단계 완료 상태 저장
         });
         
         // 시간강사 수당 지급 추가 (모든 월)
@@ -71,7 +80,7 @@ function initializeAllMonths() {
         });
     }
     
-    console.log('All months initialized with core tasks:', monthlyTasks);
+    console.log('All months initialized with core tasks (updated sub-steps):', monthlyTasks);
 }
 
 // 월별 탭 전환
@@ -198,8 +207,8 @@ function renderTaskCard(task) {
             </div>
         `;
     } else if (task.type === '프로젝트업무' && task.steps) {
-        const completedSteps = task.completed_steps || [];
-        const progressPercent = (completedSteps.length / task.steps.length) * 100;
+        const { completedCount, totalCount } = getProjectTaskProgress(task);
+        const progressPercent = (completedCount / totalCount) * 100;
         
         progressContent = `
             <div class="task-progress">
@@ -207,16 +216,9 @@ function renderTaskCard(task) {
                     <div class="progress-fill" style="width: ${progressPercent}%"></div>
                 </div>
                 <div class="task-steps">
-                    <h5>작업 단계 (${completedSteps.length}/${task.steps.length}):</h5>
+                    <h5>작업 단계 (${completedCount}/${totalCount}):</h5>
                     <ul class="steps-list">
-                        ${task.steps.map((step, index) => `
-                            <li class="step-item ${completedSteps.includes(index) ? 'completed' : ''}">
-                                <input type="checkbox" class="step-checkbox" data-task="${task.id}" data-step="${index}"
-                                       ${completedSteps.includes(index) ? 'checked' : ''}
-                                       onchange="toggleTaskCompletion('${task.id}', 'step', ${index})">
-                                <span class="step-text">${step}</span>
-                            </li>
-                        `).join('')}
+                        ${task.steps.map((step, index) => renderStepItem(step, index, task)).join('')}
                     </ul>
                 </div>
             </div>
@@ -245,13 +247,139 @@ function renderTaskCard(task) {
     `;
 }
 
+// 단계 렌더링 (하위 단계 지원)
+function renderStepItem(step, index, task) {
+    const completedSteps = task.completed_steps || [];
+    const isStepCompleted = completedSteps.includes(index);
+    
+    if (typeof step === 'object' && step.sub_steps) {
+        // 하위 단계가 있는 경우
+        const completedSubSteps = task.completed_sub_steps && task.completed_sub_steps[index] ? task.completed_sub_steps[index] : [];
+        const subStepProgress = completedSubSteps.length / step.sub_steps.length;
+        const isMainStepCompleted = subStepProgress === 1;
+        
+        return `
+            <li class="step-item ${isMainStepCompleted ? 'completed' : ''}">
+                <div class="step-main">
+                    <input type="checkbox" class="step-checkbox" data-task="${task.id}" data-step="${index}"
+                           ${isMainStepCompleted ? 'checked' : ''}
+                           onchange="toggleTaskCompletion('${task.id}', 'step', ${index})" readonly>
+                    <span class="step-text">${step.name}</span>
+                    <div class="sub-steps-progress">
+                        <small>(${completedSubSteps.length}/${step.sub_steps.length} 완료)</small>
+                    </div>
+                </div>
+                <ul class="sub-steps-list">
+                    ${step.sub_steps.map((subStep, subIndex) => `
+                        <li class="sub-step-item ${completedSubSteps.includes(subIndex) ? 'completed' : ''}">
+                            <input type="checkbox" class="sub-step-checkbox" data-task="${task.id}" 
+                                   data-step="${index}" data-sub-step="${subIndex}"
+                                   ${completedSubSteps.includes(subIndex) ? 'checked' : ''}
+                                   onchange="toggleSubStepCompletion('${task.id}', ${index}, ${subIndex})">
+                            <span class="sub-step-text">${subStep}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </li>
+        `;
+    } else {
+        // 일반 단계
+        const stepText = typeof step === 'string' ? step : step.name || step;
+        return `
+            <li class="step-item ${isStepCompleted ? 'completed' : ''}">
+                <div class="step-main">
+                    <input type="checkbox" class="step-checkbox" data-task="${task.id}" data-step="${index}"
+                           ${isStepCompleted ? 'checked' : ''}
+                           onchange="toggleTaskCompletion('${task.id}', 'step', ${index})">
+                    <span class="step-text">${stepText}</span>
+                </div>
+            </li>
+        `;
+    }
+}
+
+// 프로젝트 업무 전체 진척률 계산
+function getProjectTaskProgress(task) {
+    let completedCount = 0;
+    let totalCount = 0;
+    
+    const completedSteps = task.completed_steps || [];
+    
+    task.steps.forEach((step, index) => {
+        if (typeof step === 'object' && step.sub_steps) {
+            // 하위 단계가 있는 경우
+            const completedSubSteps = task.completed_sub_steps && task.completed_sub_steps[index] ? task.completed_sub_steps[index] : [];
+            completedCount += completedSubSteps.length;
+            totalCount += step.sub_steps.length;
+        } else {
+            // 일반 단계
+            if (completedSteps.includes(index)) {
+                completedCount++;
+            }
+            totalCount++;
+        }
+    });
+    
+    return { completedCount, totalCount };
+}
+
+// 하위 단계 완료 토글
+function toggleSubStepCompletion(taskId, stepIndex, subStepIndex) {
+    console.log('Toggling sub-step completion:', taskId, stepIndex, subStepIndex);
+    
+    const task = findTaskById(taskId);
+    if (!task) {
+        console.error('Task not found:', taskId);
+        return;
+    }
+    
+    if (!task.completed_sub_steps) {
+        task.completed_sub_steps = {};
+    }
+    
+    if (!task.completed_sub_steps[stepIndex]) {
+        task.completed_sub_steps[stepIndex] = [];
+    }
+    
+    const completedSubSteps = task.completed_sub_steps[stepIndex];
+    const subStepIndexInArray = completedSubSteps.indexOf(subStepIndex);
+    
+    if (subStepIndexInArray === -1) {
+        completedSubSteps.push(subStepIndex);
+    } else {
+        completedSubSteps.splice(subStepIndexInArray, 1);
+    }
+    
+    // 모든 하위 단계가 완료되었는지 확인하고 메인 단계 상태 업데이트
+    const step = task.steps[stepIndex];
+    if (typeof step === 'object' && step.sub_steps) {
+        const allSubStepsCompleted = completedSubSteps.length === step.sub_steps.length;
+        const completedSteps = task.completed_steps || [];
+        const stepIndexInCompleted = completedSteps.indexOf(stepIndex);
+        
+        if (allSubStepsCompleted && stepIndexInCompleted === -1) {
+            completedSteps.push(stepIndex);
+            task.completed_steps = completedSteps;
+        } else if (!allSubStepsCompleted && stepIndexInCompleted !== -1) {
+            completedSteps.splice(stepIndexInCompleted, 1);
+            task.completed_steps = completedSteps;
+        }
+    }
+    
+    // UI 업데이트
+    setTimeout(() => {
+        renderTasks(currentMonth);
+        updateProgress();
+    }, 100);
+}
+
 // 업무 완료 여부 확인
 function isTaskCompleted(task) {
     if (task.type === '정기업무' && task.weeks) {
         return (task.completed_weeks || 0) >= task.weeks;
     } else if (task.type === '프로젝트업무' && task.steps) {
-        const completedSteps = task.completed_steps || [];
-        return completedSteps.length >= task.steps.length;
+        const { completedCount, totalCount } = getProjectTaskProgress(task);
+        return completedCount >= totalCount;
     }
     return false;
 }
@@ -293,6 +421,12 @@ function toggleTaskCompletion(taskId, type, index) {
         
     } else if (type === 'step') {
         if (!task.completed_steps) task.completed_steps = [];
+        
+        const step = task.steps[index];
+        if (typeof step === 'object' && step.sub_steps) {
+            // 하위 단계가 있는 경우는 하위 단계 완료 상태에 따라 결정됨 (읽기 전용)
+            return;
+        }
         
         const stepIndex = task.completed_steps.indexOf(index);
         if (stepIndex === -1) {
@@ -419,16 +553,17 @@ function openTaskModal(taskId = null) {
             if (descriptionInput) descriptionInput.value = task.description || '';
             if (weeksInput && task.weeks) weeksInput.value = task.weeks;
             
-            // 프로젝트업무 단계 로드
+            // 프로젝트업무 단계 로드 (하위 단계는 편집 불가)
             if (task.type === '프로젝트업무' && task.steps) {
                 const stepsContainer = safeGetElement('steps-container');
                 if (stepsContainer) {
                     stepsContainer.innerHTML = '';
                     task.steps.forEach(step => {
+                        const stepText = typeof step === 'string' ? step : step.name || step;
                         const stepDiv = document.createElement('div');
                         stepDiv.className = 'step-input-group';
                         stepDiv.innerHTML = `
-                            <input type="text" class="form-control step-input" value="${step}" required>
+                            <input type="text" class="form-control step-input" value="${stepText}" required>
                             <button type="button" class="btn btn--outline btn--sm" onclick="removeStep(this)">×</button>
                         `;
                         stepsContainer.appendChild(stepDiv);
@@ -516,9 +651,15 @@ function saveTask() {
     }
     
     if (editingTask) {
-        // 기존 업무 편집
+        // 기존 업무 편집 (기간제교원 계약은 편집 제한)
         const task = findTaskById(editingTask);
         if (task) {
+            if (task.name === '기간제교원 계약') {
+                alert('기간제교원 계약 업무는 기본 구조를 변경할 수 없습니다.');
+                closeTaskModal();
+                return;
+            }
+            
             task.name = name;
             task.type = type;
             task.description = description;
@@ -599,6 +740,12 @@ function saveTask() {
 function deleteTask(taskId) {
     console.log('Deleting task:', taskId);
     
+    const task = findTaskById(taskId);
+    if (task && task.name === '기간제교원 계약') {
+        alert('기간제교원 계약 업무는 삭제할 수 없습니다.');
+        return;
+    }
+    
     if (!confirm('정말로 이 업무를 삭제하시겠습니까?')) {
         return;
     }
@@ -646,7 +793,8 @@ function duplicateTask(taskId) {
         id: `custom_${currentMonth}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         name: `${task.name} (복사본)`,
         completed_weeks: 0,
-        completed_steps: []
+        completed_steps: [],
+        completed_sub_steps: {}
     };
     
     if (!monthlyTasks[currentMonth].custom_tasks) {
@@ -731,11 +879,11 @@ function setupTaskEventListeners() {
     }
 }
 
-// 페이지 로드 시 초기화 - 휴직 관련 코드 완전 제거
+// 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing...');
     
-    // 모든 월에 기간제교원 계약 업무 자동 생성 (핵심 요구사항)
+    // 모든 월에 기간제교원 계약 업무 자동 생성 (정확한 하위 단계 포함)
     initializeAllMonths();
     
     // 이벤트 리스너 설정
@@ -746,7 +894,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderTasks(1);
     updateProgress();
     
-    console.log('Initialization complete - All months have contract tasks');
+    console.log('Initialization complete - All months have contract tasks with correct sub-steps');
 });
 
 // 모달 외부 클릭 시 닫기

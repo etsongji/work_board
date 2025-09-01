@@ -1124,24 +1124,34 @@ select.form-control {
 
 .step-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-8);
-  padding: var(--space-6) 0;
+  padding: var(--space-8) 0;
   border-bottom: 1px solid var(--color-card-border);
+  flex-direction: column;
 }
 
 .step-item:last-child {
   border-bottom: none;
 }
 
+.step-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+}
+
 .step-checkbox {
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .step-text {
   flex: 1;
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
 }
 
 .step-item.completed .step-text {
@@ -1154,6 +1164,60 @@ select.form-control {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
+}
+
+/* Sub-steps styling */
+.sub-steps-progress {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.sub-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0 0 var(--space-24);
+  width: 100%;
+}
+
+.sub-step-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  border-bottom: none;
+  background: var(--color-bg-8);
+  border-radius: var(--radius-sm);
+  padding: var(--space-6) var(--space-8);
+  margin-bottom: var(--space-4);
+}
+
+.sub-step-item:last-child {
+  margin-bottom: 0;
+}
+
+.sub-step-checkbox {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sub-step-text {
+  flex: 1;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.sub-step-item.completed .sub-step-text {
+  text-decoration: line-through;
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Ensure proper alignment for steps with sub-steps */
+.step-item:has(.sub-steps-list) .step-main {
+  margin-bottom: var(--space-8);
 }
 
 /* Empty State */
@@ -1170,6 +1234,7 @@ select.form-control {
 /* Focus styles for better accessibility */
 .task-checkbox:focus,
 .step-checkbox:focus,
+.sub-step-checkbox:focus,
 .week-checkbox input:focus {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
@@ -1210,6 +1275,21 @@ select.form-control {
     width: 100%;
     margin-top: var(--space-4);
   }
+
+  .sub-steps-list {
+    margin-left: var(--space-12);
+  }
+  
+  .step-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  
+  .sub-steps-progress {
+    margin-left: 0;
+    align-self: flex-start;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1237,5 +1317,13 @@ select.form-control {
   .modal-header,
   .modal-footer {
     padding: var(--space-16);
+  }
+
+  .sub-steps-list {
+    margin-left: var(--space-8);
+  }
+  
+  .sub-step-item {
+    padding: var(--space-4) var(--space-6);
   }
 }
